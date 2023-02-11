@@ -1,4 +1,4 @@
-# chatGPT_AI4Finance
+# chatGPT in the finance sector
 
 chatGPT relatives: 
 
