@@ -16,7 +16,9 @@ https://arxiv.org/pdf/2302.04023.pdf
 
 https://www.youtube.com/watch?v=x4dIx9VYQoM
 
-# Brainstorming
+# chatGPT APIs
+
+# chatGPT usages
 
 
 
