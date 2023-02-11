@@ -33,6 +33,7 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 # chatGPT APIs
 
++ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
 + [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
 
