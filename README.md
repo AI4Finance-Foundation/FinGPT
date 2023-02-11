@@ -1,6 +1,11 @@
 # chatGPT
 
-chatGPT relatives: 
+
+# Introductory
+
++ [The Journey of Open AI GPT models](https://medium.com/walmartglobaltech/the-journey-of-open-ai-gpt-models-32d95b7b7fb2)  GPT models explained. Open AI's GPT-1,GPT-2,GPT-3.
+
+# chatGPT relatives: 
 
 [PaLM](https://arxiv.org/abs/2204.02311)
 
