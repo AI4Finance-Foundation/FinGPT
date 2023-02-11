@@ -8,11 +8,13 @@ chatGPT relatives:
 
 
 Interesting evaluations:
-https://arxiv.org/pdf/2301.08745.pdf
 
-https://arxiv.org/pdf/2302.04023.pdf
++ [Is ChatGPT A Good Translator? A Preliminary Study](https://arxiv.org/pdf/2301.08745.pdf)
 
-https://www.youtube.com/watch?v=x4dIx9VYQoM
++ [A Multitask, Multilingual, Multimodal Evaluation of ChatGPT
+on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
+
+[YouTube][Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
 
 # chatGPT APIs
 
