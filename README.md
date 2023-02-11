@@ -1,4 +1,4 @@
-# chatGPT in the finance sector
+# chatGPT
 
 chatGPT relatives: 
 
