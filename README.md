@@ -14,7 +14,7 @@ Interesting evaluations:
 + [A Multitask, Multilingual, Multimodal Evaluation of ChatGPT
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
 
-[YouTube][Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
+[YouTube] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
 
 # chatGPT APIs
 
