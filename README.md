@@ -3,7 +3,8 @@
 
 # Introductory
 
-+ [The Journey of Open AI GPT models](https://medium.com/walmartglobaltech/the-journey-of-open-ai-gpt-models-32d95b7b7fb2)  GPT models explained. Open AI's GPT-1,GPT-2,GPT-3.
++ [The Journey of Open AI GPT models](https://medium.com/walmartglobaltech/the-journey-of-open-ai-gpt-models-32d95b7b7fb2).  GPT models explained. Open AI's GPT-1,GPT-2,GPT-3.
++ [GPT-1] [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf)
 
 # chatGPT relatives: 
 
