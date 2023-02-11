@@ -2,11 +2,9 @@
 
 chatGPT relatives: 
 
-PaLM
-https://arxiv.org/abs/2204.02311
+[PaLM](https://arxiv.org/abs/2204.02311)
 
-Chincella:
-https://arxiv.org/abs/2203.15556
+[Chincella](https://arxiv.org/abs/2203.15556)
 
 
 Interesting evaluations:
