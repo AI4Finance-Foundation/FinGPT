@@ -11,7 +11,11 @@
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
 
-# chatGPT usages
+# chatGPT in the finance sector
+
+** Robo-advisor **
+
+** Code-tutor **
 
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
