@@ -13,6 +13,12 @@
 
 # chatGPT  in the finance sector
 
+**PromptNet** 
+
+Analogy to ImageNet and WordNet, it is critical to build a PromptNet.
+
++ [Awesome_Prompting_Papers_in_Computer_Vision](https://github.com/ttengwang/Awesome_Prompting_Papers_in_Computer_Vision)
+
 **Robo-advisor**
 
 **Coding-tutor**
