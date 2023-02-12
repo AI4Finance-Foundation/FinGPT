@@ -17,6 +17,7 @@
 
 + [Awesome_Prompting_Papers_in_Computer_Vision](https://github.com/ttengwang/Awesome_Prompting_Papers_in_Computer_Vision)
 + [OpenPrompt](https://github.com/thunlp/OpenPrompt)
++ [promptsource](https://github.com/bigscience-workshop/promptsource)
 
 **Robo-advisor**
 
