@@ -9,6 +9,18 @@
 + [GPT-3] [Language models are few-shot learners](https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html) NeurIPS 2020.
 + [InstructGPT][Training language models to follow instructions with human feedback](https://openreview.net/forum?id=TG8KACxEON) NeurIPS 2022.
 
+
+# chatGPT usages
+
++ [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
+
+
+# chatGPT APIs
+
++ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
++ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
+
+
 # chatGPT relatives: 
 
 [PaLM](https://arxiv.org/abs/2204.02311)
@@ -24,17 +36,6 @@ Interesting evaluations:
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
 
 [YouTube] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
-
-
-# chatGPT usages
-
-+ [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-
-
-# chatGPT APIs
-
-+ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
-+ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
 
 
