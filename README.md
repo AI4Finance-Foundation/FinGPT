@@ -1,5 +1,6 @@
 # chatGPT
 
+  A [YouTube video](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining chatGPT and FinRL.
 
 # Introductory
 
