@@ -16,6 +16,7 @@
 
 + [OpenAI Examples Library](https://platform.openai.com/examples)
 + [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
++ [GPT-3 Sandbox (Github)](https://github.com/shreyashankar/gpt3-sandbox) Enable users to create cool web demos using OpenAI GPT-3 API.
 + [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
 + [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
@@ -49,3 +50,7 @@ Interesting evaluations:
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
 
 [YouTube] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
+
+# Links
+
++ [Awesome GPT-3]([GPT-3 Examples](https://github.com/elyase/awesome-gpt3))
