@@ -12,7 +12,13 @@
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
 
-# ChatGPT  in the finance sector
+# ChatGPT APIs
+
++ [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
++ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
++ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
+
+# ChatGPT for FinTech
 
 **PromptNet** Analogy to ImageNet and WordNet, it is critical to build a PromptNet.
 
@@ -25,13 +31,6 @@
 **Coding-tutor**
 
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-
-
-# ChatGPT APIs
-
-+ [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
-+ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
-+ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
 
 # ChatGPT relatives: 
@@ -49,9 +48,3 @@ Interesting evaluations:
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
 
 [YouTube] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
-
-
-
-
-
-
