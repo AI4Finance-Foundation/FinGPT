@@ -14,6 +14,7 @@
 
 # ChatGPT APIs
 
++ [OpenAI Examples Library](https://platform.openai.com/examples)
 + [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
 + [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
 + [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
