@@ -1,4 +1,4 @@
-# chatGPT
+# ChatGPT
 
   A [YouTube video](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining chatGPT and FinRL.
 
@@ -12,7 +12,7 @@
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
 
-# chatGPT  in the finance sector
+# ChatGPT  in the finance sector
 
 **PromptNet** Analogy to ImageNet and WordNet, it is critical to build a PromptNet.
 
@@ -27,13 +27,13 @@
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 
-# chatGPT APIs
+# ChatGPT APIs
 
 + [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
 + [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
 
-# chatGPT relatives: 
+# ChatGPT relatives: 
 
 [PaLM](https://arxiv.org/abs/2204.02311)
 
