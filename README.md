@@ -19,7 +19,11 @@
 
 # ChatGPT for FinTech
 
-**Sentiment Analysis of Tweets**
+**(Fast and accurate) Sentiment Analysis**
+
+   GPT-3 can help study customer surveys, social media tweets from customers/users.
+   
+   Tweets
 + [Tweet Classifier](https://platform.openai.com/playground/p/default-tweet-classifier?model=text-davinci-003)
 + [Advanced Tweet Classifier](https://platform.openai.com/playground/p/default-adv-tweet-classifier?model=text-davinci-003)
 
