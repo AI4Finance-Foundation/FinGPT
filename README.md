@@ -14,7 +14,7 @@
 
 # ChatGPT for FinTech
 
-**Tweet**
+**Sentiment Analysis of Tweets**
 + [Tweet Classifier](https://platform.openai.com/playground/p/default-tweet-classifier?model=text-davinci-003)
 + [Advanced Tweet Classifier](https://platform.openai.com/playground/p/default-adv-tweet-classifier?model=text-davinci-003)
 
