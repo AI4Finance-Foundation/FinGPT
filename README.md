@@ -12,15 +12,11 @@
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
 
-# ChatGPT APIs
-
-+ [OpenAI Examples Library](https://platform.openai.com/examples)
-+ [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
-+ [GPT-3 Sandbox (Github)](https://github.com/shreyashankar/gpt3-sandbox) Enable users to create cool web demos using OpenAI GPT-3 API.
-+ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
-+ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
-
 # ChatGPT for FinTech
+
+**Tweet**
++ [Tweet Classifier](https://platform.openai.com/playground/p/default-tweet-classifier?model=text-davinci-003)
++ [Advanced Tweet Classifier](https://platform.openai.com/playground/p/default-adv-tweet-classifier?model=text-davinci-003)
 
 **PromptNet** Analogy to ImageNet and WordNet, it is critical to build a PromptNet.
 
@@ -34,6 +30,15 @@
 
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
+
+# ChatGPT APIs
+
++ [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
++ [ChatGPT-wrapper: python and shell](https://github.com/mmabrouk/chatgpt-wrapper)
++ [OpenAI Examples Library](https://platform.openai.com/examples)
++ [GPT-3 Sandbox (Github)](https://github.com/shreyashankar/gpt3-sandbox) Enable users to create cool web demos using OpenAI GPT-3 API.
++ [Exploring the Capabilities of the ChatGPT API: A Beginner’s Guide](https://levelup.gitconnected.com/exploring-the-capabilities-of-the-chatgpt-api-a-beginners-guide-e9089d49961f)
++ [Reverse engineered ChatGPT API](https://github.com/acheong08/ChatGPT)
 
 # ChatGPT relatives: 
 
