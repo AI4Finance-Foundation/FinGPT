@@ -35,6 +35,9 @@
 
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
+**Blogs about ChatGPT for FinTech**
+
++
 
 # ChatGPT APIs
 
