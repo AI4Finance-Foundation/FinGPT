@@ -3,7 +3,8 @@
 ## ChatGPT at AI4Finance
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
-  + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
+  + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
+  + [FinRL+ChatGPT Trading](https://github.com/oliverwang15/Alternative-Data/tree/main/demo/chatgpt-trading)
 
 ## Introductory
 
