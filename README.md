@@ -1,9 +1,9 @@
-## ChatGPT for FinTech
+# ChatGPT for FinTech
 
   +  A [YouTube video](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
-# Introductory
+## Introductory
 
 + [InstructGPT] [Training language models to follow instructions with human feedback](https://openreview.net/forum?id=TG8KACxEON) NeurIPS 2022.
 
@@ -14,15 +14,15 @@
 + [GPT-1] [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf)
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
-# Big Dataset and Financial Big Dataset
+## Big Dataset and Financial Big Dataset
 
 + [WHAT’S IN MY AI?](https://lifearchitect.ai/whats-in-my-ai/) A Comprehensive Analysis of Datasets Used to Train GPT-1, GPT-2, GPT-3, GPT-NeoX-20B, Megatron-11B, MT-NLG, and Gopher
 
-# Interesting Demos
+## Interesting Demos
 
 + [GPT-3 Creative Fiction](https://gwern.net/gpt-3#prompts-as-programming) Creative writing by OpenAI’s GPT-3 model, demonstrating poetry, dialogue, puns, literary parodies, and storytelling. Plus advice on effective GPT-3 prompt programming & avoiding common errors.
 
-# ChatGPT for FinTech
+## ChatGPT for FinTech
 
 **(Fast and accurate) Sentiment Analysis**
 
@@ -48,7 +48,7 @@
 
 +
 
-# ChatGPT APIs
+## ChatGPT APIs
 
 Prompting as a new programming paradigm!
 + [Towards Data Science] [GPT-3: Creative Potential of NLP](https://towardsdatascience.com/gpt-3-creative-potential-of-nlp-d5ccae16c1ab)
@@ -62,7 +62,7 @@ Prompting as a new programming paradigm!
 
 **Prompting programming**
 
-# ChatGPT relatives: 
+## ChatGPT relatives: 
 
 [PaLM](https://arxiv.org/abs/2204.02311)
 
@@ -77,6 +77,6 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 [YouTube] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
 
-# Links
+## Links
 
 + [Awesome GPT-3 Examples](https://github.com/elyase/awesome-gpt3)
