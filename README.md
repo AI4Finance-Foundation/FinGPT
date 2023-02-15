@@ -1,6 +1,6 @@
 # ChatGPT for FinTech
 
-# ChatGPT at AI4Finance
+## ChatGPT at AI4Finance
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
