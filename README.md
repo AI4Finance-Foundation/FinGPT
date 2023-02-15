@@ -2,7 +2,7 @@
 
 # ChatGPT at AI4Finance
 
-  +  A [YouTube video](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
+  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 ## Introductory
@@ -26,6 +26,10 @@
 
 ## ChatGPT for FinTech
 
+**ChatGPT Trading Bot**
++ [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
++ [YouTube video] [ChatGPT Trading strategy 20097% returns](https://www.youtube.com/watch?v=unsa_gXPAJ4)
+
 **(Fast and accurate) Sentiment Analysis**
 
    GPT-3 can help study customer surveys, social media tweets from customers/users.
@@ -47,8 +51,6 @@
 + [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 **Blogs about ChatGPT for FinTech**
-
-+
 
 ## ChatGPT APIs
 
