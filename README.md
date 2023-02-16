@@ -66,6 +66,7 @@
 Prompting as a new programming paradigm!
 + [Towards Data Science] [GPT-3: Creative Potential of NLP](https://towardsdatascience.com/gpt-3-creative-potential-of-nlp-d5ccae16c1ab)
 + [YouTube video] [OpenAI GPT-3 - Prompt Engineering For Financial NLP](https://www.youtube.com/watch?v=Nl2Cdbao5Ws)
++ [YouTube video] [Advanced ChatGPT Prompt Engineering](https://www.youtube.com/watch?v=bBiTR_1sEmI)
 
 + [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
 + [ChatGPT-wrapper: python and shell](https://github.com/mmabrouk/chatgpt-wrapper)
