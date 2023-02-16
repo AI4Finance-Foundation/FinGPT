@@ -36,6 +36,8 @@
 + [YouTube video] [ChatGPT Trading Strategy 893% Returns](https://www.youtube.com/watch?v=YxjvjK5AD2M)
 + [YouTube video] [ChatGPT 10 Million Trading Strategy](https://www.youtube.com/watch?v=9VPfd08uU4Q)
 + [YouTube video] [ChatGPT: Your Crypto Assistant](https://www.youtube.com/watch?v=LpzeshX6s2w)
++ [YouTube video] [Generate Insane Trading Returns with ChatGPT and TradingView](https://www.youtube.com/watch?v=ekz6ugJE1h0&t=3s)
++ [YouTube video] [This Ai Forex Trading Strategy Will Make you RICH!? (Chat GPT)](https://www.youtube.com/watch?v=rCNz6OX6Niw)
 
 **(Fast and accurate) Sentiment Analysis**
 
