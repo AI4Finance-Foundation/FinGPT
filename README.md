@@ -1,5 +1,7 @@
 # ChatGPT for FinTech
 
+The NLP data is put in the FinNLP repo: https://github.com/AI4Finance-Foundation/FinNLP
+
 ## ChatGPT at AI4Finance
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
