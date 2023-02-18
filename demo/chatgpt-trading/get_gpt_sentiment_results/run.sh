@@ -1,0 +1,1 @@
+python3 get_gpt_res.py > train.log 2>&1
