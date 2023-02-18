@@ -1,6 +1,6 @@
 # ChatGPT for FinTech
 
-The NLP data is put in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+Data and demos are currently put in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
 ## ChatGPT at AI4Finance
 
