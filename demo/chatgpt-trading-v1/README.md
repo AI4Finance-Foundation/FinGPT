@@ -43,7 +43,7 @@ Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as C
 
 * The result is shown as follows:
 
-  ![image-20230216004801458](https://cdn.jsdelivr.net/gh/oliverwang15/imgbed@main/img/Chatgpt_trading_res.png)
+  ![image-20230216004801458](https://cdn.jsdelivr.net/gh/oliverwang15/imgbed@main/img/202302181558796.png)
 
 * The performance metrics are as follows
   |        metrics      | result  |
