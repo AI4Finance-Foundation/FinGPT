@@ -6,7 +6,7 @@ Data and demos are currently put in [FinNLP](https://github.com/AI4Finance-Found
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-  + [FinRL+ChatGPT Trading Agent](https://github.com/oliverwang15/Alternative-Data/tree/main/demo/chatgpt-trading)
+  + [FinRL+ChatGPT Trading Agent](https://github.com/oliverwang15/Alternative-Data/tree/main/demo/chatgpt-trading_v1)
   + [ChatGPT adds technical indicators into FinRL]
 
 ## Introductory
