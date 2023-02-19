@@ -38,18 +38,18 @@ In this version, let's use the ChatGPT to give us trading suggestions. The codes
 1. Generate signal directly from ChatGPT. 
     * Generate the trading signal directly from the key words in the trading suggestion given by ChatGPT
         ```python
-                大幅加仓 (Add a lot)             ->        +2 
-                小幅加仓 (Add a little)          ->        +1 
-                持有不动 (Hold on)               ->         0 
-                小幅减仓 (reduce a little)       ->        -1 
-                大幅减仓 (reduce a lot)          ->        -2 
+                '大幅加仓' ('Add a lot')             ->        +2 
+                '小幅加仓' ('Add a little')          ->        +1 
+                '持有不动' ('Hold on')               ->         0 
+                '小幅减仓' ('reduce a little')       ->        -1 
+                '大幅减仓' ('reduce a lot')          ->        -2 
     
         ```  
 2. Generate signal by yourself with suggestion given by ChatGPT
     * Here we present the News and suggestion given by ChatGPT to you, and you have to make trading decision by youself.
         ``` python 
                 News     ->
-                                     You          ->    signals (+1/0/-1)
+                                     You          ->    Signals (+1/0/-1)
                 ChatGPT  ->
         ```
     
