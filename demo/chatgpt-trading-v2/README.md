@@ -35,7 +35,7 @@ In this version, let's use the ChatGPT to give us trading suggestions. The codes
     * Next, save the result to `./date/maotai.csv`
 
 ## Ⅱ. Trade with ChatGPT
-1. Generate signal directly from ChatGPT. 
+1. Generate signal directly from ChatGPT (Reward by ChatGPT)
     * Generate the trading signal directly from the key words in the trading suggestion given by ChatGPT
         ```python
                 '大幅加仓' ('Add a lot')             ->        +2 
@@ -45,7 +45,7 @@ In this version, let's use the ChatGPT to give us trading suggestions. The codes
                 '大幅减仓' ('reduce a lot')          ->        -2 
     
         ```  
-2. Generate signal by yourself with suggestion given by ChatGPT
+2. Generate signal by yourself with suggestion given by ChatGPT (Reward with ChatGPT)
     * Here we present the News and suggestion given by ChatGPT to you, and you have to make trading decision by youself.
         ``` python 
                 News     ->
