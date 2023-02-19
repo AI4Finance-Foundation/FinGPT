@@ -2,19 +2,19 @@
 
 [ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech): a list of resources to use ChatGPT for FinTech
 
-Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as ChatGPT. The codes are available [here](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v1/trade_with_gpt3.ipynb)
+Let's use ChatGPT to create an FinRL agent that trades as smartly as ChatGPT. 
 
-## 1. Price Data and Tweets Data Preparation
+## 1. Preparation of Price Data and Tweets Data 
 
 * First, we fetch price data and Tweets data from [stocknet-dataset](https://github.com/yumoxu/stocknet-dataset)
-* Second, we input Tweets data to a GPT model, say "text-curie-001" or "text-davinci-003", and get the corresponding sentiment scores
+* Second, we input Tweets data to a pretrained GPT model, say "text-curie-001" or "text-davinci-003", and get the corresponding sentiment scores
 * Third, we save the sentiment scores to a file under `./data`
 
-## 2. ChatGPT Trading Agent
+## 2. Trading Bot Using ChatGPT
 
 * We calculate the average sentiment score `S`.
 * We implement a simple strategy that buys 100 shares when `S` >= 0.3 and sells 100 shares when `S` <= -0.3
-* Parameters of GPT Model are:
+* Parameters of the pretrained GPT model are:
 
   ``` PyThon
   "model_name": "text-davinci-003",  # "text-curie-001","text-davinci-003"
@@ -26,7 +26,7 @@ Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as C
 
 ## 3. Backtest
 
-* We backtest the agent's performance from '2014-01-01' to '2015-12-30'.
+* We backtest the trading performance from '2014-01-01' to '2015-12-30'.
 * Parameters are:
 
   ``` PyThon
@@ -66,4 +66,4 @@ Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as C
 
 1. Combing price features
 
-2. Train an FinRL agent on the sentiment scores given by GPT models
+2. Train an FinRL agent on the sentiment scores by pretrained GPT models
