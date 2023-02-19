@@ -2,7 +2,7 @@
 
 More data and demos can be found in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
-**Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+**Disclaimer: We are sharing codes for academic purpose udner the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
 ## ChatGPT at AI4Finance
 
