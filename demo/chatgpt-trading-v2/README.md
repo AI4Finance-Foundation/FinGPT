@@ -57,7 +57,7 @@ In this version, let's use the ChatGPT to give us trading suggestions. The codes
 
 * The result is shown as follows:
 
-    ![image-20230220010613394](https://cdn.jsdelivr.net/gh/oliverwang15/imgbed@main/img/202302200106459.png)
+    ![image-20230220011335859](https://cdn.jsdelivr.net/gh/oliverwang15/imgbed@main/img/202302200113884.png)
 
 
 ## Ⅳ. TODOs
