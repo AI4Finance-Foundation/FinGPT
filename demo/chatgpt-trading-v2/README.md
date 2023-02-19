@@ -1,13 +1,13 @@
 # ChatGPT Trading Bot V2.
 
-[ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech)
+[ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech): a list of resources to use ChatGPT for FinTech
 
-In this version, let's use the ChatGPT to give us trading suggestions. The codes are available in [get_chatgpt_results](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v2/get_chatgpt_results.ipynb) and [trade_with_chatgpt ](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v2/trade_with_chatgpt.ipynb) notebooks. 
+In this version, we demonstrate how to get suggestions from ChatGPT. The codes are available in [get_chatgpt_results](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v2/get_chatgpt_results.ipynb) and [trade_with_chatgpt ](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v2/trade_with_chatgpt.ipynb) notebooks. 
 
-**Notice, the results are only for academic purpose, you need to CONSIDER DELIBERATELY before making any trading decision.** 
+**Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
-## Ⅰ. Get the Trading Suggestions from ChatGPT
-1. News Data Preparation
+## Ⅰ. Get Suggestions from ChatGPT
+1. Preparation of News Data
     * First, we fetch News data from [Astock](https://github.com/JinanZou/Astock)
     * Second, we select `Maotai (贵州茅台 600519)` for example
 
