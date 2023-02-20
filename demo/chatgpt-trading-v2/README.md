@@ -4,6 +4,9 @@
 
 Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as ChatGPT. The codes are available [here](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v2/trade_with_gpt3.ipynb)
 
+
+**Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
 ## 1. Price Data and Tweets Data Preparation
 
 * First, we fetch price data and Tweets data from [stocknet-dataset](https://github.com/yumoxu/stocknet-dataset)
