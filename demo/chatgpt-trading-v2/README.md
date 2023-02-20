@@ -1,4 +1,4 @@
-# ChatGPT Trading Bot V1.
+# ChatGPT Trading Bot V2.
 
 [ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech): a list of resources to use ChatGPT for FinTech
 
