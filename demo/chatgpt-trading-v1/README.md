@@ -1,6 +1,6 @@
 # ChatGPT Trading Bot V2.
 
-[ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech)
+[ChatGPT for FinTech](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech): a list of resources to use ChatGPT for FinTech
 
 In this version, let's use the ChatGPT to give us trading suggestions. The codes are available in [get_chatgpt_results](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v1/get_chatgpt_results.ipynb) and [trade_with_chatgpt ](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v1/trade_with_chatgpt.ipynb) notebooks. 
 

@@ -2,13 +2,13 @@
 
 More data and demos can be found in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
-**Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+**Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
 ## ChatGPT at AI4Finance
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-  + [FinRL+ChatGPT Trading Agent](https://github.com/AI4Finance-Foundation/FinNLP/tree/main/demo/chatgpt-trading-v1)
+  + [FinRL+ChatGPT Trading Agent](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo)
   + [ChatGPT adds technical indicators into FinRL]
 
 ## Introductory
@@ -22,7 +22,7 @@ More data and demos can be found in [FinNLP](https://github.com/AI4Finance-Found
 + [GPT-1] [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf)
 + [Transformer] [Attention is All you Need](https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) NeurIPS 2017.
 
-## Big Dataset and Financial Big Dataset
+## (Financial) Big Data
 
 + [WHAT’S IN MY AI?](https://lifearchitect.ai/whats-in-my-ai/) A Comprehensive Analysis of Datasets Used to Train GPT-1, GPT-2, GPT-3, GPT-NeoX-20B, Megatron-11B, MT-NLG, and Gopher
 
