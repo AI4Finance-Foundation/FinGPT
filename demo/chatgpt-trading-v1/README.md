@@ -4,7 +4,9 @@
 
 In this version, let's use the ChatGPT to give us trading suggestions. The codes are available in [get_chatgpt_results](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v1/get_chatgpt_results.ipynb) and [trade_with_chatgpt ](https://github.com/oliverwang15/Alternative-Data/blob/main/demo/chatgpt-trading-v1/trade_with_chatgpt.ipynb) notebooks. 
 
-**Notice, the results are only for academic purpose, you need to CONSIDER DELIBERATELY before making any trading decision.** 
+
+**Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
 
 ## Ⅰ. Get the Trading Suggestions from ChatGPT
 1. News Data Preparation
