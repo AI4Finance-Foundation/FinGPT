@@ -139,7 +139,7 @@ def run_news_in_chinese():
 
 def run_news_in_english():
     prompt_str = "Read following news and list 3 stocks that may be affected, " \
-                 "briefly judge each one positively or negatively:\n\n"
+                 "briefly judge each one 'positive' or 'negative':\n\n"
     prompt_str += get_news_from_market_aux(api_key=API_KEY_MarketAUX)
     print(f"\n====\n{prompt_str}")
 
