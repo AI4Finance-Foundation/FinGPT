@@ -92,6 +92,8 @@ Prompting as a new programming paradigm!
 [Chincella](https://arxiv.org/abs/2203.15556)
 
 Interesting evaluations:
++ [RLHF for pretraining](https://arxiv.org/abs/2302.08582)
+
 + [Compare ChatGPT with GPT3.5](https://arxiv.org/pdf/2302.06476.pdf)
 
 + [Is ChatGPT A Good Translator? A Preliminary Study](https://arxiv.org/pdf/2301.08745.pdf)
