@@ -13,7 +13,7 @@ The data sources and our wapper for large language models can be found in [FinNL
     * Trade with the suggestions given by ChatGPT
   + [ChatGPT Trading Agent V2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v2)
     * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-  + [Chatgpt Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
+  + [ChatGPT Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
     * A demo to show how we can use ChatGPT to build a Robo-advisor
   + ChatGPT adds technical indicators into FinRL
 
