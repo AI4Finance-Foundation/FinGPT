@@ -1,6 +1,6 @@
 # ChatGPT for FinTech
 
-More data and demos can be found in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+The data sources and our wapper for large language models can be found in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
 **Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
@@ -8,8 +8,14 @@ More data and demos can be found in [FinNLP](https://github.com/AI4Finance-Found
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-  + [FinRL+ChatGPT Trading Agent](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo)
-  + [ChatGPT adds technical indicators into FinRL]
+  + [ChatGPT Trading Agent V1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v1)
+    
+    * Trade with the suggestions given by ChatGPT
+  + [ChatGPT Trading Agent V2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v2)
+    * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
+  + [ChatGPT Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
+    * A demo to show how we can use ChatGPT to build a Robo-advisor
+  + ChatGPT adds technical indicators into FinRL
 
 ## Introductory
 
