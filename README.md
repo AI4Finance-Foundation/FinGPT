@@ -22,6 +22,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 ## Introductory
 
++ [GPT-4] [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774)
 + [InstructGPT] [Training language models to follow instructions with human feedback](https://openreview.net/forum?id=TG8KACxEON) NeurIPS 2022.
 
 [The Journey of Open AI GPT models](https://medium.com/walmartglobaltech/the-journey-of-open-ai-gpt-models-32d95b7b7fb2).  GPT models explained. Open AI's GPT-1, GPT-2, GPT-3.
