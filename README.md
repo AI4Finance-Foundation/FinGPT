@@ -13,7 +13,7 @@ The data sources and our wapper for large language models (LLM) are put separate
   
   + [ChatGPT Robo Advisor v2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v2)
   + [ChatGPT Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
-    * A demo to show how we can use ChatGPT to build a Robo-advisor 
+    * A demo of using ChatGPT to build a Robo-advisor 
   + [ChatGPT Trading Agent V2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v2)
     * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
   + [ChatGPT Trading Agent V1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v1)
