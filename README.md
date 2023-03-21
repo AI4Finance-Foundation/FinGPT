@@ -1,6 +1,8 @@
 # ChatGPT for FinTech
 
-The data sources and our wapper for large language models can be found in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+We demonstrate ChatGPT's applications in FinTech.
+
+The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
 **Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
