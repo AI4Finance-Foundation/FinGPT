@@ -1,6 +1,6 @@
 # ChatGPT for FinTech
 
-We demonstrate ChatGPT's applications in FinTech.
+We focus on ChatGPT's applications in FinTech.
 
 The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
