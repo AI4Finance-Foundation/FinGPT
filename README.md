@@ -8,7 +8,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 ## ChatGPT at AI4Finance
 
-  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE) combining ChatGPT and FinRL.
+  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE)， combining ChatGPT and FinRL.
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
   
   + [ChatGPT Robo Advisor v2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v2)
