@@ -9,7 +9,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 ## News
 
 + [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
-+ [ChatGPT is about to revolutionize the economy. We need to decide what that looks like] (https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
++ [ChatGPT is about to revolutionize the economy. We need to decide what that looks like](https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
 
 ## ChatGPT at AI4Finance
 
