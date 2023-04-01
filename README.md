@@ -1,4 +1,4 @@
-# FinGPT: ChatGPT for FinTech
+# FinGPT: open-source for open-finance.
 
 DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
