@@ -1,4 +1,4 @@
-# ChatGPT for FinTech
+# FinGPT: ChatGPT for FinTech
 
 We focus on ChatGPT applications in FinTech, to show the power of ChatGPT in finance.
 
