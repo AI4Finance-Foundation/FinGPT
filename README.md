@@ -12,6 +12,12 @@ The data sources and our wapper for large language models (LLM) are put separate
 + [MIT Technology Review] [ChatGPT is about to revolutionize the economy. We need to decide what that looks like](https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
 + [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
 
+## Overall Architecture
+
+<div align="center">
+<img align="center" src=figs/FinGPT.jpg>
+</div>
+
 ## ChatGPT at AI4Finance
 
   + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
