@@ -1,5 +1,7 @@
 # FinGPT: ChatGPT for FinTech
 
+DO NOT expect Wall Street to open-source LLMs nor open APIs.
+
 We focus on ChatGPT applications in FinTech, to show the power of ChatGPT in finance.
 
 The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
