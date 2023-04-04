@@ -28,11 +28,11 @@ The data sources and our wapper for large language models (LLM) are put separate
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
   
   + [ChatGPT Robo Advisor v2](./demos)
-  + [ChatGPT Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
+  + [ChatGPT Robo Advisor v1](./demos)
     * A demo of using ChatGPT to build a Robo-advisor 
-  + [ChatGPT Trading Agent V2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v2)
+  + [ChatGPT Trading Agent V2](./demos)
     * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-  + [ChatGPT Trading Agent V1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v1)
+  + [ChatGPT Trading Agent V1](./demos)
     * Trade with the suggestions given by ChatGPT
   + ChatGPT adds technical indicators into FinRL
 
@@ -50,9 +50,13 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 ## (Financial) Big Data
 
++ [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
++ 
 + [WHAT’S IN MY AI?](https://lifearchitect.ai/whats-in-my-ai/) A Comprehensive Analysis of Datasets Used to Train GPT-1, GPT-2, GPT-3, GPT-NeoX-20B, Megatron-11B, MT-NLG, and Gopher
 
 + [FinRL-Meta Repo](https://github.com/AI4Finance-Foundation/FinRL-Meta) and paper [FinRL-Meta: Market Environments and Benchmarks for Data-Driven Financial Reinforcement Learning](https://proceedings.neurips.cc/paper_files/paper/2022/hash/0bf54b80686d2c4dc0808c2e98d430f7-Abstract-Datasets_and_Benchmarks.html). Advances in Neural Information Processing Systems, 2022.
+
++ [AI4Finance] [FinNLP]([https://arxiv.org/abs/2303.17564](https://github.com/AI4Finance-Foundation/FinNLP))
 
 ## Interesting Demos
 
