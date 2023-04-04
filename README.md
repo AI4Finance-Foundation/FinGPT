@@ -17,7 +17,6 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 
 
-
 <div align="center">
 <img align="center" src=figs/FinGPT.jpg>
 </div>
@@ -38,6 +37,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 ## Introductory
 
++ [Sparks of artificial general intelligence: Early experiments with GPT-4](https://arxiv.org/abs/2303.12712)
 + [GPT-4] [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774)
 + [InstructGPT] [Training language models to follow instructions with human feedback](https://openreview.net/forum?id=TG8KACxEON) NeurIPS 2022.
 
