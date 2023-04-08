@@ -62,7 +62,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 + [FinRL-Meta Repo](https://github.com/AI4Finance-Foundation/FinRL-Meta) and paper [FinRL-Meta: Market Environments and Benchmarks for Data-Driven Financial Reinforcement Learning](https://proceedings.neurips.cc/paper_files/paper/2022/hash/0bf54b80686d2c4dc0808c2e98d430f7-Abstract-Datasets_and_Benchmarks.html). Advances in Neural Information Processing Systems, 2022.
 
-+ [AI4Finance] [FinNLP]([https://arxiv.org/abs/2303.17564](https://github.com/AI4Finance-Foundation/FinNLP))
++ [AI4Finance] [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP) Democratizing Internet-scale financial data.
 
 ## Interesting Demos
 
