@@ -4,7 +4,7 @@ DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
 The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
-Why FinGPT?
+# Why FinGPT?
 
 1). Finance is high dynamic. BloombergGPT retrains LLM using a mixed dataset of finance and general sources, which is too much expensive (1.3M hours). Lightweight adaptation is highly favorable.
 
