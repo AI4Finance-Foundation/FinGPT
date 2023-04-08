@@ -125,7 +125,7 @@ Prompting as a new programming paradigm!
 
 ## ChatGPT relatives: 
 
-[A Release Timeline](https://github.com/osanseviero/ml_timeline)
+[A Release Timeline](https://github.com/osanseviero/ml_timeline) of many LLMs.
 
 [PaLM](https://arxiv.org/abs/2204.02311)
 
