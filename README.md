@@ -8,9 +8,9 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 # Why FinGPT?
 
-1). Finance is high dynamic. BloombergGPT retrains LLM using a mixed dataset of finance and general sources, which is too much expensive (1.3M hours). Lightweight adaptation is highly favorable.
+1). Finance is high dynamic. BloombergGPT retrains LLM using a mixed dataset of finance and general data sources, which is too much expensive (1.3M hours). Lightweight adaptation is highly favorable.
 
-2). Internet-scale finance data (timely updates using an automatic data curation pipeline) is critical. BloombergGPT has privileged data access and API access. A promising alternative is "democratizing Internet-scale finance data".
+2). Internet-scale finance data is critical, which should allow timely updates using an automatic data curation pipeline. BloombergGPT has privileged data access and API access. A promising alternative is "democratizing Internet-scale finance data".
 
 3). Another key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables learning individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.)
 
