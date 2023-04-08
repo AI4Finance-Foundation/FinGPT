@@ -8,7 +8,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 # Why FinGPT?
 
-1). Finance is high dynamic. BloombergGPT retrains LLM using a mixed dataset of finance and general data sources, which is too much expensive (1.3M hours, a cost of around $5M). It is feasible to retrain every month or week, so lightweight adaptation is highly favorable in finance.
+1). Finance is high dynamic. BloombergGPT trains an LLM using a mixed dataset of finance and general data sources, which is too much expensive (1.3M hours, a cost of around $5M). It is feasible to retrain every month or week, so lightweight adaptation is highly favorable in finance.
 
 2). Internet-scale finance data is critical, which should allow timely updates (monthly or weekly updates) using an automatic data curation pipeline. BloombergGPT has privileged data access and API access, but a promising alternative is "democratizing Internet-scale financial data".
 
