@@ -1,18 +1,18 @@
 # FinGPT: Open-source for Open-finance.
 
-DO NOT expect Wall Street to open-source LLMs nor open APIs.
+Let us DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
-The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+We democratize financial data for large language models (LLM) at [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
 **Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
 # Why FinGPT?
 
-1). Finance is high dynamic. BloombergGPT retrains an LLM using a mixed dataset of finance and general data sources, which is too much expensive (1.3M hours, a cost of around $5M). It is costy to retrain every month or every week, so lightweight adaptation is highly favorable in finance.
+1). Finance is highly dynamic. BloombergGPT retrains an LLM using a mixed dataset of finance and general data sources, which is too expensive (1.3M GPU hours, a cost of around $5M). It is costy to retrain an LLM model every month or every week, so lightweight adaptation is highly favorable in finance.
 
-2). Internet-scale financial data is critical, which should allow timely updates (monthly or weekly updates) using an automatic data curation pipeline. BloombergGPT has privileged data access and API access, but a promising alternative is "democratizing Internet-scale financial data".
+2). Democratizing Internet-scale financial data is critical, which should allow timely updates (monthly or weekly updates) using an automatic data curation pipeline. But, BloombergGPT has privileged data access and APIs.
 
-3). Another key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables learning individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the ``secret" ingradient of ChatGPT and GPT4.
+3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the ``secret" ingradient of ChatGPT and GPT4.
 
 ## News
 
