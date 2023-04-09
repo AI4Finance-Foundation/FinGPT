@@ -103,7 +103,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 **Coding-tutor**
 
-+ [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
++ [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 **Blogs about ChatGPT for FinTech**
 
