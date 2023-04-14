@@ -1,27 +1,49 @@
-# ChatGPT for FinTech
+# FinGPT: Open-source for Open-finance.
 
-We focus on ChatGPT's applications in FinTech.
+Let us DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
-The data sources and our wapper for large language models (LLM) are put separately in [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+We democratize financial data for large language models (LLM) at [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
 
 **Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
+# Why FinGPT?
+
+1). Finance is highly dynamic. BloombergGPT retrains an LLM using a mixed dataset of finance and general data sources, which is too expensive (1.3M GPU hours, a cost of around $5M). It is costy to retrain an LLM model every month or every week, so lightweight adaptation is highly favorable in finance.
+
+2). Democratizing Internet-scale financial data is critical, which should allow timely updates (monthly or weekly updates) using an automatic data curation pipeline. But, BloombergGPT has privileged data access and APIs.
+
+3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the ``secret" ingradient of ChatGPT and GPT4.
+
+## News
+
++ [Columbia Perspectives on ChatGPT](https://datascience.columbia.edu/news/2023/columbia-perspectives-on-chatgpt/?utm_source=sendinblue&utm_campaign=DSI%20Newsletter%20April%202023&utm_medium=email)
++ [MIT Technology Review] [ChatGPT is about to revolutionize the economy. We need to decide what that looks like](https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
++ [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
++ [Finextra] [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
+
+
+
+<div align="center">
+<img align="center" src=figs/FinGPT.jpg>
+</div>
+
 ## ChatGPT at AI4Finance
 
-  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE)， combining ChatGPT and FinRL.
+  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
   + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
   
-  + [ChatGPT Robo Advisor v2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v2)
-  + [ChatGPT Robo Advisor v1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-robo-advisor-v1)
+  + [ChatGPT Robo Advisor v2](./demos)
+  + [ChatGPT Robo Advisor v1](./demos)
     * A demo of using ChatGPT to build a Robo-advisor 
-  + [ChatGPT Trading Agent V2](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v2)
+  + [ChatGPT Trading Agent V2](./demos)
     * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-  + [ChatGPT Trading Agent V1](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech/tree/master/demo/chatgpt-trading-v1)
+  + [ChatGPT Trading Agent V1](./demos)
     * Trade with the suggestions given by ChatGPT
   + ChatGPT adds technical indicators into FinRL
 
 ## Introductory
 
++ [Sparks of artificial general intelligence: Early experiments with GPT-4](https://arxiv.org/abs/2303.12712)
 + [GPT-4] [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774)
 + [InstructGPT] [Training language models to follow instructions with human feedback](https://openreview.net/forum?id=TG8KACxEON) NeurIPS 2022.
 
@@ -34,7 +56,13 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 ## (Financial) Big Data
 
++ [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
+
 + [WHAT’S IN MY AI?](https://lifearchitect.ai/whats-in-my-ai/) A Comprehensive Analysis of Datasets Used to Train GPT-1, GPT-2, GPT-3, GPT-NeoX-20B, Megatron-11B, MT-NLG, and Gopher
+
++ [FinRL-Meta Repo](https://github.com/AI4Finance-Foundation/FinRL-Meta) and paper [FinRL-Meta: Market Environments and Benchmarks for Data-Driven Financial Reinforcement Learning](https://proceedings.neurips.cc/paper_files/paper/2022/hash/0bf54b80686d2c4dc0808c2e98d430f7-Abstract-Datasets_and_Benchmarks.html). Advances in Neural Information Processing Systems, 2022.
+
++ [AI4Finance] [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP) Democratizing Internet-scale financial data.
 
 ## Interesting Demos
 
@@ -75,7 +103,7 @@ The data sources and our wapper for large language models (LLM) are put separate
 
 **Coding-tutor**
 
-+ [Hey, chatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
++ [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 **Blogs about ChatGPT for FinTech**
 
@@ -97,6 +125,8 @@ Prompting as a new programming paradigm!
 
 ## ChatGPT relatives: 
 
+[A Release Timeline](https://github.com/osanseviero/ml_timeline) of many LLMs.
+
 [PaLM](https://arxiv.org/abs/2204.02311)
 
 [Chincella](https://arxiv.org/abs/2203.15556)
@@ -115,4 +145,5 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 ## Links
 
++ [LLM Survey](https://github.com/RUCAIBox/LLMSurvey)
 + [Awesome GPT-3 Examples](https://github.com/elyase/awesome-gpt3)
