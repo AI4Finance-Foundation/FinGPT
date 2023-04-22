@@ -1,4 +1,4 @@
-# Data-Centric FinGPT: Open-source for Open-finance.
+# Data-Centric FinGPT: Open-source for Open Finance.
 
 Let us DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
