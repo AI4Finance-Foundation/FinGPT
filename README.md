@@ -14,6 +14,11 @@ We democratize financial data for large language models (LLM) at [FinNLP](https:
 
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the ``secret" ingradient of ChatGPT and GPT4.
 
+## FinGPT Demos
+
+* [FinGPT V1](./demos)
+  + **Let's train our own ChatGPT in Finance with pre-trained LLMs and LoRA**
+
 ## News
 
 + [Columbia Perspectives on ChatGPT](https://datascience.columbia.edu/news/2023/columbia-perspectives-on-chatgpt/?utm_source=sendinblue&utm_campaign=DSI%20Newsletter%20April%202023&utm_medium=email)
@@ -21,25 +26,27 @@ We democratize financial data for large language models (LLM) at [FinNLP](https:
 + [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
 + [Finextra] [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
 
+# What is FinNLP
 
+* FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
 
 <div align="center">
 <img align="center" src=figs/FinGPT.jpg>
 </div>
 
+
 ## ChatGPT at AI4Finance
 
-  + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
-  + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-  
-  + [ChatGPT Robo Advisor v2](./demos)
-  + [ChatGPT Robo Advisor v1](./demos)
++ [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
++ [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
++ [ChatGPT Robo Advisor v2](./demos)
++ [ChatGPT Robo Advisor v1](./demos)
     * A demo of using ChatGPT to build a Robo-advisor 
-  + [ChatGPT Trading Agent V2](./demos)
++ [ChatGPT Trading Agent V2](./demos)
     * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-  + [ChatGPT Trading Agent V1](./demos)
++ [ChatGPT Trading Agent V1](./demos)
     * Trade with the suggestions given by ChatGPT
-  + ChatGPT adds technical indicators into FinRL
++ ChatGPT adds technical indicators into FinRL
 
 ## Introductory
 
@@ -84,7 +91,7 @@ We democratize financial data for large language models (LLM) at [FinNLP](https:
 **(Fast and accurate) Sentiment Analysis**
 
    GPT-3 can help study customer surveys, social media tweets from customers/users.
-   
+
    Tweets
 + [Tweet Classifier](https://platform.openai.com/playground/p/default-tweet-classifier?model=text-davinci-003)
 + [Advanced Tweet Classifier](https://platform.openai.com/playground/p/default-adv-tweet-classifier?model=text-davinci-003)
