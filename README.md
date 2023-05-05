@@ -2,7 +2,7 @@
 
 Let us DO NOT expect Wall Street to open-source LLMs nor open APIs.
 
-We democratize financial data for large language models (LLM) at [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP)
+We democratize financial data for large language models (LLM) at [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP) and [FinNLP Website](https://ai4finance-foundation.github.io/FinNLP/) 
 
 **Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
