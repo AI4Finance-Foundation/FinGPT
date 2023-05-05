@@ -1,5 +1,6 @@
 # FinGPT - v1
 ## Let's train our own ChatGPT in Finance with pre-trained LLMs and LoRA
+### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introduction on how to finetune ChatGLM by using hugging face.
 
 ### Ⅰ. Data Preparations
 #### 1. [Download Titles](./data_preparations/download_titles.py)
@@ -16,10 +17,16 @@
     * change pct <= -0.06 : `very negative` 
 
 ### Ⅱ. Making Dataset
-* TO BE CONTINUED
+* Please run the following two files respectively
+    * [change_jsonl_train_and_valid.sh](./making_dataset/change_jsonl_train_and_valid.sh)
+    * [make_dataset_train_and_valid.sh](./making_dataset/make_dataset_train_and_valid.sh)
 
 ### Ⅲ. Training (Finetuning)
-* TO BE CONTINUED
+* Please run the following codes
+    ``` shell
+    cd training
+    sh finetune.sh
+    ```
 
 ### Ⅳ. Inferencing 
-* TO BE CONTINUED
+* Please refer to [infer.ipynb](./inferencing/infer.ipynb)
