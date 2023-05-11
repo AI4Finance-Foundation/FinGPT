@@ -8,7 +8,7 @@ We democratize financial data for large language models (LLM) at [FinNLP](https:
 
 # Why FinGPT?
 
-1). Finance is highly dynamic. BloombergGPT retrains an LLM using a mixed dataset of finance and general data sources, which is too expensive (1.3M GPU hours, a cost of around $5M). It is costy to retrain an LLM model every month or every week, so lightweight adaptation is highly favorable in finance.
+1). Finance is highly dynamic. [BloombergGPT](https://arxiv.org/abs/2303.17564) retrains an LLM using a mixed dataset of finance and general data sources, which is too expensive (1.3M GPU hours, a cost of around $5M). It is costy to retrain an LLM model every month or every week, so lightweight adaptation is highly favorable in finance.
 
 2). Democratizing Internet-scale financial data is critical, which should allow timely updates (monthly or weekly updates) using an automatic data curation pipeline. But, BloombergGPT has privileged data access and APIs.
 
