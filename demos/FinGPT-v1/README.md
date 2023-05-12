@@ -1,4 +1,4 @@
-# FinGPT - v1
+# FinGPT - v1 (Chinese Financial News + ChatGLM + LoRA)
 ## Let's train our own ChatGPT in Finance with pre-trained LLMs and LoRA
 ### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introduction on how to finetune ChatGLM by using hugging face.
 

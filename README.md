@@ -17,7 +17,9 @@ We democratize financial data for large language models (LLM) at [FinNLP](https:
 ## FinGPT Demos
 
 * [FinGPT V1](./demos)
-  + **Let's train our own ChatGPT in Finance with pre-trained LLMs and LoRA (Low-Rank Adaptation)**
+  + **Let's train our own FinGPT in Chinese Finance with ChatGLM and LoRA (Low-Rank Adaptation)**
+* [FinGPT V2](./demos)
+  + **Let's train our own FinGPT in American Finance with LLaMA and LoRA  (Low-Rank Adaptation)**
 
 ## News
 
