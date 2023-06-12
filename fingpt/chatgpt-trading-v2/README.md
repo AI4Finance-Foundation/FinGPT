@@ -36,8 +36,8 @@ Let's fully use the ChatGPT to create an FinRL agent that trades as smartly as C
   "stock_name" : "AAPL",        # please refer to the stocks provided by stocknet-dataset
   "start_date":"2014-01-01",    # should be later than 2014-01-01
   "end_date":"2015-12-30",      # should be earlier than 2015-12-30
-  "init_cash": 100,             # initial avaliable cash
-  "init_hold": 0,               # initial avaliable stock holdings
+  "init_cash": 100,             # initial available cash
+  "init_hold": 0,               # initial available stock holdings
   "cal_on": "Close",            # The column that used to calculate prices
   "trade_volumn": 100,          # Volumns to trade
   ```
