@@ -21,7 +21,6 @@ def get_one_content(x):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0",
         "Referer": "https://guba.eastmoney.com/",
     }
-
     tunnel = YOUR_KUAIDAILI_TUNNEL
     username = YOUR_KUAIDAILI_USERNAME
     password = YOUR_KUAIDAILI_PASSWARD
@@ -37,11 +36,11 @@ def get_one_content(x):
     while not ok:
         try:
             response = requests.get(url = url, headers = headers, proxies= proxies)
-            if response == 200:
+            if response.status_code == 200:
                 res = etree.HTML(response.text)
-                res = res.xpath("//script[1]//text()")[2][25:][:-136]
-                res = json.loads(res)
-                res = pd.Series(res["post"]).to_frame().T
+                res = res.xpath("//script[2]//text()")[0]
+                res = json.loads(res[17:])
+                res = pd.Series(res).to_frame().T
                 ok = True
                 return res
         except:
