@@ -17,9 +17,15 @@
     * change pct <= -0.06 : `very negative` 
 
 ### Ⅱ. Making Dataset
-* Please run the following two files respectively
-    * [change_jsonl_train_and_valid.sh](./making_dataset/change_jsonl_train_and_valid.sh)
-    * [make_dataset_train_and_valid.sh](./making_dataset/make_dataset_train_and_valid.sh)
+
+1. [Make dataset_by_date](./making_dataset/make_dataset_by_date.py)
+   * You may run this notebook to generate the dataset file in alpaca format
+
+2. Please run the following two files respectively to generate the dataset in hugging face dataset format.
+
+   * [change_jsonl_train_and_valid.sh](./making_dataset/change_jsonl_train_and_valid.sh)
+
+   * [make_dataset_train_and_valid.sh](./making_dataset/make_dataset_train_and_valid.sh)
 
 ### Ⅲ. Training (Finetuning)
 * Please run the following codes
