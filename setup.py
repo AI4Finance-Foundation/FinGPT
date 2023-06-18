@@ -2,14 +2,8 @@ from setuptools import setup, find_packages
 
 # Read requirements.txt, ignore comments
 try:
-    REQUIRES = list()
-    f = open("requirements.txt", "rb")
-    for line in f.read().decode("utf-8").split("\n"):
-        line = line.strip()
-        if "#" in line:
-            line = line[: line.find("#")].strip()
-        if line:
-            REQUIRES.append(line)
+    with open("requirements.txt", "r") as f:
+        REQUIRES = [line.split('#', 1)[0].strip() for line in f if line.strip()]
 except:
     print("'requirements.txt' not found!")
     REQUIRES = list()
@@ -18,7 +12,7 @@ setup(
     name="FinGPT",
     version="0.0.0",
     include_package_data=True,
-    author="Hongyang Yang, Xiao-Yang Liu",
+    author="Hongyang Yang, Xiao-Yang Liu, Guoxuan Wang",
     author_email="hy2500@columbia.edu",
     url="https://github.com/AI4Finance-Foundation/FinGPT",
     license="MIT",
