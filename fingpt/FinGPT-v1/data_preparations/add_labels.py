@@ -9,6 +9,18 @@ from lxml import etree
 from tqdm import tqdm
 
 from meta.data_processors.akshare import Akshare
+
+'''
+You may install FinRL-Meta package with the following code:
+
+    git clone git@github.com:AI4Finance-Foundation/FinRL-Meta.git
+    cd FinRL-Meta
+    python setup.py sdist
+    cd dist
+    pip install finrl-meta-0.3.6.tar.gz
+    
+'''
+
 from loguru import logger
 
 # The result_path should be the results with only titles which is the IN path
