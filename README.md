@@ -40,7 +40,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 * FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
 
 <div align="center">
-<img align="center" src=figs/FinGPT.jpg>
+<img align="center" src=figs/FinGPT_framework.png>
 </div>
 
 
