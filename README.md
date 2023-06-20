@@ -11,7 +11,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
-**Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
 # Why FinGPT?
 
