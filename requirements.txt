@@ -5,3 +5,6 @@ pandas
 # packaging
 setuptools>=41.4.0
 wheel>=0.33.6
+
+# historical data
+tushare
