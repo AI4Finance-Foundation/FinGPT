@@ -33,6 +33,6 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
     keywords="Financial Large Language Models",
-    platform=["any"],
+    platforms=["any"],
     python_requires=">=3.6",
 )
