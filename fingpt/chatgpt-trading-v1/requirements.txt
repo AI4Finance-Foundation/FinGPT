@@ -1,0 +1,3 @@
+revChatGPT
+pandas
+matplotlib
