@@ -28,12 +28,11 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 * [FinGPT V2](./fingpt)
   + **Let's train our own FinGPT in American Financial Market with LLaMA and LoRA  (Low-Rank Adaptation)**
 
-## News
-
-+ [Columbia Perspectives on ChatGPT](https://datascience.columbia.edu/news/2023/columbia-perspectives-on-chatgpt/?utm_source=sendinblue&utm_campaign=DSI%20Newsletter%20April%202023&utm_medium=email)
-+ [MIT Technology Review] [ChatGPT is about to revolutionize the economy. We need to decide what that looks like](https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
-+ [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
-+ [Finextra] [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
+## FinGPT Series Blogs
++ [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
+](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
++ [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
+](https://medium.datadriveninvestor.com/fingpt-i-why-we-built-the-first-open-source-large-language-model-for-finance-c01b5517ca)
 
 # What is FinGPT and FinNLP?
 
@@ -49,18 +48,17 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 </div>
 
 ## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with four layers:
-* Data source layer: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
-* Data engineering layer: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
-* LLMs layer: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
-* Application layer: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
+* **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
+* **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
+* **LLMs layer**: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
+* **Application layer**: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
 
+## News
 
-## FinGPT Series Blogs
-+ [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
-](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
-+ [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
-](https://medium.datadriveninvestor.com/fingpt-i-why-we-built-the-first-open-source-large-language-model-for-finance-c01b5517ca)
-
++ [Columbia Perspectives on ChatGPT](https://datascience.columbia.edu/news/2023/columbia-perspectives-on-chatgpt/?utm_source=sendinblue&utm_campaign=DSI%20Newsletter%20April%202023&utm_medium=email)
++ [MIT Technology Review] [ChatGPT is about to revolutionize the economy. We need to decide what that looks like](https://www.technologyreview.com/2023/03/25/1070275/chatgpt-revolutionize-economy-decide-what-looks-like/)
++ [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
++ [Finextra] [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
 
 ## ChatGPT at AI4Finance
 
