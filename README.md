@@ -28,7 +28,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 * [FinGPT V2](./fingpt)
   + **Let's train our own FinGPT in American Financial Market with LLaMA and LoRA  (Low-Rank Adaptation)**
 
-## FinGPT Series Blogs
+## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
 ](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
 + [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
