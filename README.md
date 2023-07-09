@@ -1,4 +1,4 @@
-![image](https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/da4c62b4-e5a8-4446-aa4b-6920024e683b)# Data-Centric FinGPT: Open-source for Open Finance.
+# Data-Centric FinGPT: Open-source for Open Finance.
 [![Downloads](https://pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
 [![Downloads](https://pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
 [![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
