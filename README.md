@@ -38,9 +38,9 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 # What is FinGPT and FinNLP?
 
 ### The Goals of FinGPT
-1. Real-time data curation pipeline to *democratize data* for FinGPT 
-2. Lightweight adaptation to *democratize the FinGPT model* for both individuals and institutes (frequent updates)
-3. Support various *financial applications*
+1. Real-time data curation pipeline to **democratize data** for FinGPT 
+2. Lightweight adaptation to **democratize the FinGPT model** for both individuals and institutes (frequent updates)
+3. Support various **financial applications**
 
 * FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
 
