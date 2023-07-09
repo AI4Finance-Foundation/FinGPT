@@ -1,4 +1,4 @@
-# Data-Centric FinGPT: Open-source for Open Finance.
+![image](https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/da4c62b4-e5a8-4446-aa4b-6920024e683b)# Data-Centric FinGPT: Open-source for Open Finance.
 [![Downloads](https://pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
 [![Downloads](https://pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
 [![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
@@ -35,7 +35,12 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 + [BloombergGPT] [BloombergGPT: A Large Language Model for Finance](https://arxiv.org/abs/2303.17564)
 + [Finextra] [ChatGPT and Bing AI to sit as panellists at fintech conference](https://www.finextra.com/newsarticle/41973/chatgpt-and-bing-ai-to-sit-as-panellists-at-fintech-conference)
 
-# What is FinNLP
+# What is FinGPT and FinNLP?
+
+### The Goals of FinGPT
+1. Real-time data curation pipeline to *democratize data* for FinGPT 
+2. Lightweight adaptation to *democratize the FinGPT model* for both individuals and institutes (frequent updates)
+3. Support various *financial applications*
 
 * FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
 
