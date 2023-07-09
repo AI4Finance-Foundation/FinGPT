@@ -46,6 +46,8 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ## FinGPT Series Blogs
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
 ](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
++ [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
+](https://medium.datadriveninvestor.com/fingpt-i-why-we-built-the-first-open-source-large-language-model-for-finance-c01b5517ca)
 
 
 ## ChatGPT at AI4Finance
