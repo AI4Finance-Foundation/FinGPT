@@ -48,20 +48,20 @@ for sentiment in out_text:
 
 | ACC/F1 Micro           | BloombergGPT | ChatGLM2 | ChatGLM2 (8-bit) | FinGPT v3 | FinGPT v3 (8-bit) |
 | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- |
-| FPB$^{[1]}$     | -            | 0.464    | 0.476            | **0.8**   | 0.784             |
-| FiQA-SA$^{[2]}$ | -            | 0.822    | **0.833**        | 0.815     | 0.818             |
-| TFNS$^{[3]}$ | -            | 0.331    | 0.332            | **0.738** | 0.721             |
-| NWGI$^{[4]}$ | -            | 0.560    | 0.561            | **0.588** | **0.588**         |
+| FPB [1]     | -            | 0.464    | 0.476            | **0.8**   | 0.784             |
+| FiQA-SA [2] | -            | 0.822    | **0.833**        | 0.815     | 0.818             |
+| TFNS [3] | -            | 0.331    | 0.332            | **0.738** | 0.721             |
+| NWGI [4]  | -            | 0.560    | 0.561            | **0.588** | **0.588**         |
 | **Macro F1**           |              |          |                  |           |                   |
-| FPB$^{[1]}$ | -            | 0.487    | 0.5              | **0.774** | 0.754             |
-| FiQA-SA$^{[2]}$ | -            | 0.56     | 0.57             | **0.665** | 0.645             |
-| TFNS$^{[3]}$ | -            | 0.34     | 0.34             | **0.681** | 0.652             |
-| NWGI$^{[4]}$ | - | 0.489    | 0.492            | **0.579** | 0.576             |
+| FPB [1]  | -            | 0.487    | 0.5              | **0.774** | 0.754             |
+| FiQA-SA [2]  | -            | 0.56     | 0.57             | **0.665** | 0.645             |
+| TFNS [3]  | -            | 0.34     | 0.34             | **0.681** | 0.652             |
+| NWGI [4]  | - | 0.489    | 0.492            | **0.579** | 0.576             |
 | **Weighted F1**        |              |          |                  |           |                   |
-| FPB$^{[1]}$ | 0.511        | 0.381    | 0.398            | **0.795** | 0.778             |
-| FiQA-SA$^{[2]}$ | 0.751        | 0.79     | 0.801            | **0.806** | 0.801             |
-| TFNS$^{[3]}$ | -            | 0.189    | 0.19             | **0.74**  | 0.721             |
-| NWGI$^{[4]}$ | - | 0.449    | 0.452            | **0.578** | **0.578**         |
+| FPB [1] | 0.511        | 0.381    | 0.398            | **0.795** | 0.778             |
+| FiQA-SA [2]  | 0.751        | 0.79     | 0.801            | **0.806** | 0.801             |
+| TFNS [3]  | -            | 0.189    | 0.19             | **0.74**  | 0.721             |
+| NWGI [4]  | - | 0.449    | 0.452            | **0.578** | **0.578**         |
 
 [[1] Financial_Phrasebank (FPB) ](https://huggingface.co/datasets/financial_phrasebank) is a financial news sentiment analysis benchmark, the labels are "positive", "negative" and "neutral". We use the same split as BloombergGPT. BloombergGPT only use 5-shots in the test to show their model's outstanding performance without further finetuning. However, is our task, all data in the 'train' part were used in finetuning, So our results are far better than Bloomberg's.
 

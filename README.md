@@ -13,7 +13,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 **Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
 
-# Why FinGPT?
+## Why FinGPT?
 
 1). Finance is highly dynamic. [BloombergGPT](https://arxiv.org/abs/2303.17564) retrains an LLM using a mixed dataset of finance and general data sources, which is too expensive (1.3M GPU hours, a cost of around **$5M**). It is costly to retrain an LLM model every month or every week, so lightweight adaptation is highly favorable in finance. Instead of undertaking a costly and time-consuming process of retraining a model from scratch with every significant change in the financial landscape, FinGPT can be fine-tuned swiftly to align with new data (the cost of adaptation falls significantly, estimated at less than **$416 per training**).
 
@@ -22,11 +22,20 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
 ## FinGPT Demos
+* [FinGPT V3 (Updated on 7/11/2023)](./fingpt)
+  + **FinGPT v3 [(FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT)](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) is a LLM finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
+  + Benchmark Results: 
+    | Weighted F1   | BloombergGPT | ChatGLM2 | ChatGLM2 (8-bit) | FinGPT v3 | FinGPT v3 (8-bit) |
+    | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- |
+    | FPB  | 0.511        | 0.381    | 0.398            | **0.795** | 0.778             |
+    | FiQA-SA   | 0.751        | 0.79     | 0.801            | **0.806** | 0.801             |
+    | TFNS   | -            | 0.189    | 0.19             | **0.74**  | 0.721             |
+    | NWGI   | - | 0.449    | 0.452            | **0.578** | **0.578**         |
 
-* [FinGPT V1](./fingpt)
-  + **Let's train our own FinGPT in Chinese Financial Market with ChatGLM and LoRA (Low-Rank Adaptation)**
 * [FinGPT V2](./fingpt)
   + **Let's train our own FinGPT in American Financial Market with LLaMA and LoRA  (Low-Rank Adaptation)**
+* [FinGPT V1](./fingpt)
+  + **Let's train our own FinGPT in Chinese Financial Market with ChatGLM and LoRA (Low-Rank Adaptation)**
 
 ## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
@@ -34,7 +43,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 + [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
 ](https://medium.datadriveninvestor.com/fingpt-i-why-we-built-the-first-open-source-large-language-model-for-finance-c01b5517ca)
 
-# What is FinGPT and FinNLP?
+## What is FinGPT and FinNLP?
 
 ### The Goals of FinGPT
 1. Real-time data curation pipeline to **democratize data** for FinGPT 
