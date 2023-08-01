@@ -49,28 +49,28 @@ for sentiment in out_text:
 
 | ACC/F1 Micro    | BloombergGPT | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) | [FinGPT v3](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) | FinGPT v3.1      | FinGPT v3.2 (8bit) | FinGPT v3.3 (4-bit, QLoRA) |
 | --------------- | ------------ | ------------------------------------------------ | ------------------------------------------------------------ | ---------------- | ------------------ | -------------------------- |
-| FPB [1]         | -            | 0.464                                            | 0.775                                                        | 0.775            | **0.851**          | <u>0.832</u>               |
-| FiQA-SA [2]     | -            | 0.822                                            | 0.731                                                        | **0.869**        | <u>0.847</u>       | 0.825                      |
-| TFNS [3]        | -            | 0.331                                            | 0.738                                                        | 0.722            | **0.865**          | <u>0.823</u>               |
-| NWGI [4]        | -            | 0.560                                            | 0.588                                                        | **0.674**        | <u>0.593</u>       | 0.578                      |
-| Mean            |              | 0.544                                            | 0.735                                                        | 0.760            | **0.789 **         | <u>0.772</u>               |
-| Std             |              | 0.180                                            | <u>0.090</u>                                                 | **0.072**        | 0.113              | 0.108                      |
+| FPB [1]         | -            | 0.464                                            | 0.775                                                        | 0.775            | **0.851**          | <ins>0.832</ins>               |
+| FiQA-SA [2]     | -            | 0.822                                            | 0.731                                                        | **0.869**        | <ins>0.847</ins>       | 0.825                      |
+| TFNS [3]        | -            | 0.331                                            | 0.738                                                        | 0.722            | **0.865**          | <ins>0.823</ins>               |
+| NWGI [4]        | -            | 0.560                                            | 0.588                                                        | **0.674**        | <ins>0.593</ins>       | 0.578                      |
+| Mean            |              | 0.544                                            | 0.735                                                        | 0.760            | **0.789 **         | <ins>0.772</ins>               |
+| Std             |              | 0.180                                            | <ins>0.090</ins>                                                 | **0.072**        | 0.113              | 0.108                      |
 | **Macro F1**    |              |                                                  |                                                              |                  |                    |                            |
-| FPB [1]         | -            | 0.487                                            | 0.745                                                        | 0.778            | **0.834**          | <u>0.812</u>               |
-| FiQA-SA [2]     | -            | 0.560                                            | 0.641                                                        | **0.796**        | <u>0.767</u>       | 0.705                      |
-| TFNS [3]        | -            | 0.340                                            | 0.681                                                        | 0.653            | **0.828**          | <u>0.778</u>               |
-| NWGI [4]        | -            | 0.489                                            | 0.579                                                        | **0.646**        | <u>0.599</u>       | 0.572                      |
-| Mean            |              | 0.469                                            | 0.675                                                        | <u>0.718</u>     | **0.757**          | 0.717                      |
-| Std             |              | 0.080                                            | <u>**0.069**</u>                                             | <u>**0.069**</u> | 0.095              | 0.092                      |
+| FPB [1]         | -            | 0.487                                            | 0.745                                                        | 0.778            | **0.834**          | <ins>0.812</ins>               |
+| FiQA-SA [2]     | -            | 0.560                                            | 0.641                                                        | **0.796**        | <ins>0.767</ins>       | 0.705                      |
+| TFNS [3]        | -            | 0.340                                            | 0.681                                                        | 0.653            | **0.828**          | <ins>0.778</ins>               |
+| NWGI [4]        | -            | 0.489                                            | 0.579                                                        | **0.646**        | <ins>0.599</ins>       | 0.572                      |
+| Mean            |              | 0.469                                            | 0.675                                                        | <ins>0.718</ins>     | **0.757**          | 0.717                      |
+| Std             |              | 0.080                                            | <ins>**0.069**</ins>                                             | <ins>**0.069**</ins> | 0.095              | 0.092                      |
 | **Weighted F1** |              |                                                  |                                                              |                  |                    |                            |
-| FPB [1]         | 0.511        | 0.381                                            | 0.701                                                        | 0.780            | **0.851**          | <u>0.829</u>               |
-| FiQA-SA [2]     | 0.751        | 0.790                                            | 0.760                                                        | **0.868**        | <u>0.853</u>       | 0.827                      |
-| TFNS [3]        | -            | 0.189                                            | 0.740                                                        | 0.721            | **0.865**          | <u>0.822</u>               |
-| NWGI [4]        | -            | 0.449                                            | 0.578                                                        | **0.710**        | <u>0.587</u>       | 0.567                      |
-| Mean            |              | 0.452                                            | 0.730                                                        | <u>0.770</u>     | **0.789**          | 0.761                      |
-| Std             |              | 0.217                                            | <u>0.091</u>                                                 | **0.063**        | 0.117              | 0.112                      |
+| FPB [1]         | 0.511        | 0.381                                            | 0.701                                                        | 0.780            | **0.851**          | <ins>0.829</ins>               |
+| FiQA-SA [2]     | 0.751        | 0.790                                            | 0.760                                                        | **0.868**        | <ins>0.853</ins>       | 0.827                      |
+| TFNS [3]        | -            | 0.189                                            | 0.740                                                        | 0.721            | **0.865**          | <ins>0.822</ins>               |
+| NWGI [4]        | -            | 0.449                                            | 0.578                                                        | **0.710**        | <ins>0.587</ins>       | 0.567                      |
+| Mean            |              | 0.452                                            | 0.730                                                        | <ins>0.770</ins>     | **0.789**          | 0.761                      |
+| Std             |              | 0.217                                            | <ins>0.091</ins>                                                 | **0.063**        | 0.117              | 0.112                      |
 
-​	**X**: Best score, <u>X</u>: Second best score.
+​	**X**: Best score, <ins>X</ins>: Second best score.
 
 [[1] Financial_Phrasebank (FPB) ](https://huggingface.co/datasets/financial_phrasebank) is a financial news sentiment analysis benchmark, the labels are "positive", "negative" and "neutral". We use the same split as BloombergGPT. BloombergGPT only use 5-shots in the test to show their model's outstanding performance without further finetuning. However, is our task, all data in the 'train' part were used in finetuning, So our results are far better than Bloomberg's.
 
