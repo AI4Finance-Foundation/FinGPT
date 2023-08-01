@@ -42,6 +42,9 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
 + [FinGPT I: Why We Built the First Open-Source Large Language Model for Finance
 ](https://medium.datadriveninvestor.com/fingpt-i-why-we-built-the-first-open-source-large-language-model-for-finance-c01b5517ca)
++ [FinGPT II: Cracking the Financial Sentiment Analysis Task Using Instruction Tuning of General-Purpose Large Language Models
+](https://medium.datadriveninvestor.com/fingpt-ii-cracking-the-financial-sentiment-analysis-task-using-instruction-tuning-of-3333bce428c4)
+
 
 ## What is FinGPT and FinNLP?
 
