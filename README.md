@@ -22,15 +22,20 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
 ## FinGPT Demos
-* [FinGPT V3 (Updated on 7/11/2023)](./fingpt)
-  + **FinGPT v3 [(FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT)](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) is a LLM finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
+* [FinGPT V3 (Updated on 8/4/2023)](./fingpt)
+  
+  + **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
   + Benchmark Results: 
-    | Weighted F1   | BloombergGPT | ChatGLM2 | ChatGLM2 (8-bit) | FinGPT v3 | FinGPT v3 (8-bit) |
+    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2]((https://github.com/THUDM/ChatGLM2-6B)) | [FinGPT v3.1]((https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT)) | [Llama2]((https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)) | [FinGPT v3.2]((https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT)) |
     | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- |
-    | FPB  | 0.511        | 0.381    | 0.398            | **0.795** | 0.778             |
-    | FiQA-SA   | 0.751        | 0.79     | 0.801            | **0.806** | 0.801             |
-    | TFNS   | -            | 0.189    | 0.19             | **0.74**  | 0.721             |
-    | NWGI   | - | 0.449    | 0.452            | **0.578** | **0.578**         |
+    | FPB  | 0.511        | 0.381    | **0.855**     | 0.390 | 0.850           |
+    | FiQA-SA   | 0.751        | 0.790   | 0.850         | 0.800 | **0.860**        |
+    | TFNS   | -            | 0.189    | 0.875          | 0.296 | **0.894**     |
+    | NWGI   | - | 0.449    | **0.642**     | 0.503 | 0.632    |
+  
+  * Reproduce the results by running [benchmarks](./benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
+  * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./training_8bit/train.ipynb) in 8bit or this [notebook](./training_int4/train.ipynb) in int4 (QLoRA)
+  
 
 * [FinGPT V2](./fingpt)
   + **Let's train our own FinGPT in American Financial Market with LLaMA and LoRA  (Low-Rank Adaptation)**
