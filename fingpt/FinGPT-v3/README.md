@@ -2,7 +2,7 @@
 
 **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
 
-### You can reproduce the results of our experiment by running [benchmarks](./benchmark/benchmarks.ipynb), the detailed tutorial is  on the way.
+### You can reproduce the results of our experiment by running [benchmarks](./benchmark/benchmarks.ipynb), the detailed tutorial is on the way.
 
 ## Ⅰ. Try our model ( [FinGPT v3](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) )
 
