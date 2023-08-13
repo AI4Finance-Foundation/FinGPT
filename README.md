@@ -36,13 +36,13 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
   
   + **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
   + Benchmark Results: 
-    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) | [FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) | [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
+    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
     | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- |
-    | FPB  | 0.511        | 0.381    | **0.855**     | 0.390 | 0.850           |
-    | FiQA-SA   | 0.751        | 0.790   | 0.850         | 0.800 | **0.860**        |
-    | TFNS   | -            | 0.189    | 0.875          | 0.296 | **0.894**     |
-    | NWGI   | - | 0.449    | **0.642**     | 0.503 | 0.632    |
-  
+    | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.850           |
+    | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | **0.860**        |
+    | TFNS      | -            | 0.189      | 0.296      | 0.875          | **0.894**     |
+    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632    |
+    | Devices   | 512 * A100   | 64 * A100  | 0.503      |  **0.642**     | 0.632    |  
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
   
