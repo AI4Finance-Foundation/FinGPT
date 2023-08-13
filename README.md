@@ -41,7 +41,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
     | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.850           |
     | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | **0.860**        |
     | TFNS      | -            | 0.189      | 0.296      | 0.875          | **0.894**     |
-    | NWGI      | -            | 0.449      |       | **0.642**      | 0.632    |
+    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632    |
     | Devices   | 512 * A100   | 64 * A100  |       |  8 × A100     | 8 × A100    |
     | Time      | 53 days      | 2.5 days   |       |  8 hours      | 8 hours    |  
     | Cost      | $2.67 million      | $ 14,976   |      |  $262.4      | $262.4     |  
