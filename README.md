@@ -140,7 +140,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 + [YouTube video] [ChatGPT: Your Crypto Assistant](https://www.youtube.com/watch?v=LpzeshX6s2w)
 + [YouTube video] [Generate Insane Trading Returns with ChatGPT and TradingView](https://www.youtube.com/watch?v=ekz6ugJE1h0&t=3s)
 
-
+<!--- 
 **(Fast and accurate) Sentiment Analysis**
 
    GPT-3 can help study customer surveys, social media tweets from customers/users.
@@ -201,7 +201,7 @@ Interesting evaluations:
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
 
 [YouTube video] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
-
+---> 
 ## Citing FinRL
 ```
 @article{yang2023fingpt,
