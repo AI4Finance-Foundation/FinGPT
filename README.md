@@ -41,11 +41,10 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
     | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.850           |
     | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | **0.860**        |
     | TFNS      | -            | 0.189      | 0.296      | 0.875          | **0.894**     |
-    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632    |
-    | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- |
-    | Devices   | 512 * A100   | 64 * A100  | 0.503      |  8 × A100     | 8 × A100    |
-    | Time      | 53 days      | 2.5 days   | 0.503      |  8 hours      | 8 hours    |  
-    | Time      | 53 days      | 2.5 days   | 0.503      |  8 hours      | 8 hours    |  
+    | NWGI      | -            | 0.449      |       | **0.642**      | 0.632    |
+    | Devices   | 512 * A100   | 64 * A100  |       |  8 × A100     | 8 × A100    |
+    | Time      | 53 days      | 2.5 days   |       |  8 hours      | 8 hours    |  
+    | Cost      | $2.67 million      | $ 14,976   |      |  $262.4      | $262.4     |  
 
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
