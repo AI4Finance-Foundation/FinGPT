@@ -7,7 +7,7 @@
 
 
 <div align="center">
-<img align="center" src=figs/white_logo_color_background.jpg width="20%"/>
+<img align="center" src=figs/logo_transparent_background width="40%"/>
 </div>
 
 Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTech institutes' internal regulations and policies.
