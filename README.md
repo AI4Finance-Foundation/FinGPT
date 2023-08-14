@@ -36,15 +36,15 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
   
   + **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
   + Benchmark Results: 
-    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |FinGPT v3.1.1 (8bit)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
-    | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- | ----------------- |
-    | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.855           |  0.850           |
-    | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | 0.847       | **0.860**        |
-    | TFNS      | -            | 0.189      | 0.296      | 0.875          | 0.879     | **0.894**     |
-    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632    |0.636    |
-    | Devices   | 512 × A100   | 64 × A100  |  2048 × A100     |  8 × A100     | 8 × A100    | 8 × A100    |
-    | Time      | 53 days      | 2.5 days   |  21 days     |  8 hours      | 6.47 hours    |   8 hours    |  
-    | Cost      | $2.67 million      | $ 14,976   |  $4.23 million    |  $262.4      | $212.2     |  $262.4     |  
+    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1 (ChatGLM2 based)](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2 (llama2 based)](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
+    | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- | ----------------- |----------------- |
+    | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.855           |  0.777          | 0.850          |
+    | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | 0.847            | 0.752      |**0.860**      |
+    | TFNS      | -            | 0.189      | 0.296      | 0.875          | 0.879           | 0.828       |**0.894**        |
+    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632            |0.583            |0.636            |
+    | Devices   | 512 × A100   | 64 × A100  |  2048 × A100     |  8 × A100     | 8 × A100    | 8 × A100        |8 × A100        |
+    | Time      | 53 days      | 2.5 days   |  21 days     |  8 hours      | 6.47 hours    |   4.15 hours        |8 hours        |   
+    | Cost      | $2.67 million      | $ 14,976   |  $4.23 million    |  $262.4      | $212.2     |  $136.12     |  $262.4     | 
 **Cost per GPU hour.** For A100 GPUs, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**
 
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
