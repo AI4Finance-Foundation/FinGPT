@@ -42,9 +42,10 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
     | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | **0.860**        |
     | TFNS      | -            | 0.189      | 0.296      | 0.875          | **0.894**     |
     | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632    |
-    | Devices   | 512 × A100   | 64 × A100  |       |  8 × A100     | 8 × A100    |
-    | Time      | 53 days      | 2.5 days   |       |  8 hours      | 8 hours    |  
-    | Cost      | $2.67 million      | $ 14,976   |      |  $262.4      | $262.4     |  
+    | Devices   | 512 × A100   | 64 × A100  |  2048 × A100     |  8 × A100     | 8 × A100    |
+    | Time      | 53 days      | 2.5 days   |  21 days     |  8 hours      | 8 hours    |  
+    | Cost      | $2.67 million      | $ 14,976   |  $4.23 million    |  $262.4      | $262.4     |  
+Cost per GPU hour. For A100 GPUs, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUsis used as a benchmark to estimate the costs. Note that BloombergGPT (1] also used p4d.24xlargeAs of July 1l, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimatedcost per GPU hour comes to $32.77 divided by 8, resulting in approximately $4.10. With this valueas the reference unit price (i.e.., 1 GPU hour). we proceed to compute the training cost for each LLMbased on the number of GPU hours consumed. For V100 GPUs. we use AWS p3dn.24xlarge. As ofJuly ll 2023, the hourly rate for this instance stands at $31.218'. The estimated cost per GPU houris $3.90.
 
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
