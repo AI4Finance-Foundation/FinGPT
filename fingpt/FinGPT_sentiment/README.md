@@ -64,7 +64,7 @@ cd fingpt/FinGPT_sentiment
 pip install -r requirements.txt
 ```
 
-3. Instructions on how to run the model, fine-tune, or evaluate can be found in the respective directories (`instruction-FinGPT`, `multisource_retrieval`). Note the generated .csv file from multisource_retrieval is the input for instruction tuned LLM during evaluation.
+3. Instructions on how to run the model, fine-tune, or evaluate can be found in the respective directories (`instruction-FinGPT`, `multisource_retrieval`). Note the generated .csv file from multisource_retrieval is the input for the instruction-tuned LLM during evaluation.
 
 ## Citation
 
