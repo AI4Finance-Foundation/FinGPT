@@ -48,7 +48,7 @@ Experimental results on the Twitter Val dataset.
 [^2^]: [https://arxiv.org/abs/2210.02414]
 [^3^]: [https://arxiv.org/abs/2302.13971]
 
-### An showcase of RAG-instruction-tuned LLM
+### A showcase of RAG-instruction-tuned LLM
 ![Case](assets/showcase.png)
 
 ## Installation and Usage
