@@ -4,7 +4,7 @@ A fast, affordable, scalable and open system framework for enabling end-to-end I
 ## Training
 Use the following command to instruction finetune the llama7b model on the financial sentiment analysis datasets.
 ```
-python train.py --actor-model decapoda-research/sent-llama-7b-hf --deployment-type single_node --output-dir checkpoints
+python train.py --actor-model /path/to/llama7b --deployment-type single_node --output-dir checkpoints
 ```
 
 Choose the expected deployment-type，(ranging from single_gpu, single_node to multi_node)。These deployment type corresponds to different training scripts in the "training" folder. Modify the parameters of these scripts according to needs. Specially, if you want to finetune with LoRA, you can modify the script in training/supervised_finetuning/single_node/run_sent-llama-7b.sh as:
