@@ -13,7 +13,7 @@ if [ "$ZERO_STAGE" == "" ]; then
 fi
 mkdir -p $OUTPUT
 
-python3 main.py \
+deepspeed main.py \
    --data_path zeroshot/twitter-financial-news-sentiment chiapudding/kaggle-financial-sentiment \
    --data_split 2,4,4 \
    --model_name_or_path facebook/opt-1.3b \
