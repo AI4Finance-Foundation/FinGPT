@@ -212,13 +212,11 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
   journal={FinLLM Symposium at IJCAI 2023},
   year={2023}
 }
-@misc{zhang2023instructfingpt,
+@article{zhang2023instructfingpt,
       title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
       author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
-      year={2023},
-      eprint={2306.12659},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+      journal={FinLLM Symposium at IJCAI 2023},
+      year={2023}
 }
 ```
 
