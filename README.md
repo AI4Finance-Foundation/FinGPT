@@ -1,6 +1,6 @@
 # Data-Centric FinGPT: Open-source for Open Finance.
-[![Downloads](https://pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
-[![Downloads](https://pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
+[![Downloads](https://static.pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
+[![Downloads](https://static.pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
 [![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![PyPI](https://img.shields.io/pypi/v/fingpt.svg)](https://pypi.org/project/fingpt/)
 ![License](https://img.shields.io/github/license/AI4Finance-Foundation/fingpt.svg?color=brightgreen)
