@@ -2,4 +2,4 @@
 
 # export HF_HOME=/path/to/huggingface/
 
-python train.py --actor-model decapoda-research/sent-llama-7b-hf --deployment-type single_node --output-dir checkpoints
+python train.py --actor-model facebook/opt-sent-1.3b --deployment-type single_gpu --output-dir checkpoints

@@ -1,0 +1,89 @@
+usage: train.py [-h]
+                [--actor-model {1.3b,6.7b,13b,66b,llama-13b,sent-1.3b,sent-llama-7b,sent-llama2-7b}]
+                [--actor-zero-stage {,0,1,2,3}] [--output-dir OUTPUT_DIR]
+                [--deployment-type {single_gpu,single_node,multi_node}]
+train.py: error: argument --actor-model: invalid choice: 'facebook/sent-opt-1.3b' (choose from '1.3b', '6.7b', '13b', '66b', 'llama-13b', 'sent-1.3b', 'sent-llama-7b', 'sent-llama2-7b')
+---=== Running Step Instruction Tuning ===---
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_node/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Running:
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_node/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Traceback (most recent call last):
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 158, in <module>
+    main(args)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 146, in main
+    launch_cmd(args, step_num, cmd)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 123, in launch_cmd
+    raise RuntimeError('\n\n'.join((
+RuntimeError: Step 1 exited with non-zero status 1
+
+Launch command: bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_node/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+
+Log output: /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b/training.log
+
+Please see our tutorial at https://github.com/microsoft/DeepSpeedExamples/tree/master/applications/DeepSpeed-Chat/training/supervised_finetuning
+
+Please check that you have installed our requirements: `pip install -r requirements.txt`
+
+If you are seeing an OOM error, try modifying /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_node/run_sent-1.3b.sh:
+
+  - Reduce `--per_device_*_batch_size`
+
+  - Increase `--zero_stage {0,1,2,3}` on multi-gpu setups
+
+  - Enable `--gradient_checkpointing` or `--only_optimizer_lora`
+---=== Running Step Instruction Tuning ===---
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Running:
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Traceback (most recent call last):
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 158, in <module>
+    main(args)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 146, in main
+    launch_cmd(args, step_num, cmd)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 123, in launch_cmd
+    raise RuntimeError('\n\n'.join((
+RuntimeError: Step 1 exited with non-zero status 2
+
+Launch command: bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+
+Log output: /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b/training.log
+
+Please see our tutorial at https://github.com/microsoft/DeepSpeedExamples/tree/master/applications/DeepSpeed-Chat/training/supervised_finetuning
+
+Please check that you have installed our requirements: `pip install -r requirements.txt`
+
+If you are seeing an OOM error, try modifying /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh:
+
+  - Reduce `--per_device_*_batch_size`
+
+  - Increase `--zero_stage {0,1,2,3}` on multi-gpu setups
+
+  - Enable `--gradient_checkpointing` or `--only_optimizer_lora`
+---=== Running Step Instruction Tuning ===---
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Running:
+bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+Traceback (most recent call last):
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 158, in <module>
+    main(args)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 146, in main
+    launch_cmd(args, step_num, cmd)
+  File "/hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/train.py", line 123, in launch_cmd
+    raise RuntimeError('\n\n'.join((
+RuntimeError: Step 1 exited with non-zero status 1
+
+Launch command: bash /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b 
+
+Log output: /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/actor-models/sent-1.3b/training.log
+
+Please see our tutorial at https://github.com/microsoft/DeepSpeedExamples/tree/master/applications/DeepSpeed-Chat/training/supervised_finetuning
+
+Please check that you have installed our requirements: `pip install -r requirements.txt`
+
+If you are seeing an OOM error, try modifying /hpcfs/users/a1232991/FinGPT/fingpt/FinGPT_sentiment/instruct-FinGPT/training/supervised_finetuning/training_scripts/single_gpu/run_sent-1.3b.sh:
+
+  - Reduce `--per_device_*_batch_size`
+
+  - Increase `--zero_stage {0,1,2,3}` on multi-gpu setups
+
+  - Enable `--gradient_checkpointing` or `--only_optimizer_lora`

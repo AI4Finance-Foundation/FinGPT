@@ -13,8 +13,10 @@ if [ "$ZERO_STAGE" == "" ]; then
 fi
 mkdir -p $OUTPUT
 
+# --data_path zeroshot/twitter-financial-news-sentiment chiapudding/kaggle-financial-sentiment \
+
 deepspeed main.py \
-   --data_path zeroshot/twitter-financial-news-sentiment chiapudding/kaggle-financial-sentiment \
+   --data_path /hpcfs/users/a1232991/.cache/huggingface/datasets/chiapudding___kaggle-financial-sentiment /hpcfs/users/a1232991/.cache/huggingface/datasets/zeroshot___twitter-financial-news-sentiment \
    --data_split 10,0,0 \
    --model_name_or_path decapoda-research/llama-7b-hf \
    --per_device_train_batch_size 4 \
