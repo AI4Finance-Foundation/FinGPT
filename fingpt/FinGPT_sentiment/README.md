@@ -75,6 +75,7 @@ If you find our work useful or use it in your projects, please consider citing o
       title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
       author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
       year={2023},
+      journal={FinLLM Symposium at IJCAI 2023},
       eprint={2306.12659},
       archivePrefix={arXiv},
       primaryClass={cs.CL}
