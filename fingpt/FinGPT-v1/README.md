@@ -2,11 +2,11 @@
 ## Let's obtain our own FinGPT by finetuning Llama2 and ChatGLM2 with LoRA
 
 ### Ⅰ. Data Preparations
-#### 1. [Download Titles](./data_preparations/download_titles.py)
+#### 1. Download Titles [code](./data_preparations/download_titles.py)
 * In this file, we downloaded the financial news titles and URLs from [eastmoney(东方财富)](https://www.eastmoney.com/)  
-#### 2. [Download Content](./data_preparations/download_contents.py)
+#### 2. Download Content [code](./data_preparations/download_contents.py)
 * In this file, we downloaded the financial news Contents from [eastmoney(东方财富)](https://www.eastmoney.com/)  
-#### 3. [Add labels](./data_preparations/add_labels.py)
+#### 3. Add labels [code](./data_preparations/add_labels.py)
 * In this file, we add the label for news titles and contents.
 * The labels are determined by the change pct between the stock price of today and 5-days later
     * change pct >= 0.06 : `very positive` 
@@ -17,7 +17,7 @@
 
 ### Ⅱ. Making Dataset
 
-1. [Make dataset_by_date](./making_dataset/make_dataset_by_date.py)
+1. Make dataset_by_date [code](./making_dataset/make_dataset_by_date.py)
    * You may run this notebook to generate the dataset file in alpaca format
 
 2. Please run the following two files respectively to generate the dataset in hugging face dataset format.
