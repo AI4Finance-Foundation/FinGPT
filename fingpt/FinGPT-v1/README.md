@@ -1,13 +1,12 @@
 # FinGPT-V1
 ## Let's obtain our own FinGPT by finetuning Llama2 and ChatGLM2 with LoRA
-### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introductions on how to finetune ChatGLM by using huggingface.
 
 ### Ⅰ. Data Preparations
 #### 1. [Download Titles](./data_preparations/download_titles.py)
 * In this file, we downloaded the financial news titles and URLs from [eastmoney(东方财富)](https://www.eastmoney.com/)  
 #### 2. [Download Content](./data_preparations/download_contents.py)
 * In this file, we downloaded the financial news Contents from [eastmoney(东方财富)](https://www.eastmoney.com/)  
-#### 2. [Add labels](./data_preparations/add_labels.py)
+#### 3. [Add labels](./data_preparations/add_labels.py)
 * In this file, we add the label for news titles and contents.
 * The labels are determined by the change pct between the stock price of today and 5-days later
     * change pct >= 0.06 : `very positive` 
@@ -36,3 +35,5 @@
 
 ### Ⅳ. Inferencing 
 * Please refer to [infer.ipynb](./inferencing/infer.ipynb)
+
+### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introductions on how to finetune ChatGLM by using huggingface.
