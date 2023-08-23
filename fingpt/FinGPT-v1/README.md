@@ -1,5 +1,5 @@
 # FinGPT-V1
-## Let's obtain our own FinGPT by finetuning Llama2 and ChatGLM2 with LoRA
+## Let's obtain our own FinGPT by finetuning ChatGLM2 with LoRA
 
 ### Ⅰ. Data Preparations
 #### 1. Download Titles [code](./data_preparations/download_titles.py)
