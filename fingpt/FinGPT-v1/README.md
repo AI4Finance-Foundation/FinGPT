@@ -1,4 +1,4 @@
-# FinGPT - v1
+# FinGPT-V1
 ## Let's obtain our own FinGPT by finetuning Llama2 and ChatGLM2 with LoRA
 ### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introductions on how to finetune ChatGLM by using huggingface.
 
