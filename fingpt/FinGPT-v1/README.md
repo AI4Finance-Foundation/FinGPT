@@ -1,5 +1,5 @@
 # FinGPT - v1
-## Let's train our own FinGPT in Finance with pre-trained LLMs and LoRA
+## Let's obtain our own FinGPT by finetuning Llama2 and ChatGLM2 with LoRA
 ### Special thanks to [ChatGLM-Tuning](https://github.com/mymusise/ChatGLM-Tuning) for introductions on how to finetune ChatGLM by using huggingface.
 
 ### Ⅰ. Data Preparations
