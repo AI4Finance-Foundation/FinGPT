@@ -204,21 +204,6 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 [YouTube video] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
 ---> 
-## Citing FinGPT
-```
-@article{yang2023fingpt,
-  title={FinGPT: Open-Source Financial Large Language Models},
-  author={Yang, Hongyang and Liu, Xiao-Yang and Wang, Christina Dan},
-  journal={FinLLM Symposium at IJCAI 2023},
-  year={2023}
-}
-@article{zhang2023instructfingpt,
-      title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
-      author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
-      journal={FinLLM Symposium at IJCAI 2023},
-      year={2023}
-}
-```
 
 ## Links
 
