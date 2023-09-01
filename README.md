@@ -84,6 +84,18 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 * **LLMs layer**: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
 * **Application layer**: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
 
+## Open-Sourced Base Model used in the LLMs layer
+
+    | Base Model   | Advanages  |  Applications |
+    | ---------------------- | ----------------- | ----------------- |
+    | [Llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) | Model Performance: llama-2 excels on English based market data.
+Model Size: llama-2's size is optimal for fine-tuning and efficiency.
+Experiment Results: llama-2 consistently shows superior fine-tuning results.  | Financial Sentiment Analysis, Robo-Advisor |
+    | [ChatGLM2-6B](https://huggingface.co/THUDM/chatglm2-6b)   | State-of-the-art LLMs model for the Chinese based market  | Financial Sentiment Analysis |
+
+
+
+
 ## News
 
 + [Columbia Perspectives on ChatGPT](https://datascience.columbia.edu/news/2023/columbia-perspectives-on-chatgpt/?utm_source=sendinblue&utm_campaign=DSI%20Newsletter%20April%202023&utm_medium=email)
