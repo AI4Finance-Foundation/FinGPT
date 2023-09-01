@@ -86,10 +86,10 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 ## Open-Sourced Base Model used in the LLMs layer
 
-| Base Model   | Model Performance |Model Size|Experiment Results |  Applications |
-|  ----  |  ----  |  ----  |   ----  |   ----  | 
-| [Llama-2](https://github.com/facebookresearch/llama)| Llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) is optimal for fine-tuning, ensuring computational efficiency. | llama-2 consistently shows superior fine-tuning results.  | Financial Sentiment Analysis, Robo-Advisor |
-| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)  | ChatGLM2 excels on Chinese-based market | [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |good | Financial Sentiment Analysis |
+| Base Model |Pretraining Tokens|Context Length  | Model Performance |Model Size|Experiment Results |  Applications |
+|  ----  |  ----  |  ----  |   ----  |   ----  |  ----  | ----  |
+| [Llama-2](https://github.com/facebookresearch/llama)|2 Trillion|4096| Llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) is optimal for fine-tuning, ensuring computational efficiency. | llama-2 consistently shows superior fine-tuning results.  | Financial Sentiment Analysis, Robo-Advisor |
+| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Potent Chinese language expression capability | [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Good for Chinese market data  | Financial Sentiment Analysis, Financial Report Summary |
 
 
 
