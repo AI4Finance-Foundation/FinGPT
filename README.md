@@ -87,7 +87,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ## Open-Sourced Base Model used in the LLMs layer
 
 | Base Model   | Model Performance |Model Size|Experiment Results |  Applications |
-|  ----  |  ----  |  ----  | 
+|  ----  |  ----  |  ----  |   ----  |   ----  | 
 | [Llama-2](https://github.com/facebookresearch/llama)| llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) is optimal for fine-tuning and efficiency | llama-2 consistently shows superior fine-tuning results.  | Financial Sentiment Analysis, Robo-Advisor |
 | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)  | State-of-the-art LLMs model for the Chinese based market |good |good | Financial Sentiment Analysis |
 
