@@ -89,10 +89,10 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 | Base Model |Pretraining Tokens|Context Length  | Model Advantages |Model Size|Experiment Results |  Applications |
 |  ----  |  ----  |  ----  |   ----  |   ----  |  ----  | ----  |
-| [Llama-2](https://github.com/facebookresearch/llama)|2 Trillion|4096| Llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) and [Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b-hf) | llama-2 consistently shows superior fine-tuning results.  | Financial Sentiment Analysis, Robo-Advisor |
+| [Llama-2](https://github.com/facebookresearch/llama)|2 Trillion|4096| Llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) and [Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b-hf) | llama-2 consistently shows superior fine-tuning results  | Financial Sentiment Analysis, Robo-Advisor |
 | [Falcon](https://github.com/falconry/falcon) |1,500B|2048|  Maintains high-quality results while being more resource-efficient | [falcon-7b](https://huggingface.co/tiiuae/falcon-7b) |Good for English market data  | Financial Sentiment Analysis |
-| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Potent Chinese language expression capability | [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Good for Chinese market data  | Financial Sentiment Analysis, Financial Report Summary |
-| [InternLM](https://github.com/InternLM/InternLM) |1.8T  |8k |Flexibly and independently construct workflows |[internlm-7b](https://huggingface.co/internlm/internlm-7b) |Good for Chinese market data  | Financial Sentiment Analysis |
+| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Exceptional capability for Chinese language expression| [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Shows prowess for Chinese market data.  | Financial Sentiment Analysis, Financial Report Summary |
+| [InternLM](https://github.com/InternLM/InternLM) |1.8T  |8k |Can flexibly and independently construct workflows |[internlm-7b](https://huggingface.co/internlm/internlm-7b) |Effective for Chinese market data  | Financial Sentiment Analysis |
 
 
 
