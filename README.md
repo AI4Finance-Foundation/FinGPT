@@ -25,7 +25,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 ## Why FinGPT?
 
-1). Finance is highly dynamic. [BloombergGPT](https://arxiv.org/abs/2303.17564) trained an LLM using a mixture of finance data and general-purpose data, which too about 53 days, at a cost of around **$3M**). It is costly to retrain an LLM model like BloombergGPT every month or every week, thus lightweight adaptation is highly favorable. FinGPT can be fine-tuned swiftly to incorporate new data (the cost falls significantly, less than **$300 per fine-tuning**).
+1). Finance is highly dynamic. [BloombergGPT](https://arxiv.org/abs/2303.17564) trained an LLM using a mixture of finance data and general-purpose data, which took about 53 days, at a cost of around **$3M**). It is costly to retrain an LLM model like BloombergGPT every month or every week, thus lightweight adaptation is highly favorable. FinGPT can be fine-tuned swiftly to incorporate new data (the cost falls significantly, less than **$300 per fine-tuning**).
 
 2). Democratizing Internet-scale financial data is critical, say allowing timely updates of the model (monthly or weekly updates) using an automatic data curation pipeline.  BloombergGPT has privileged data access and APIs, while FinGPT presents a more accessible alternative. It prioritizes lightweight adaptation, leveraging the best available open-source LLMs.
 
@@ -34,7 +34,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ## FinGPT Demos
 * [FinGPT V3 (Updated on 8/4/2023)](./fingpt)
   
-  + **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
+  + **FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets.**
   + FinGPT v3.1 uses chatglm2-6B as base model; FinGPT v3.2 uses llama2-7b as base model
   + Benchmark Results:
     | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
@@ -91,7 +91,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 |  ----  |  ----  |  ----  |   ----  |   ----  |  ----  | ----  |
 | [Llama-2](https://github.com/facebookresearch/llama)|2 Trillion|4096| Llama-2 excels on English-based market data | [llama-2-7b](https://huggingface.co/meta-llama/Llama-2-7b-hf) and [Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b-hf) | llama-2 consistently shows superior fine-tuning results  | Financial Sentiment Analysis, Robo-Advisor |
 | [Falcon](https://github.com/falconry/falcon) |1,500B|2048|  Maintains high-quality results while being more resource-efficient | [falcon-7b](https://huggingface.co/tiiuae/falcon-7b) |Good for English market data  | Financial Sentiment Analysis |
-| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Exceptional capability for Chinese language expression| [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Shows prowess for Chinese market data.  | Financial Sentiment Analysis, Financial Report Summary |
+| [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Exceptional capability for Chinese language expression| [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Shows prowess for Chinese market data  | Financial Sentiment Analysis, Financial Report Summary |
 | [InternLM](https://github.com/InternLM/InternLM) |1.8T  |8k |Can flexibly and independently construct workflows |[internlm-7b](https://huggingface.co/internlm/internlm-7b) |Effective for Chinese market data  | Financial Sentiment Analysis |
 
 
