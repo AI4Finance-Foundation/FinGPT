@@ -17,7 +17,7 @@
 
 ### Ⅱ. Making Dataset
 
-1. Make dataset_by_date [code](./making_dataset/make_dataset_by_date.py)
+1. Make dataset_by_date [code](https://github.com/AI4Finance-Foundation/FinGPT/blob/master/fingpt/FinGPT-v1/making_dataset/make_dataset_by_date.ipynb)
    * You may run this notebook to generate the dataset file in alpaca format
 
 2. Please run the following two files respectively to generate the dataset in hugging face dataset format.
