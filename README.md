@@ -97,13 +97,13 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 | [Qwen](https://github.com/QwenLM/Qwen-7B)|2.2T  |8k |Fast response and high accuracy| [qwen-7b](https://huggingface.co/tangger/Qwen-7B-Chat) |Effective for Chinese market data  | Financial Sentiment Analysis|
 | [InternLM](https://github.com/InternLM/InternLM) |1.8T  |8k |Can flexibly and independently construct workflows |[internlm-7b](https://huggingface.co/internlm/internlm-7b) |Effective for Chinese market data  | Financial Sentiment Analysis |
 
- + Benchmark Results for the above open-source Base Models in the financial sentiment analysis task using the same instruction template for SFT (LoRA):
-    | Weighted F1/Acc  |Llama2 |Falcon |  MPT|Bloom |ChatGLM2|Qwen|InternLM |
-    | --------- | ----------------- | ------------ | --------------------- | ---------------- | --------------- | ----------------- |----------------- |
-    | FPB       | 0.863/0.863       | 0.846/0.849  | **0.872**/**0.872**   | 0.810/0.810      | 0.850/0.849     |0.854/0.854        | 0.709/0.714      |
-    | FiQA-SA   | **0.871**/0.855   | 0.840/0.811  | 0.863/0.844           | 0.771/0.753      | 0.864/**0.862** | 0.867/0.851       |0.679/0.687       |
-    | TFNS      | 0.896/0.895       | 0.893/0.893  | **0.907**/**0.907**   | 0.840/0.840      | 0.859/0.858     | 0.883/0.882       |0.729/0.731       |
-    | NWGI      | **0.649/0.651**   | 0.636/0.638  | 0.640/0.641           | 0.573/0.574      | 0.619/0.629     |0.638/0.643        |0.498/0.503       |
+* Benchmark Results for the above open-source Base Models in the financial sentiment analysis task using the same instruction template for SFT (LoRA):
+| Weighted F1/Acc  |Llama2 |Falcon |  MPT|Bloom |ChatGLM2|Qwen|InternLM |
+| --------- | ----------------- | ------------ | --------------------- | ---------------- | --------------- | ----------------- |----------------- |
+| FPB       | 0.863/0.863       | 0.846/0.849  | **0.872**/**0.872**   | 0.810/0.810      | 0.850/0.849     |0.854/0.854        | 0.709/0.714      |
+| FiQA-SA   | **0.871**/0.855   | 0.840/0.811  | 0.863/0.844           | 0.771/0.753      | 0.864/**0.862** | 0.867/0.851       |0.679/0.687       |
+| TFNS      | 0.896/0.895       | 0.893/0.893  | **0.907**/**0.907**   | 0.840/0.840      | 0.859/0.858     | 0.883/0.882       |0.729/0.731       |
+| NWGI      | **0.649/0.651**   | 0.636/0.638  | 0.640/0.641           | 0.573/0.574      | 0.619/0.629     |0.638/0.643        |0.498/0.503       |
 
 
 ## News
