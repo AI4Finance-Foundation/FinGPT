@@ -94,6 +94,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 | [MPT](https://github.com/mosaicml/llm-foundry) |1T|2048| MPT models can be trained with high throughput efficiency and stable convergence | [mpt-7b](https://huggingface.co/mosaicml/mpt-7b) |Good for English market data  | Financial Sentiment Analysis |
 | [Bloom](https://github.com/bigscience-workshop/bigscience/tree/master/train/tr11-176B-ml#readme) |366B|2048| World’s largest open multilingual language model  | [bloom-7b1](https://huggingface.co/bigscience/bloom-7b1) |Good for English market data  | Financial Sentiment Analysis |
 | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)|1.4T  |32K |Exceptional capability for Chinese language expression| [chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) |Shows prowess for Chinese market data  | Financial Sentiment Analysis, Financial Report Summary |
+| [Qwen](https://github.com/QwenLM/Qwen-7B)|2.2T  |8k |Fast response and high accuracy| [qwen-7b](https://huggingface.co/tangger/Qwen-7B-Chat) |Effective for Chinese market data  | Financial Sentiment Analysis|
 | [InternLM](https://github.com/InternLM/InternLM) |1.8T  |8k |Can flexibly and independently construct workflows |[internlm-7b](https://huggingface.co/internlm/internlm-7b) |Effective for Chinese market data  | Financial Sentiment Analysis |
 
 
