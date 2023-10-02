@@ -81,6 +81,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
 </div>
+
 ## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with four layers:
 * **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
 * **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
