@@ -77,7 +77,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <div align="center">
 <img align="center" src=figs/FinGPT_framework_20231003.png>
 </div>
-* FinGPT-RAG
+* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG)
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
 </div>
