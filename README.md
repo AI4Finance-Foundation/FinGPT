@@ -73,16 +73,20 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 3. Support various **financial applications**
 
 * FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
-
+* FinGPT Framework
 <div align="center">
 <img align="center" src=figs/FinGPT_framework_20231003.png>
 </div>
-
+* FinGPT-RAG
+<div align="center">
+<img align="center" src=figs/FinGPT_RAG_framework.png>
+</div>
 ## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with four layers:
 * **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
 * **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
 * **LLMs layer**: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
 * **Application layer**: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
+
 
 ## Open-Source Base Model used in the LLMs layer of FinGPT
 * Feel free to contribute more open-source base models tailored for various language-specific financial markets.
