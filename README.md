@@ -249,7 +249,7 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
       journal={FinLLM Symposium at IJCAI 2023},
       year={2023}
 }
-@article{zhang2023finrag,
+@article{zhang2023fingptrag,
   title={Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models},
   author={Zhang, Boyu and Yang, Hongyang and Zhou, tianyu and Babar, Ali and Liu, Xiao-Yang},
  journal = {ACM International Conference on AI in Finance (ICAIF)},
