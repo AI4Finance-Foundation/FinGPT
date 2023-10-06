@@ -8,7 +8,9 @@
 
 3. [FinGPT-v3](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-v3)
 
-4. [FinGPT_RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG)
+4. [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG)
+5. [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark)
+
 
 ## Ⅱ. Robo Advisor
 
