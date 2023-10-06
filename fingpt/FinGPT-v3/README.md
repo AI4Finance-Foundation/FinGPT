@@ -1,4 +1,4 @@
-# FinGPT v3 Series
+# FinGPT v3 Series (Instruction / Supervised Fine-tuning)
 
 **FinGPT v3 series are LLMs finetuned with LoRA method on the News and Tweets sentiment analysis dataset which achieve best scores on most of the financial sentiment analysis datasets.**
 
