@@ -57,7 +57,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
   + **Let's train our own FinGPT in Chinese Financial Market with ChatGLM and LoRA (Low-Rank Adaptation)**
 
 ## Tutorials
-[FinGPT_Training_LoRA_with_ChatGLM2_6B_for_Beginners.ipynb](https://github.com/AI4Finance-Foundation/FinGPT/blob/master/FinGPT_Training_LoRA_with_ChatGLM2_6B_for_Beginners.ipynb)
+[[Training] FinGPT_Training_LoRA_with_ChatGLM2_6B_for_Beginners.ipynb](https://github.com/AI4Finance-Foundation/FinGPT/blob/master/FinGPT_Training_LoRA_with_ChatGLM2_6B_for_Beginners.ipynb)
 
 ## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
