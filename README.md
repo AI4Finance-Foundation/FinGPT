@@ -57,7 +57,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
   + **Let's train our own FinGPT in Chinese Financial Market with ChatGLM and LoRA (Low-Rank Adaptation)**
 
 ## Tutorials
-[[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
+[[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
 
 ## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
