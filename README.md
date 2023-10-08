@@ -261,7 +261,7 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 ```
 
 <div align="center">
-<img align="center" src=figs/fingpt_best_presentation.png>
+<img align="center" src=figs/fingpt_best_presentation.png width="70%">
 </div>
 
 ## Links
