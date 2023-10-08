@@ -81,7 +81,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <img align="center" src=figs/FinGPT_framework_20231003.png>
 </div>
 
-* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG)
+* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
 
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
@@ -93,7 +93,9 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <img align="center" src=figs/FinGPT_FinNLP_data_source.png>
 </div>
 
-* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark)
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-
+task, and zero-shot instruction tuning tasks. Through detailed analysis of various base models and a commitment to openness and reproducibility, our methodology provides invaluable insights for researchers and lays a robust foundation for future developments in open-source financial LLMs.
+
 
 <div align="center">
 <img align="center" src=figs/FinGPT_Benchmark.png>
