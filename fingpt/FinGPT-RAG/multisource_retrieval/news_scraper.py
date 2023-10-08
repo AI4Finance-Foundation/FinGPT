@@ -40,8 +40,8 @@ twitter_api_key_secret = os.getenv("TWITTER_API_KEY_SECRET")
 twitter_access_token = os.getenv("TWITTER_ACCESS_TOKEN")
 twitter_access_token_secret = os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 twitter_bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
-auth = tweepy.OAuth1UserHandler(twitter_api_key, twitter_api_key_secret, twitter_access_token, twitter_access_token_secret)
-api = tweepy.API(auth)
+# auth = tweepy.OAuth1UserHandler(twitter_api_key, twitter_api_key_secret, twitter_access_token, twitter_access_token_secret)
+# api = tweepy.API(auth)
 
 
 
