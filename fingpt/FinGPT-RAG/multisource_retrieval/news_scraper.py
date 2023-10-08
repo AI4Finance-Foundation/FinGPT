@@ -656,7 +656,7 @@ def select_column_and_classify():
             raise ValueError("Invalid column selection")
 
         df["classification"] = ""  # Create a new column named "classification"
-        default_classification_prompt = ". For news above, determine its origin. Only print \"Twitter\" or \"Seeking Alpha\" or \"Reuters\" or \"WSJ\""
+        default_classification_prompt = ". For financial statement above, determine its origin (based on your existing knowledge). Your answer should be either \"Twitter\" or \"Seeking Alpha\" or \"Reuters\" or \"WSJ\""
         classification_prompt = gui.enterbox("Modify the classification prompt:", "Custom Classification Prompt",
                                              default_classification_prompt)
 

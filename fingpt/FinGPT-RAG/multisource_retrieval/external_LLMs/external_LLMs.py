@@ -25,7 +25,7 @@ def extract_classification(text, classification_prompt):
             },
             {
                 "role": "user",
-                "content": text + classification_prompt,
+                "content": "We have the following financial statement: \"" + text + "\"" + classification_prompt,
             }
         ],
     }
@@ -36,7 +36,18 @@ def extract_classification(text, classification_prompt):
         response = requests.post(api_url, headers=headers, json=payload)
         json_data = response.json()
         print("json data", json_data)
-        classification_response = json_data[0]['text'].strip()
+        classification_response = json_data["choices"][0]['message']['content'].strip()
+        if "Twitter" in classification_response:
+            classification_response = "Twitter"
+        elif "Seeking Alpha" in classification_response:
+            classification_response = "Seeking Alpha"
+        elif "Reuters" in classification_response:
+            classification_response = "Reuters"
+        elif "WSJ" in classification_response:
+            classification_response = "WSJ"
+        else:
+            classification_response = "Unknown"
+
         print("Classification response:", classification_response)
         return classification_response
     except requests.exceptions.RequestException as e:
