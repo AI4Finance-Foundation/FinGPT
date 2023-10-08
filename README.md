@@ -93,8 +93,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <img align="center" src=figs/FinGPT_FinNLP_data_source.png>
 </div>
 
-* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-
-task, and zero-shot instruction tuning tasks. Through detailed analysis of various base models and a commitment to openness and reproducibility, our methodology provides invaluable insights for researchers and lays a robust foundation for future developments in open-source financial LLMs.
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-task, and zero-shot instruction tuning tasks. 
 
 
 <div align="center">
