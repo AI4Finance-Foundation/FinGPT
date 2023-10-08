@@ -21,6 +21,7 @@ from searchtweets import load_credentials
 # From src/
 import requests_url
 from requests_url import requests_get
+from external_LLMs import external_LLMs
 from scrapers.yahoo import scrape_yahoo
 from sentence_processing.split_sentence import split_sentence
 from scrapers.cnbc import scrape_cnbc
@@ -42,45 +43,6 @@ twitter_access_token_secret = os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 twitter_bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
 # auth = tweepy.OAuth1UserHandler(twitter_api_key, twitter_api_key_secret, twitter_access_token, twitter_access_token_secret)
 # api = tweepy.API(auth)
-
-
-
-# Classification methods:
-def extract_classification(text, classification_prompt):
-    print("Extracting classification for", text)
-    api_key = os.getenv('OPENAI_API_KEY')
-    api_url = "https://api.openai.com/v1/chat/completions"
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}',
-    }
-
-    payload = {
-        'model': 'gpt-3.5-turbo',
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a financial analyst."
-            },
-            {
-                "role": "user",
-                "content": text + classification_prompt,
-            }
-        ],
-    }
-
-    print("Sending request to", api_url, "with payload", payload)
-
-    try:
-        response = requests.post(api_url, headers=headers, json=payload)
-        json_data = response.json()
-        print("json data", json_data)
-        classification_response = json_data[0]['text'].strip()
-        print("Classification response:", classification_response)
-        return classification_response
-    except requests.exceptions.RequestException as e:
-        print(f"Request error: {e}")
 
 # Scraping methods:
 def url_encode_string(input_string):
@@ -702,7 +664,7 @@ def select_column_and_classify():
 
             for row_index, row in df.iloc[1:].iterrows():
                 target_sentence = row[sentence_column]
-                classification_response = extract_classification(target_sentence, classification_prompt)
+                classification_response = external_LLMs.extract_classification(target_sentence, classification_prompt)
                 df.at[row_index, "classification"] = classification_response  # Assign classification response to the new column
 
             output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
@@ -719,12 +681,15 @@ def select_column_and_classify():
         context_choice = gui.ynbox("Do you want to research the context for this news?", "Context Research")
         process_existing_file = gui.ynbox("Do you want process an existing file?", "Context Research")
         if context_choice:
+            print("cp 1")
             file_path = gui.fileopenbox("Select the CSV file containing news for context research", filetypes=["*.csv"])
             df = pd.read_csv(file_path)
             column_names = df.columns.tolist()
+            print("cp 2")
             if not process_existing_file:
                 df["link"] = ""  # Create a new column named "link"
                 df["contextualized_sentence"] = ""  # Create a new column named "contextualized sentence"
+
 
             if file_path:
                 sentence_column = gui.buttonbox("Column Selection", "Select the column for target sentence in the CSV:",

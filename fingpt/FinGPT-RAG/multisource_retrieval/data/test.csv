@@ -1,4 +1,4 @@
-sentence,snippets,target,sentiment_score,aspects,format,label
+sentence,snippets,target,sentiment_score,aspects,format,label, contextualized_sentence
 $HCP Come to the party and buy this -gonna give solid gains and a dividend $$$$$$,['gonna give solid gains and a dividend'],HCP,0.52,['Corporate/Dividend Policy'],post,0
 @gakrum nice chart shows distinctive down channel not a dip.. where do you see the bottom? $SPY ..$150? ..$130?,['chart shows distinctive down channel'],SPY,-0.443,['Stock/Technical Analysis'],post,2
 Japan's Asahi to submit bid next week for SABMiller's Grolsch and Peroni - Yomiuri,['to submit bid next week'],SABMiller,0.236,['Stock/Buyside/Stock Buyside'],headline,0
