@@ -132,14 +132,6 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
 + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-+ [ChatGPT Robo Advisor v2](./fingpt)
-+ [ChatGPT Robo Advisor v1](./demos)
-    * A demo of using ChatGPT to build a Robo-advisor 
-+ [ChatGPT Trading Agent V2](./fingpt)
-    * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-+ [ChatGPT Trading Agent V1](./fingpt)
-    * Trade with the suggestions given by ChatGPT
-+ ChatGPT adds technical indicators into FinRL
 
 ## Introductory
 
