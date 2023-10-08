@@ -49,7 +49,7 @@ twitter_bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
 def extract_classification(text, classification_prompt):
     print("Extracting classification for", text)
     api_key = os.getenv('OPENAI_API_KEY')
-    api_url = os.getenv('OPENAI_API_URL')
+    api_url = "https://api.openai.com/v1/chat/completions"
 
     headers = {
         'Content-Type': 'application/json',
@@ -57,13 +57,17 @@ def extract_classification(text, classification_prompt):
     }
 
     payload = {
-        'model': 'text-davinci-003',
-        'prompt': f'"\n\n{text} {classification_prompt}"',
-        'temperature': 0.5,
-        'max_tokens': 60,
-        'top_p': 1.0,
-        'frequency_penalty': 0.8,
-        'presence_penalty': 0.0,
+        'model': 'gpt-3.5-turbo',
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a financial analyst."
+            },
+            {
+                "role": "user",
+                "content": text + classification_prompt,
+            }
+        ],
     }
 
     print("Sending request to", api_url, "with payload", payload)
@@ -71,7 +75,8 @@ def extract_classification(text, classification_prompt):
     try:
         response = requests.post(api_url, headers=headers, json=payload)
         json_data = response.json()
-        classification_response = json_data['choices'][0]['text'].strip()
+        print("json data", json_data)
+        classification_response = json_data[0]['text'].strip()
         print("Classification response:", classification_response)
         return classification_response
     except requests.exceptions.RequestException as e:
