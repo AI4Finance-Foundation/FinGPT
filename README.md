@@ -97,7 +97,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 
 <div align="center">
-<img align="center" src=figs/FinGPT_Benchmark.png>
+<img align="center" src=figs/FinGPT_Benchmark_update1.png>
 </div>
 
 ## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with five layers:
