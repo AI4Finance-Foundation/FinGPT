@@ -10,7 +10,7 @@ import urllib.parse
 from dotenv import load_dotenv
 import pandas as pd
 from bs4 import BeautifulSoup
-import easygui as gui
+from gui import gui
 
 # Scraper tools:
 import tweepy
@@ -640,36 +640,37 @@ def webdrive_twitter(url):
 def select_column_and_classify():
     # Classify sentences
     try:
-        classification_choice = gui.ynbox("Do you want to classify the news?", "Classification")
+        classification_choice = gui.ynbox("Classification", "Do you want to classify the news?")
 
         if classification_choice:
-            # Read CSV file
-            file_path = gui.fileopenbox("Select CSV file", filetypes=["*.csv"])
+            file_path = gui.fileopenbox("Select CSV file", "*.csv")
             df = pd.read_csv(file_path)
             column_names = df.columns.tolist()
 
-            sentence_column = gui.buttonbox("Column Selection",
-                                            "Select the column of sentence for classification:",
-                                            choices=column_names)
+            sentence_column = gui.buttonbox("Column Selection", "Select the column of sentence for classification:",
+                                        column_names)
             if not sentence_column:
                 raise ValueError("Invalid column selection")
 
-            df["classification"] = ""  # Create a new column named "classification"
-            default_classification_prompt = ". For news above, determine its origin. Only print \"Twitter\" or \"Seeking Alpha\" or \"Reuters\" or \"WSJ\""
-            classification_prompt = gui.enterbox("Modify the classification prompt:", "Custom Classification Prompt",
-                                                 default_classification_prompt)
+        if not sentence_column:
+            raise ValueError("Invalid column selection")
 
-            if not classification_prompt:
-                classification_prompt = default_classification_prompt
+        df["classification"] = ""  # Create a new column named "classification"
+        default_classification_prompt = ". For news above, determine its origin. Only print \"Twitter\" or \"Seeking Alpha\" or \"Reuters\" or \"WSJ\""
+        classification_prompt = gui.enterbox("Modify the classification prompt:", "Custom Classification Prompt",
+                                             default_classification_prompt)
 
-            for row_index, row in df.iloc[1:].iterrows():
-                target_sentence = row[sentence_column]
-                classification_response = external_LLMs.extract_classification(target_sentence, classification_prompt)
-                df.at[row_index, "classification"] = classification_response  # Assign classification response to the new column
+        if not classification_prompt:
+            classification_prompt = default_classification_prompt
 
-            output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
-            df.to_csv(output_file_path, index=False)
-            gui.msgbox("Classification Complete")
+        for row_index, row in df.iloc[1:].iterrows():
+            target_sentence = row[sentence_column]
+            classification_response = external_LLMs.extract_classification(target_sentence, classification_prompt)
+            df.at[row_index, "classification"] = classification_response  # Assign classification response to the new column
+
+        output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
+        df.to_csv(output_file_path, index=False)
+        gui.msgbox("Classification Complete")
     except Exception as e:
         gui.exceptionbox(str(e))
         print("Error occurred at row index:", row_index)
@@ -678,8 +679,9 @@ def select_column_and_classify():
 
     # Research contexts for sentences
     try:
-        context_choice = gui.ynbox("Do you want to research the context for this news?", "Context Research")
-        process_existing_file = gui.ynbox("Do you want process an existing file?", "Context Research")
+        context_choice = gui.ynbox("Context Research", "Do you want to research the context for this news?")
+        process_existing_file = gui.ynbox("Context Research", "Do you want process an existing file?")
+
         if context_choice:
             print("cp 1")
             file_path = gui.fileopenbox("Select the CSV file containing news for context research", filetypes=["*.csv"])
