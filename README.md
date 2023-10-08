@@ -261,7 +261,8 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 ```
 
 <div align="center">
-<img align="center" src=figs/fingpt_best_presentation.png width="50%">
+<a href="https://finllm.github.io/workshop/#/fcb" target="_blank">
+<img align="center" src=figs/fingpt_best_presentation.png width="65%">
 </div>
 
 ## Links
