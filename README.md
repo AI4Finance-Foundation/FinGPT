@@ -94,6 +94,12 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 <img align="center" src=figs/FinGPT_FinNLP_data_source.png>
 </div>
 
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark)
+
+<div align="center">
+<img align="center" src=figs/FinGPT_Benchmark.png>
+</div>
+
 ## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with four layers:
 * **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
 * **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
