@@ -260,6 +260,10 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 }
 ```
 
+<div align="center">
+<img align="center" src=figs/fingpt_best_presentation.png>
+</div>
+
 ## Links
 
 + [LLM Survey](https://github.com/RUCAIBox/LLMSurvey)
