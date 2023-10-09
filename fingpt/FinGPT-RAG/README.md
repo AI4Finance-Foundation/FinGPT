@@ -1,5 +1,7 @@
 # Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models: Open Source Code
 
+[Our Paper](https://arxiv.org/abs/2310.04027)
+
 ## Overview
 
 This repository provides the implementation of a retrieval-augmented Large Language Models (LLMs) framework tailored for financial sentiment analysis. Directly applying LLMs for financial sentiment analysis has challenges, especially when faced with the succinct nature of financial news. Our method addresses these challenges by introducing a two-fold approach: an instruction-tuned LLMs module and a retrieval-augmentation module.
