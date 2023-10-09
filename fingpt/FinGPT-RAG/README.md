@@ -5,7 +5,7 @@
 ## Overview
 
 This repository provides the implementation of a retrieval-augmented Large Language Models (LLMs) framework tailored for financial sentiment analysis. Directly applying LLMs for financial sentiment analysis has challenges, especially when faced with the succinct nature of financial news. Our method addresses these challenges by introducing a two-fold approach: an instruction-tuned LLMs module and a retrieval-augmentation module.
-![Framwork](assets/framework.jpg)
+![Framework](assets/framework.jpg)
 ## Abstract
 
 Financial sentiment analysis is critical for valuation and investment decision-making. Traditional NLP models, limited by their parameter size and the scope of their training datasets, often fall short in this area. Large Language Models (LLMs) have demonstrated superior performance across various NLP tasks, but directly applying them to financial sentiment analysis presents its own set of challenges. Our proposed framework, benchmarked against traditional models and other LLMs, achieves a performance gain of 15% to 48% in accuracy and F1 score.
