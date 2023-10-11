@@ -1,0 +1,33 @@
+{
+    "train_micro_batch_size_per_gpu": "auto",
+    "train_batch_size": "auto",
+    "gradient_accumulation_steps": "auto",
+    "optimizer": {
+      "type": "ZeroOneAdam",
+      "params": {
+        "lr": "auto",
+        "weight_decay": "auto",
+        "bias_correction": false,
+        "var_freeze_step": 1000,
+        "var_update_scaler": 16,
+        "local_step_scaler": 1000,
+        "local_step_clipper": 16,
+        "cuda_aware": true,
+        "comm_backend_name": "nccl"
+        }
+    },
+    "scheduler": {
+        "type": "WarmupLR",
+        "params": {
+            "warmup_min_lr": 0,
+            "warmup_max_lr": "auto",
+            "warmup_num_steps": "auto"
+        }
+    },
+    "fp16": {
+        "enabled": true
+    },
+    "zero_optimization": {
+        "stage": 0
+    }
+}
