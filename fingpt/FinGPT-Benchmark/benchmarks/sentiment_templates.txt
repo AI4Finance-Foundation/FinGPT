@@ -1,0 +1,5 @@
+What is the sentiment of the input {type} from financial perspective?
+Assign a sentiment category to this {type} related to finance.
+Categorize the input {type}'s emotional tone into one of three groups.
+Determine the sentiment expressed in the {type} from financial perspective.
+Characterize the {type}'s sentiment using the following options.
