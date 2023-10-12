@@ -34,6 +34,16 @@ try:
     for row_index, row in df.iloc[1:].iterrows():
         target_sentence = row[sentence_column]
         classification_response = external_LLMs.extract_classification(target_sentence, classification_prompt)
+        if "Twitter" in classification_response:
+            classification_response = "Twitter"
+        elif "Seeking Alpha" in classification_response:
+            classification_response = "Seeking Alpha"
+        elif "Reuters" in classification_response:
+            classification_response = "Reuters"
+        elif "WSJ" in classification_response:
+            classification_response = "WSJ"
+        else:
+            classification_response = "Unknown"
         df.at[row_index, "classification"] = classification_response  # Assign classification response to the new column
 
     output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"

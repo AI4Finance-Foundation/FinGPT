@@ -23,7 +23,7 @@ try:
     if not sentence_column:
         raise ValueError("Invalid column selection")
 
-    df["classification"] = ""  # Create a new column named "classification"
+    df["openai_inferred_sentiment"] = ""  # Create a new column named "classification"
     default_classification_prompt = ". For financial statement above, determine its sentiment (based on your existing knowledge). Your answer should be either \"negative\" or \"neutral\" or \"positive\""
     classification_prompt = gui.enterbox("Modify the classification prompt:", "Custom Classification Prompt",
                                          default_classification_prompt)
@@ -31,13 +31,25 @@ try:
     if not classification_prompt:
         classification_prompt = default_classification_prompt
 
+    counter = 0
+    output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
     for row_index, row in df.iloc[1:].iterrows():
         target_sentence = row[sentence_column]
         classification_response = external_LLMs.extract_classification(target_sentence, classification_prompt)
-        df.at[row_index, "classification"] = classification_response  # Assign classification response to the new column
+        if "negative" in classification_response:
+            classification_response = 0
+        elif "positive" in classification_response:
+            classification_response = 1
+        elif "neutral" in classification_response:
+            classification_response = 2
+        df.at[row_index, "openai_inferred_sentiment"] = classification_response
 
-    output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
-    df.to_csv(output_file_path, index=False)
+        counter += 1
+
+        # Save the DataFrame to a CSV file every 10 rows
+        if counter % 10 == 0:
+            df.to_csv(output_file_path, index=False)
+
     gui.msgbox("Classification Complete")
 except Exception as e:
     gui.exceptionbox(str(e))
