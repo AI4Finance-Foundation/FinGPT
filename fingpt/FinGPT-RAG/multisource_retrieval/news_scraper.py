@@ -25,6 +25,7 @@ from scrapers.yahoo import scrape_yahoo
 from sentence_processing.split_sentence import split_sentence
 from scrapers.cnbc import scrape_cnbc
 from scrapers.market_screener import scrape_market_screener
+from scrapers import url_encode
 
 # TODO: Twitter API requests # https://twitter.com/bryan4665/
 
@@ -43,10 +44,7 @@ twitter_bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
 # auth = tweepy.OAuth1UserHandler(twitter_api_key, twitter_api_key_secret, twitter_access_token, twitter_access_token_secret)
 # api = tweepy.API(auth)
 
-# Scraping methods:
-def url_encode_string(input_string):
-    encoded_string = urllib.parse.quote(input_string)
-    return encoded_string
+# scraping_by_url methods:
 
 def similarity_score(a, b):
     words_a = a.split()
@@ -62,8 +60,7 @@ def similarity_score(a, b):
     similarity = matching_words / min(len(words_a), len(words_b))
     return similarity
 
-def scraping(link, subject):
-
+def scraping_by_url(link, subject):
     if "seekingalpha.com" in link:
         print("Found 1 Seeking Alpha link:", link)
         # requests.requests_get_for_seeking_alpha(link, subject)
@@ -132,7 +129,7 @@ def scraping(link, subject):
 
 def scrape_bloomberg(subject):
     try:
-        url_encoded_subject = url_encode_string(subject)
+        url_encoded_subject = url_encode.url_encode_string(subject)
 
         full_url = 'https://www.bloomberg.com/search?query=' + url_encoded_subject + '&sort=relevance:asc&startTime=2015-04-01T01:01:01.001Z&' + '&page=' + str(
             1)
@@ -184,7 +181,7 @@ def scrape_bloomberg_article_page(url, subject):
 
 def scrape_reuters(subject):
     try:
-        url_encoded_subject = url_encode_string(subject)
+        url_encoded_subject = url_encode.url_encode_string(subject)
 
         full_url = 'https://www.reuters.com/search/news?blob=' + url_encoded_subject
         print("Trying url " + full_url)
@@ -296,7 +293,7 @@ def scrape_business_wire_article_page(url, subject):
 
 def scrape_wsj(subject):
     try:
-        url_encoded_subject = url_encode_string(subject)
+        url_encoded_subject = url_encode.url_encode_string(subject)
 
         full_url = 'https://www.wsj.com/search?query=' + url_encoded_subject + '&operator=OR&sort=relevance&duration=1y&startDate=2015%2F01%2F01&endDate=2016%2F01%2F01'
         print("Trying url " + full_url)
@@ -349,7 +346,7 @@ def scrape_wsj(subject):
 
 def scrape_seeking_alpha(subject):
     try:
-        url_encoded_subject = url_encode_string(subject)
+        url_encoded_subject = url_encode.url_encode_string(subject)
         full_url = 'https://seekingalpha.com/search?q=' + url_encoded_subject + '&tab=headlines'
         print("Trying url " + full_url)
 
@@ -461,52 +458,6 @@ def scrape_cnbc_article_page(url, subject):
         print("Exception in scrape_cnbc_article_page:", e)
         return "N/A", subject
 
-def scrape_google(subject):
-    try:
-        url_encoded_subject = url_encode_string(subject)
-        # Search Operators https://moz.com/learn/seo/search-operators
-        # Remove site: operator: '"+site%3Atwitter.com+OR+site%3Aseekingalpha.com+OR+site%3Areuters.com+OR+site%3Amarketscreener.com+OR+site%3Ayahoo.com'
-        full_url = 'https://www.google.com/search?q="' + url_encoded_subject + '"'
-        print("Trying url " + full_url)
-
-        # response = requests_get(full_url)
-        response = requests_get(full_url)
-
-        links = []
-
-        soup = BeautifulSoup(response.content, 'html5lib')
-
-        father_divs = soup.find_all('div', {'class': 'kvH3mc BToiNc UK95Uc'})
-        for father_div in father_divs:
-            upper_div = father_div.find('div', {'class': 'Z26q7c UK95Uc jGGQ5e'})
-            upper_subdiv = upper_div.find('div', {'class': 'yuRUbf'})
-
-            lower_div = father_div.find('div', {'class': 'Z26q7c UK95Uc'})
-            lower_subdiv = lower_div.find('div', {'class': 'VwiC3b yXK7lf MUxGbd yDYNvb lyLwlc lEBKkf'})
-            lower_spans = lower_subdiv.find_all('span')
-            lower_div_text = ''
-            for lower_span in lower_spans:
-                lower_ems = lower_span.find_all('em')
-                lower_div_text += ' '.join([em.text.strip() for em in lower_ems])
-
-            upper_div_a = upper_subdiv.find('a', {'href': lambda href: href})
-            if upper_div_a:
-                upper_div_text = upper_div_a.find('h3').text.strip()
-
-                google_result = upper_div_text + ". " + lower_div_text
-                similarity = similarity_score(subject, google_result)
-                print("Google result:", google_result)
-                if similarity > 0.75:
-                    print("Relevant")
-                    link = upper_div_a['href']
-                    return scraping(link, subject)
-
-        print("Link not found")
-        return "N/A", subject
-    except Exception as e:
-        print("Exception in scrape_google:", e)
-        return "N/A", subject
-
 
 # def scrape_twitter(url, subject):
 #     options = Options()
@@ -597,20 +548,20 @@ def scrape_twitter_through_website(url, subject): # not feasible
                         link = a_maybe_containing_link['href']
                         if link:
                             print("Link found in Twitter post text")
-                            return scraping(link, subject)
+                            return scraping_by_url(link, subject)
 
                 # Case 2
                 link = soup.find('a', {'class': 'css-4rbku5 css-18t94o4 css-1dbjc4n r-1loqt21 r-18u37iz r-16y2uox r-1wtj0ep r-1ny4l3l r-o7ynqc r-6416eg'})['href']
                 link_domain_div = soup.find('div', {'class': 'css-901oao css-1hf3ou5 r-14j79pv r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-qvutc0'}) # domain text
                 if link_domain_div:
                     if "twitter" in link_domain_div:
-                        return scraping(link, subject)
+                        return scraping_by_url(link, subject)
                     elif "bloomberg" in link_domain_div:
-                        return scraping(link, subject)
+                        return scraping_by_url(link, subject)
                     elif "reuters" in link_domain_div:
-                        return scraping(link, subject)
+                        return scraping_by_url(link, subject)
                     elif "seekingalpha" in link_domain_div:
-                        return scraping(link, subject)
+                        return scraping_by_url(link, subject)
         else:
             print("Not relevant")
             return "N/A", subject
@@ -635,7 +586,7 @@ def webdrive_twitter(url):
         driver.quit()
 
 
-# Function that handles classification of sentences using OpenAI and scraping of news websites
+# Function that handles classification of sentences using OpenAI and scraping_by_url of news websites
 def select_column_and_classify():
     # Research contexts for sentences
     try:
@@ -679,7 +630,7 @@ def select_column_and_classify():
 
                     if link:
                         print("Financial statement:", remaining_sentence, "Link:", link)
-                        url, contextualized_sentence = scraping(link, remaining_sentence)
+                        url, contextualized_sentence = scraping_by_url(link, remaining_sentence)
                         if url == 'N/A':
                             url, contextualized_sentence = scrape_google(remaining_sentence)
                     else:
@@ -701,7 +652,7 @@ def select_column_and_classify():
                 # Save the final DataFrame to a CSV file
                 output_file_path = os.path.splitext(file_path)[0] + "_scraped.csv"
                 df.to_csv(output_file_path, index=False)
-                gui.msgbox("Scraping Complete")
+                gui.msgbox("scraping_by_url Complete")
     except Exception as e:
         gui.exceptionbox(str(e))
         print("Error occurred at row index:", row_index)
