@@ -21,7 +21,7 @@ def extract_classification(text, classification_prompt):
         "messages": [
             {
                 "role": "system",
-                "content": "You are a financial analyst."
+                "content": "You are a financial analyst. You must answer with one out of the following options below for a classification task."
             },
             {
                 "role": "user",

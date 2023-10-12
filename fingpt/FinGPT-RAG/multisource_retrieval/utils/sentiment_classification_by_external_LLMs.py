@@ -23,7 +23,7 @@ try:
     if not sentence_column:
         raise ValueError("Invalid column selection")
 
-    df["openai_inferred_sentiment"] = ""  # Create a new column named "classification"
+    df["openai_inferred_sentiment_from_RAG"] = ""  # Create a new column named "classification"
     default_classification_prompt = ". For financial statement above, determine its sentiment (based on your existing knowledge). Your answer should be either \"negative\" or \"neutral\" or \"positive\""
     classification_prompt = gui.enterbox("Modify the classification prompt:", "Custom Classification Prompt",
                                          default_classification_prompt)
@@ -42,7 +42,7 @@ try:
             classification_response = 1
         elif "neutral" in classification_response:
             classification_response = 2
-        df.at[row_index, "openai_inferred_sentiment"] = classification_response
+        df.at[row_index, "openai_inferred_sentiment_from_RAG"] = classification_response
 
         counter += 1
 
