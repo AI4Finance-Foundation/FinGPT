@@ -19,17 +19,23 @@ try:
         df = pd.read_csv(file_path)
         column_names = df.columns.tolist()
 
-        sentence_column = gui.buttonbox("Column Selection", "Select the column of sentence for classification:",
-                                    column_names)
-        if not sentence_column:
+        actual_classifications_column = gui.buttonbox("F1 analysis", "Select the column of sentence with actual classifications:", column_names)
+        if not actual_classifications_column:
             raise ValueError("Invalid column selection")
 
-    if not sentence_column:
-        raise ValueError("Invalid column selection")
 
+        predicted_classifications_column = gui.buttonbox("F1 analysis",
+                                                      "Select the column of sentence with predicted classifications:",
+                                                      column_names)
+        if not predicted_classifications_column:
+            raise ValueError("Invalid column selection")
 
-    gui.msgbox("Classification Complete")
+    df = df.dropna(subset=[actual_classifications_column, predicted_classifications_column])
+    df[actual_classifications_column] = df[actual_classifications_column].astype(int)
+    df[predicted_classifications_column] = df[predicted_classifications_column].astype(int)
+    computed_f1 = f1_score(df[actual_classifications_column], df[predicted_classifications_column], average='micro')
+    print("cp")
+
+    print("F1 Complete, f1 score: ", computed_f1)
 except Exception as e:
     gui.exceptionbox(str(e))
-    output_file_path = os.path.splitext(file_path)[0] + "_classified.csv"
-    df.to_csv(output_file_path, index=False)
