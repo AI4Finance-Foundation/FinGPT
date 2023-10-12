@@ -643,11 +643,9 @@ def select_column_and_classify():
         process_existing_file = gui.ynbox("Context Research", "Do you want process an existing file?")
 
         if context_choice:
-            print("cp 1")
             file_path = gui.fileopenbox("Select the CSV file containing news for context research", filetypes=["*.csv"])
             df = pd.read_csv(file_path)
             column_names = df.columns.tolist()
-            print("cp 2")
             if not process_existing_file:
                 df["link"] = ""  # Create a new column named "link"
                 df["contextualized_sentence"] = ""  # Create a new column named "contextualized sentence"

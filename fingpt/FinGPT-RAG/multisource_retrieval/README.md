@@ -34,7 +34,7 @@ Task 2: Context Retrieval
    4. Add relevant news paragraphs to form "contextualized_sentence" for each financial statement
 5. Saves .csv
 
-## Experiment:compare RAG vs. non-RAG sentiment classification using gpt:
+## Experiment:compare non-RAG vs. RAG sentiment classification using gpt:
 1. utils/sentiment_classification_by_external_LLMs.py: Call openAI APIs to classify RAG-based and non-RAG-based statements
 2. utils/classification_accuracy_verification.py: Calculate the accuracy of sentiment classification between RAG-based and non-RAG-based statements
 3. Results: 0.7876588021778584 vs. 0.8130671506352088
