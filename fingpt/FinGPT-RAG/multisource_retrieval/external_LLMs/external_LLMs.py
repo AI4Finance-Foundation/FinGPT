@@ -37,17 +37,6 @@ def extract_classification(text, classification_prompt):
         json_data = response.json()
         print("json data", json_data)
         classification_response = json_data["choices"][0]['message']['content'].strip()
-        if "Twitter" in classification_response:
-            classification_response = "Twitter"
-        elif "Seeking Alpha" in classification_response:
-            classification_response = "Seeking Alpha"
-        elif "Reuters" in classification_response:
-            classification_response = "Reuters"
-        elif "WSJ" in classification_response:
-            classification_response = "WSJ"
-        else:
-            classification_response = "Unknown"
-
         print("Classification response:", classification_response)
         return classification_response
     except requests.exceptions.RequestException as e:
