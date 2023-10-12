@@ -34,8 +34,11 @@ try:
     df[actual_classifications_column] = df[actual_classifications_column].astype(int)
     df[predicted_classifications_column] = df[predicted_classifications_column].astype(int)
     computed_f1 = f1_score(df[actual_classifications_column], df[predicted_classifications_column], average='micro')
-    print("cp")
+    computed_accuracy_score = accuracy_score(df[actual_classifications_column], df[predicted_classifications_column])
 
-    print("F1 Complete, f1 score: ", computed_f1)
+
+    print("f1 score: ", computed_f1)
+    print("accuracy score: ", computed_accuracy_score)
+
 except Exception as e:
     gui.exceptionbox(str(e))
