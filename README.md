@@ -12,8 +12,6 @@
 
 Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTech institutes' internal regulations and policies.
 
-We democratize Internet-scale data for financial large language models (FinLLMs) at [FinNLP](https://github.com/AI4Finance-Foundation/FinNLP) and [FinNLP Website](https://ai4finance-foundation.github.io/FinNLP/) 
-
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
 **Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
@@ -34,7 +32,7 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ## FinGPT Demos
 * [FinGPT V3 (Updated on 8/4/2023)](./fingpt)
   
-  + **FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets.**
+  + **FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.**
   + FinGPT v3.1 uses chatglm2-6B as base model; FinGPT v3.2 uses llama2-7b as base model
   + Benchmark Results:
     | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
@@ -51,13 +49,23 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
   
-* [FinGPT V2](./fingpt)
-  + **Let's train our own FinGPT in American Financial Market with LLaMA and LoRA  (Low-Rank Adaptation)**
 * [FinGPT V1](./fingpt)
-  + **Let's train our own FinGPT in Chinese Financial Market with ChatGLM and LoRA (Low-Rank Adaptation)**
+  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
 
 ## Tutorials
 [[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
+
+## Instruction Tuning Datasets
+
+  | Datasets | Train Rows |  Test Rows |Description  |
+  | --------- | ----------------- | ------------ | --------------------- |
+  | [fingpt-sentiment-train](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train) | 76.8K | N/A|Sentiment Analysis Training Instructions |
+  | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instrutions |
+  | [fingpt-headline](https://huggingface.co/datasets/FinGPT/fingpt-headline) | 82.2k | 20.5k | Financial Headline Analysis Instructions|
+  | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
+  | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
+  | [fingpt-fineval](https://huggingface.co/datasets/FinGPT/fingpt-fineval) | 1.06k   | 265  | Chinese Multiple-Choice Questions Instructions|
+
 
 ## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
@@ -68,31 +76,39 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 ](https://medium.datadriveninvestor.com/fingpt-ii-cracking-the-financial-sentiment-analysis-task-using-instruction-tuning-of-3333bce428c4)
 
 
-## What is FinGPT and FinNLP?
+## FinGPT Ecosystem
+### FinGPT embraces a full-stack framework for FinLLMs with five layers:
+1. **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
+2. **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
+3. **LLMs layer**: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
+4. **Task layer**: This layer is responsible for executing fundamental tasks. These tasks serve as the benchmarks for performance evaluations and cross-comparisons in the realm of FinLLMs
+5. **Application layer**: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
 
-### The Goals of FinGPT
-1. Real-time data curation pipeline to **democratize data** for FinGPT 
-2. Lightweight adaptation to **democratize the FinGPT model** for both individuals and institutes (frequent updates)
-3. Support various **financial applications**
-
-* FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
-* FinGPT Framework
+* FinGPT Framework: Open-Source Financial Large Language Models
 
 <div align="center">
 <img align="center" src=figs/FinGPT_framework_20231003.png>
 </div>
 
-* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG)
+* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
 
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
 </div>
 
-## End-to-end framework: FinGPT embraces a full-stack framework for FinLLMs with four layers:
-* **Data source layer**: This layer assures comprehensive market coverage, addressing the temporal sensitivity of financial data through real-time information capture.
-* **Data engineering layer**: Primed for real-time NLP data processing, this layer tackles the inherent challenges of high temporal sensitivity and low signal-to-noise ratio in financial data.
-* **LLMs layer**: Focusing on a range of fine-tuning methodologies such as LoRA, this layer mitigates the highly dynamic nature of financial data, ensuring the model’s relevance and accuracy.
-* **Application layer**: Showcasing practical applications and demos, this layer highlights the potential capability of FinGPT in the financial sector.
+* [FinGPT-FinNLP](https://github.com/AI4Finance-Foundation/FinNLP): FinNLP provides a playground for all people interested in LLMs and NLP in Finance. Here we provide full pipelines for LLM training and finetuning in the field of finance. The full architecture is shown in the following picture. Detail codes and introductions can be found [here](https://github.com/AI4Finance-Foundation/FinNLP). Or you may refer to the [wiki](https://ai4finance-foundation.github.io/FinNLP/)
+
+<div align="center">
+<img align="center" src=figs/FinGPT_FinNLP_data_source.png>
+</div>
+
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-task, and zero-shot instruction tuning tasks. 
+
+
+<div align="center">
+<img align="center" src=figs/FinGPT_Benchmark_update1.png>
+</div>
+
 
 
 ## Open-Source Base Model used in the LLMs layer of FinGPT
@@ -128,14 +144,6 @@ We democratize Internet-scale data for financial large language models (FinLLMs)
 
 + [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
 + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
-+ [ChatGPT Robo Advisor v2](./fingpt)
-+ [ChatGPT Robo Advisor v1](./demos)
-    * A demo of using ChatGPT to build a Robo-advisor 
-+ [ChatGPT Trading Agent V2](./fingpt)
-    * A FinRL agent that trades as smartly as ChatGPT by using the large language model behind ChatGPT
-+ [ChatGPT Trading Agent V1](./fingpt)
-    * Trade with the suggestions given by ChatGPT
-+ ChatGPT adds technical indicators into FinRL
 
 ## Introductory
 
@@ -259,6 +267,11 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
   year={2023}
 }
 ```
+
+<div align="center">
+<a href="https://finllm.github.io/workshop/#/fcb" target="_blank">
+<img align="center" src=figs/fingpt_best_presentation.png width="65%">
+</div>
 
 ## Links
 
