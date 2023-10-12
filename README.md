@@ -63,6 +63,8 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
   | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instrutions |
   | [fingpt-headline](https://huggingface.co/datasets/FinGPT/fingpt-headline) | 82.2k | 20.5k | Financial Headline Analysis Instructions|
   | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
+  | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
+  | [fingpt-fineval](https://huggingface.co/datasets/FinGPT/fingpt-fineval) | 1.06k   | 265  | Chinese Multiple-Choice Questions Instructions|
 
 
 ## Understanding FinGPT: An Educational Blog Series
