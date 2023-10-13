@@ -30,23 +30,24 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
 ## FinGPT Demos
-* [FinGPT V3 (Updated on 8/4/2023)](./fingpt)
+* [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
   
-  + **FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.**
-  + FinGPT v3.1 uses chatglm2-6B as base model; FinGPT v3.2 uses llama2-7b as base model
-  + Benchmark Results:
-    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | FinBERT | [Llama2-7B](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) | [FinGPT v3.3](https://huggingface.co/oliverwang15/FinGPT_v33_Llama2_13B_Sentiment_Instruction_LoRA_FT_8bit) |
-    | ---------------------- | ------------ | ---------------- | --------- | ----------------- | ----------------- |----------------- |----------------- |----------------- |
-    | FPB       | 0.511        | 0.880   | 0.390      | 0.855      | 0.855           |  0.777          | 0.850          | **0.882** |
-    | FiQA-SA   | 0.751        | 0.596   | 0.800      | 0.850          | 0.847            | 0.752      |0.860      |**0.874**      |
-    | TFNS      | -            | 0.733       | 0.296      | 0.875          | 0.879           | 0.828       |0.894        |**0.903**        |
-    | NWGI      | -            | 0.538       | 0.503      | 0.642      | 0.632            |0.583            |0.636            |**0.643**            |
-    | Devices   | 512 × A100   | 4 × NVIDIA K80 GPU |  2048 × A100     | A100  | RTX 3090      | RTX 3090 |A100        |**RTX 3090**        |
-    | Time      | 53 days      | -     |  21 days     |  5.5 hours    | 6.47 hours    |   **4.15 hours**    | 5.5 hours      | 17.25 hours |
-    | Cost      | $2.67 million      | -     |  $4.23 million    |  $22.55  | $6.47  |  **$4.15**  |  $22.55  |  $17.25  |
-    
+  * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which even better than GPT-4 and ChatGPT Finetuning.**
+  * FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
+  * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
+  * Benchmark Results:
+    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | GPT-4 | OpenAI Fine-tune | FinBERT | [Llama2-7B](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) | [FinGPT v3.3](https://huggingface.co/oliverwang15/FinGPT_v33_Llama2_13B_Sentiment_Instruction_LoRA_FT_8bit) |
+    | ---------------------- | ------------ | ---------------- | --------- | ----------------- | ----------------- |----------------- |----------------- |----------------- |----------------- |----------------- |
+    | FPB       | 0.511        | 0.833   | 0.878   | 0.880   | 0.390      | 0.855      | 0.855           |  0.777          | 0.850          | **0.882** |
+    | FiQA-SA   | 0.751        | 0.630   | **0.887** | 0.596   | 0.800      | 0.850          | 0.847            | 0.752      |0.860      |0.874      |
+    | TFNS      | -            | 0.808       | 0.883       | 0.733       | 0.296      | 0.875          | 0.879           | 0.828       |0.894        |**0.903**        |
+    | NWGI      | -            | -           | -           | 0.538       | 0.503      | 0.642      | 0.632            |0.583            |0.636            |**0.643**            |
+    | Devices   | 512 × A100   | -  | -  | 4 × NVIDIA K80 GPU |  2048 × A100     | A100  | RTX 3090      | RTX 3090 |A100        |**RTX 3090**        |
+    | Time      | 53 days      | -     | -     | -     |  21 days     |  5.5 hours    | 6.47 hours    |   **4.15 hours**    | 5.5 hours      | 17.25 hours |
+    | Cost      | $2.67 million      | -     | -     | -     |  $4.23 million    |  $22.55  | $6.47  |  **$4.15**  |  $22.55  |  $17.25  |
+  
     **Cost per GPU hour.** For A100 GPUs, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**. For RTX 3090, we assume its cost per hour is approximately $1.0, which is actually much higher than available GPUs from platforms like vast.ai.
-
+  
   * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
   
