@@ -58,7 +58,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
   * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
   
 * [FinGPT V1](./fingpt)
-  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for Chinese Market**
+  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
 
 ## Tutorials
 [[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
