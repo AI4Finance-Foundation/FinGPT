@@ -33,7 +33,7 @@ def extract_keywords(text):
     except requests.exceptions.RequestException as e:
         print(f"Request error: {e}")
 
-csv_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'fiqa', 'test.csv')
+csv_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..', 'data', 'fiqa', 'test.csv')
 output_file_path = os.path.join(os.path.dirname(csv_file_path), 'test_with_keyword.csv')
 
 messages = []
