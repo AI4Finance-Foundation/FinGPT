@@ -52,7 +52,7 @@ for sentiment in out_text:
 
 ### Available Models:
 
-| Model Name                                                   | Base-Model                                                   | Training Method | **Weighted F1 **(Academic) | Weighted F1 (Academic + GPT-labeled) |
+| Model Name                                                   | Base-Model                                                   | Training Method | **Weighted F1 (Academic)** | Weighted F1 (Academic + GPT-labeled) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------- | -------------------------- | ------------------------------------ |
 | [FinGPT v3](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [THUDM/chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) | LoRA+FP16       | 0.734                      | 0.730                                |
 | [FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [THUDM/chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) | LoRA+FP16       | 0.860                      | 0.805                                |
