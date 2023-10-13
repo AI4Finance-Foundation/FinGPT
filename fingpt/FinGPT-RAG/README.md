@@ -62,7 +62,7 @@ git clone https://github.com/AI4Finance-Foundation/FinGPT.git
 
 2. Navigate to the project directory and install the required dependencies:
 ```bash
-cd fingpt/FinGPT_sentiment
+cd fingpt/FinGPT_GPT
 pip install -r requirements.txt
 ```
 
