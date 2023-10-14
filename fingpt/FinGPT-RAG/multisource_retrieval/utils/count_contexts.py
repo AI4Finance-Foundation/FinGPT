@@ -23,23 +23,23 @@ def find_different_rows():
         else:
             gui.msgbox("No rows found without 'http' in 'link' column.")
 
-    # if file_path:
-    #     # Read CSV file using pandas
-    #     df = pd.read_csv(file_path)
-    #
-    #     # Ensure "text" and "contextualized sentences" columns exist
-    #     if "text" not in df.columns or "contextualized_sentence" not in df.columns:
-    #         gui.msgbox("Either or both 'text' and 'contextualized_sentences' columns are missing.")
-    #         return
-    #
-    #     # Find rows where "text" and "contextualized sentences" values are different
-    #     different_rows = df[df['text'] != df['contextualized_sentence']]
-    #
-    #     # Report the different row indexes
-    #     if not different_rows.empty:
-    #         gui.msgbox("total number is {}".format(len(different_rows.index.tolist())))
-    #     else:
-    #         gui.msgbox("No rows found with different values for 'text' and 'contextualized_sentences'.")
+    if file_path:
+        # Read CSV file using pandas
+        df = pd.read_csv(file_path)
+
+        # Ensure "text" and "contextualized sentences" columns exist
+        if "text" not in df.columns or "contextualized_sentence" not in df.columns:
+            gui.msgbox("Either or both 'text' and 'contextualized_sentences' columns are missing.")
+            return
+
+        # Find rows where "text" and "contextualized sentences" values are different
+        different_rows = df[df['text'] != df['contextualized_sentence']]
+
+        # Report the different row indexes
+        if not different_rows.empty:
+            gui.msgbox("total number is {}".format(len(different_rows.index.tolist())))
+        else:
+            gui.msgbox("No rows found with different values for 'text' and 'contextualized_sentences'.")
 
     else:
         gui.msgbox("No file selected.")

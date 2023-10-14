@@ -8,7 +8,7 @@ from external_LLMs import external_LLMs
 import pandas as pd
 import openai
 from datasets import load_dataset
-from sklearn.metrics import accuracy_score, f1_score,confusion_matrix
+from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from tqdm import tqdm
 
 try:
@@ -33,12 +33,15 @@ try:
     df = df.dropna(subset=[actual_classifications_column, predicted_classifications_column])
     df[actual_classifications_column] = df[actual_classifications_column].astype(int)
     df[predicted_classifications_column] = df[predicted_classifications_column].astype(int)
-    computed_f1 = f1_score(df[actual_classifications_column], df[predicted_classifications_column], average='micro')
+    computed_f1 = f1_score(df[actual_classifications_column], df[predicted_classifications_column], average=None)
     computed_accuracy_score = accuracy_score(df[actual_classifications_column], df[predicted_classifications_column])
-
+    computed_precision_score = precision_score(df[actual_classifications_column], df[predicted_classifications_column], average=None)
+    computed_recall_score = recall_score(df[actual_classifications_column], df[predicted_classifications_column], average=None)
 
     print("f1 score: ", computed_f1)
     print("accuracy score: ", computed_accuracy_score)
+    print("precision score: ", computed_precision_score)
+    print("recall score: ", computed_recall_score)
 
 except Exception as e:
     gui.exceptionbox(str(e))
