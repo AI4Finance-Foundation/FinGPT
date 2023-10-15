@@ -30,7 +30,7 @@ os.environ['WANDB_PROJECT'] = 'fingpt-benchmark'
 
 def main(args):
         
-    model_name = parse_model_name(args.base_model)
+    model_name = parse_model_name(args.base_model, args.from_remote)
     
     # load model
     model = AutoModelForCausalLM.from_pretrained(
@@ -53,12 +53,12 @@ def main(args):
         model.resize_token_embeddings(len(tokenizer))
     
     # load data
-    dataset_list = load_dataset(args.dataset)
+    dataset_list = load_dataset(args.dataset, args.from_remote)
     
     dataset_train = datasets.concatenate_datasets([d['train'] for d in dataset_list]).shuffle(seed=42)
     
     if args.test_dataset:
-        dataset_list = load_dataset(args.test_dataset)
+        dataset_list = load_dataset(args.test_dataset, args.from_remote)
             
     dataset_test = datasets.concatenate_datasets([d['test'] for d in dataset_list])
     
@@ -166,6 +166,7 @@ if __name__ == "__main__":
     parser.add_argument("--instruct_template", default='default')
     parser.add_argument("--evaluation_strategy", default='steps', type=str)    
     parser.add_argument("--eval_steps", default=0.1, type=float)    
+    parser.add_argument("--from_remote", default=False, type=bool)    
     args = parser.parse_args()
     
     wandb.login()

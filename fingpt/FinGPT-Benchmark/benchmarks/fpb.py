@@ -16,7 +16,6 @@ dic = {
         2:'positive',
     }
 
-
 with open('sentiment_templates.txt') as f:
     templates = [l.strip() for l in f.readlines()]
     

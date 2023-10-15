@@ -70,45 +70,36 @@ def tokenize(args, tokenizer, feature):
     }
 
 
-def parse_model_name(name):
+def parse_model_name(name, from_remote=False):
     
     if name == 'chatglm2':
-        # return 'THUDM/chatglm2-6b'
-        return 'base_models/chatglm2-6b'
+        return 'THUDM/chatglm2-6b' if from_remote else 'base_models/chatglm2-6b'
     elif name == 'llama2':
-        # return 'meta-llama/Llama-2-7b-hf'
-        # return 'NousResearch/Llama-2-7b-hf'
-        return 'base_models/Llama-2-7b-hf'
-        # return 'base_models/Llama-2-7b-hf-nous'
+        return 'meta-llama/Llama-2-7b-hf' if from_remote else 'base_models/Llama-2-7b-hf'
+        # return 'NousResearch/Llama-2-7b-hf' if from_remote else 'base_models/Llama-2-7b-hf-nous'
     elif name == 'falcon':
-        # return 'tiiuae/falcon-7b'
-        return 'base_models/falcon-7b'
+        return 'tiiuae/falcon-7b' if from_remote else 'base_models/falcon-7b'
     elif name == 'internlm':
-        # return 'internlm/internlm-7b'
-        return 'base_models/internlm-7b'
+        return 'internlm/internlm-7b' if from_remote else 'base_models/internlm-7b'
     elif name == 'qwen':
-        # return 'Qwen/Qwen-7B'
-        return 'base_models/Qwen-7B'
+        return 'Qwen/Qwen-7B' if from_remote else 'base_models/Qwen-7B'
     elif name == 'mpt':
-        # return 'mosaicml/mpt-7b'
-        # return 'base_models/mpt-7b'
-        # return 'cekal/mpt-7b-peft-compatible'
-        return 'base_models/mpt-7b-peft-compatible'
+        return 'cekal/mpt-7b-peft-compatible' if from_remote else 'base_models/mpt-7b-peft-compatible'
+        # return 'mosaicml/mpt-7b' if from_remote else 'base_models/mpt-7b'
     elif name == 'bloom':
-        # return 'bigscience/bloom-7b1'
-        return 'base_models/bloom-7b1'
+        return 'bigscience/bloom-7b1' if from_remote else 'base_models/bloom-7b1'
     else:
         raise ValueError(f"Undefined base model {name}")
         
     
-def load_dataset(names):
+def load_dataset(names, from_remote=False):
     dataset_names = [d for d in names.split(',')]
     dataset_list = []
     for name in dataset_names:
         rep = 1
         if not os.path.exists(name):
             rep = int(name.split('*')[1]) if '*' in name else 1
-            name = 'data/fingpt-' + name.split('*')[0]
+            name = ('FinGPT/fingpt-' if from_remote else 'data/fingpt-') + name.split('*')[0]
         tmp_dataset = datasets.load_from_disk(name)
         if 'test' not in tmp_dataset:
             tmp_dataset = tmp_dataset.train_test_split(0.2, shuffle=True, seed=42)
