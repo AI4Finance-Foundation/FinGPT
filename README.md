@@ -63,7 +63,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 ## Instruction Tuning Datasets and Models
 The datasets we used, and the **multi-task financial LLMs** models are available at <https://huggingface.co/FinGPT>
-
+  
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
   | [fingpt-sentiment-train](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train) | 76.8K | N/A|Sentiment Analysis Training Instructions |
@@ -72,6 +72,25 @@ The datasets we used, and the **multi-task financial LLMs** models are available
   | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
   | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
   | [fingpt-fineval](https://huggingface.co/datasets/FinGPT/fingpt-fineval) | 1.06k   | 265  | Chinese Multiple-Choice Questions Instructions|
+
+  Multi-task financial LLMs Models:
+```python
+  demo_tasks = [
+    'Financial Sentiment Analysis',
+    'Financial Relation Extraction',
+    'Financial Headline Classification',
+    'Financial Named Entity Recognition',]
+demo_inputs = [
+    "Glaxo's ViiV Healthcare Signs China Manufacturing Deal With Desano",
+    "Apple Inc Chief Executive Steve Jobs sought to soothe investor concerns about his health on Monday, saying his weight loss was caused by a hormone imbalance that is relatively simple to treat.",
+    'gold trades in red in early trade; eyes near-term range at rs 28,300-28,600',
+    'This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (" Bank "), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste .',]
+demo_instructions = [
+    'What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}.',
+    'Given phrases that describe the relationship between two words/phrases as options, extract the word/phrase pair and the corresponding lexical relationship between them from the input text. The output format should be "relation1: word1, word2; relation2: word3, word4". Options: product/material produced, manufacturer, distributed by, industry, position held, original broadcaster, owned by, founded by, distribution format, headquarters location, stock exchange, currency, parent organization, chief executive officer, director/manager, owner of, operator, member of, employer, chairperson, platform, subsidiary, legal form, publisher, developer, brand, business division, location of formation, creator.',
+    'Does the news headline talk about price going up? Please choose an answer from {Yes/No}.',
+    'Please extract entities and their types from the input sentence, entity types should be chosen from {person/organization/location}.',]
+```
 
   | Models | Description  |
   | --------- | --------------------- |
