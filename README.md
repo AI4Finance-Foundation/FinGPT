@@ -59,7 +59,11 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
   
 * [FinGPT V1](./fingpt)
   + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
-## Instruction Tuning Datasets
+
+
+## Instruction Tuning Datasets and Models
+The datasets we used, and the multi-task financial LLMs models are available at <https://huggingface.co/FinGPT>
+
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
   | [fingpt-sentiment-train](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train) | 76.8K | N/A|Sentiment Analysis Training Instructions |
