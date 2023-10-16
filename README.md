@@ -28,7 +28,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
-## FinGPT Demos
+## FinGPT Demos: Current State-of-the-arts Model for Financial Sentiment Analysis
 * [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
   
   * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
