@@ -62,7 +62,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 
 ## Instruction Tuning Datasets and Models
-The datasets we used, and the multi-task financial LLMs models are available at <https://huggingface.co/FinGPT>
+The datasets we used, and the **multi-task financial LLMs** models are available at <https://huggingface.co/FinGPT>
 
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
@@ -72,6 +72,16 @@ The datasets we used, and the multi-task financial LLMs models are available at 
   | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
   | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
   | [fingpt-fineval](https://huggingface.co/datasets/FinGPT/fingpt-fineval) | 1.06k   | 265  | Chinese Multiple-Choice Questions Instructions|
+
+  | Models | Description  |
+  | --------- | --------------------- |
+  | [fingpt-mt_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_llama2-7b_lora)| Fine-tuned Llama2-7b model with LoRA |
+  | [fingpt-mt_falcon-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_falcon-7b_lora)| Fine-tuned falcon-7b model with LoRA |
+  | [fingpt-mt_bloom-7b1_lora](https://huggingface.co/FinGPT/fingpt-mt_bloom-7b1_lora) | Fine-tuned bloom-7b1 model with LoRA|
+  | [fingpt-mt_mpt-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_mpt-7b_lora) | Fine-tuned mpt-7b model with LoRA|
+  | [fingpt-mt_chatglm2-6b_lora](https://huggingface.co/FinGPT/fingpt-mt_chatglm2-6b_lora) | Fine-tuned chatglm-6b model with LoRA|
+  | [fingpt-mt_qwen-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_qwen-7b_lora) | Fine-tuned qwen-7b model with LoRA|
+  
   
 ## Tutorials
 [[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
