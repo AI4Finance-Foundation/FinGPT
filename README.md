@@ -67,7 +67,7 @@ The datasets we used, and the **multi-task financial LLMs** models are available
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
   | [fingpt-sentiment-train](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train) | 76.8K | N/A|Sentiment Analysis Training Instructions |
-  | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instrutions |
+  | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instructions |
   | [fingpt-headline](https://huggingface.co/datasets/FinGPT/fingpt-headline) | 82.2k | 20.5k | Financial Headline Analysis Instructions|
   | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
   | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
