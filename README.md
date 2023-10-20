@@ -14,8 +14,6 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
-**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
-
 [![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
 
 
@@ -311,7 +309,10 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 <img align="center" src=figs/fingpt_best_presentation.png width="65%">
 </div>
 
-## Links
 
-+ [LLM Survey](https://github.com/RUCAIBox/LLMSurvey)
-+ [Awesome GPT-3 Examples](https://github.com/elyase/awesome-gpt3)
+## LICENSE
+
+MIT License
+
+**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
