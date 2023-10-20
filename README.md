@@ -74,7 +74,7 @@ The datasets we used, and the **multi-task financial LLMs** models are available
   
   * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
   
-  * FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
+  * [FinGPT v3](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_v3) series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
   
   * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
   
@@ -82,9 +82,9 @@ The datasets we used, and the **multi-task financial LLMs** models are available
   
   * | Weighted F1                                                  |    FPB    |  FiQA-SA  |   TFNS    |   NWGI    |      Devices       |    Time     |      Cost      |
     | ------------------------------------------------------------ | :-------: | :-------: | :-------: | :-------: | :----------------: | :---------: | :------------: |
-    | [FinGPT v3.3](https://huggingface.co/oliverwang15/FinGPT_v33_Llama2_13B_Sentiment_Instruction_LoRA_FT_8bit) | **0.882** |   0.874   | **0.903** | **0.643** |    1 × RTX 3090    | 17.25 hours |     $17.25     |
-    | [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |   0.850   |   0.860   |   0.894   |   0.636   |      1 × A100      |  5.5 hours  |    $ 22.55     |
-    | [FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |   0.855   |   0.850   |   0.875   |   0.642   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | [FinGPT v3.3]| **0.882** |   0.874   | **0.903** | **0.643** |    1 × RTX 3090    | 17.25 hours |     $17.25     |
+    | [FinGPT v3.2]|   0.850   |   0.860   |   0.894   |   0.636   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | [FinGPT v3.1]|   0.855   |   0.850   |   0.875   |   0.642   |      1 × A100      |  5.5 hours  |    $ 22.55     |
     | FinGPT (8bit)                                                |   0.855   |   0.847   |   0.879   |   0.632   |    1 × RTX 3090    | 6.47 hours  |     $ 6.47     |
     | FinGPT (QLoRA)                                               |   0.777   |   0.752   |   0.828   |   0.583   |    1 × RTX 3090    | 4.15 hours  |     $ 4.15     |
     | OpenAI Fine-tune                                             |   0.878   | **0.887** |   0.883   |     -     |         -          |      -      |       -        |
