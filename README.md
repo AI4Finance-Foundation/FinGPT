@@ -302,6 +302,13 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
  journal = {ACM International Conference on AI in Finance (ICAIF)},
   year={2023}
 }
+
+@article{wang2023fingpt,
+  title={FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets},
+  author={Wang, Neng and Yang, Hongyang and Wang, Christina Dan},
+  journal={arXiv preprint arXiv:2310.04793},
+  year={2023}
+}
 ```
 
 <div align="center">
