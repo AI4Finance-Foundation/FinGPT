@@ -100,8 +100,10 @@ def load_dataset(names, from_remote=False):
         if not os.path.exists(name):
             rep = int(name.split('*')[1]) if '*' in name else 1
             name = ('FinGPT/fingpt-' if from_remote else 'data/fingpt-') + name.split('*')[0]
-        tmp_dataset = datasets.load_from_disk(name)
+        tmp_dataset = datasets.load_dataset(name) if from_remote else datasets.load_from_disk(name)
         if 'test' not in tmp_dataset:
+            if 'train' in tmp_dataset:
+                tmp_dataset = tmp_dataset['train']
             tmp_dataset = tmp_dataset.train_test_split(0.2, shuffle=True, seed=42)
             
         dataset_list.extend([tmp_dataset] * rep)
