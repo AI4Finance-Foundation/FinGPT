@@ -10,7 +10,7 @@
 <img align="center" src=figs/logo_transparent_background.png width="40%"/>
 </div>
 
-Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTech institutes' internal regulations and policies.
+Let us DO NOT expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
@@ -27,7 +27,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
 ## Instruction Tuning Datasets and Models
-The datasets we used, and the **multi-task financial LLMs** models are available at <https://huggingface.co/FinGPT>
+The datasets we used, and the **multi-task financial LLM** models are available at <https://huggingface.co/FinGPT>
   
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
@@ -47,7 +47,7 @@ The datasets we used, and the **multi-task financial LLMs** models are available
       'Financial Named Entity Recognition',]
   demo_inputs = [
       "Glaxo's ViiV Healthcare Signs China Manufacturing Deal With Desano",
-      "Apple Inc Chief Executive Steve Jobs sought to soothe investor concerns about his health on Monday, saying his weight loss was caused by a hormone imbalance that is relatively simple to treat.",
+      "Apple Inc. Chief Executive Steve Jobs sought to soothe investor concerns about his health on Monday, saying his weight loss was caused by a hormone imbalance that is relatively simple to treat.",
       'gold trades in red in early trade; eyes near-term range at rs 28,300-28,600',
       'This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (" Bank "), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste .',]
   demo_instructions = [
