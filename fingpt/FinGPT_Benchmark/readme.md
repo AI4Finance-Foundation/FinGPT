@@ -27,7 +27,7 @@ We suggest users follow the instruction template and task prompts that we used i
 
 ## Prepare Data & Base Models
 
-For the base models we used, we recommend pre-download them to `base_models/`.
+For the base models we used, we recommend pre-downloading them and save to `base_models/`.
 
 Refer to the `parse_model_name()` function in `utils.py` for the huggingface models we used for each LLM. (We use base models rather than any instruction-tuned version or chat version, except for ChatGLM2)
 
