@@ -71,26 +71,33 @@ def tokenize(args, tokenizer, feature):
 
 
 def parse_model_name(name, from_remote=False):
-    
-    if name == 'chatglm2':
-        return 'THUDM/chatglm2-6b' if from_remote else 'base_models/chatglm2-6b'
-    elif name == 'llama2':
-        return 'meta-llama/Llama-2-7b-hf' if from_remote else 'base_models/Llama-2-7b-hf'
-        # return 'NousResearch/Llama-2-7b-hf' if from_remote else 'base_models/Llama-2-7b-hf-nous'
-    elif name == 'falcon':
-        return 'tiiuae/falcon-7b' if from_remote else 'base_models/falcon-7b'
-    elif name == 'internlm':
-        return 'internlm/internlm-7b' if from_remote else 'base_models/internlm-7b'
-    elif name == 'qwen':
-        return 'Qwen/Qwen-7B' if from_remote else 'base_models/Qwen-7B'
-    elif name == 'mpt':
-        return 'cekal/mpt-7b-peft-compatible' if from_remote else 'base_models/mpt-7b-peft-compatible'
-        # return 'mosaicml/mpt-7b' if from_remote else 'base_models/mpt-7b'
-    elif name == 'bloom':
-        return 'bigscience/bloom-7b1' if from_remote else 'base_models/bloom-7b1'
+    """
+    Parse the model name and return the appropriate path based on whether
+    the model is to be fetched from a remote source or from a local source.
+
+    Args:
+    - name (str): Name of the model.
+    - from_remote (bool): If True, return the remote path, else return the local path.
+
+    Returns:
+    - str: The appropriate path for the given model name.
+    """
+    model_paths = {
+        'chatglm2': ('THUDM/chatglm2-6b', 'base_models/chatglm2-6b'),
+        'llama2': ('meta-llama/Llama-2-7b-hf', 'base_models/Llama-2-7b-hf'),
+        'llama2-13b': ('meta-llama/Llama-2-13b-hf', 'base_models/Llama-2-13b-hf'),
+        'falcon': ('tiiuae/falcon-7b', 'base_models/falcon-7b'),
+        'internlm': ('internlm/internlm-7b', 'base_models/internlm-7b'),
+        'qwen': ('Qwen/Qwen-7B', 'base_models/Qwen-7B'),
+        'mpt': ('cekal/mpt-7b-peft-compatible', 'base_models/mpt-7b-peft-compatible'),
+        'bloom': ('bigscience/bloom-7b1', 'base_models/bloom-7b1')
+    }
+
+    if name in model_paths:
+        return model_paths[name][0] if from_remote else model_paths[name][1]
     else:
-        raise ValueError(f"Undefined base model {name}")
-        
+        valid_model_names = ', '.join(model_paths.keys())
+        raise ValueError(f"Undefined base model '{name}'. Valid model names are: {valid_model_names}")
     
 def load_dataset(names, from_remote=False):
     dataset_names = [d for d in names.split(',')]
