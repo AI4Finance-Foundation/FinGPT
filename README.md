@@ -10,7 +10,7 @@
 <img align="center" src=figs/logo_transparent_background.png width="40%"/>
 </div>
 
-Let us DO NOT expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
+Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
