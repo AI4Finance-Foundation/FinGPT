@@ -83,7 +83,7 @@ def main(args):
         num_train_epochs=args.num_epochs,
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
-        gradient_accumulation_steps=8,
+        gradient_accumulation_steps=args.gradient_steps,
         dataloader_num_workers=args.num_workers,
         learning_rate=args.learning_rate,
         warmup_ratio=args.warmup_ratio,
@@ -94,6 +94,7 @@ def main(args):
         # fp16_full_eval=True,
         deepspeed=args.ds_config,
         evaluation_strategy=args.evaluation_strategy,
+        load_best_model_at_end=args.load_best_model,
         remove_unused_columns=False,
         report_to='wandb',
         run_name=args.run_name
@@ -158,13 +159,15 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", default=4, type=int, help="The train batch size per device")
     parser.add_argument("--learning_rate", default=1e-4, type=float, help="The learning rate")
     parser.add_argument("--num_epochs", default=8, type=float, help="The training epochs")
+    parser.add_argument("--gradient_steps", default=8, type=float, help="The gradient accumulation steps")
     parser.add_argument("--num_workers", default=8, type=int, help="dataloader workers")
     parser.add_argument("--log_interval", default=20, type=int)
     parser.add_argument("--warmup_ratio", default=0.05, type=float)
     parser.add_argument("--ds_config", default='./config_new.json', type=str)
     parser.add_argument("--scheduler", default='linear', type=str)
     parser.add_argument("--instruct_template", default='default')
-    parser.add_argument("--evaluation_strategy", default='steps', type=str)    
+    parser.add_argument("--evaluation_strategy", default='steps', type=str)
+    parser.add_argument("--load_best_model", default='False', type=bool)
     parser.add_argument("--eval_steps", default=0.1, type=float)    
     parser.add_argument("--from_remote", default=False, type=bool)    
     args = parser.parse_args()
