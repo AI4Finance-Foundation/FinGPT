@@ -67,6 +67,7 @@ If you don't have training data & base models in your local disk, pass `--from_r
 
 ### Task-specific Instruction Tuning
 ```
+#chatglm2
 deepspeed train_lora.py \
 --run_name headline-chatglm2-linear \
 --base_model chatglm2 \
@@ -76,6 +77,27 @@ deepspeed train_lora.py \
 --learning_rate 1e-4 \
 --num_epochs 8
 ```
+
+```
+#llama2-13b
+deepspeed -i "localhost:2" train_lora.py \
+--run_name sentiment-llama2-13b-8epoch-16batch \
+--base_model llama2-13b-nr \
+--dataset sentiment-train \
+--max_length 512 \
+--batch_size 16 \
+--learning_rate 1e-5 \
+--num_epochs 8 \
+--from_remote True \
+>train.log 2>&1 &
+```
+
+use 
+```
+tail -f train.log
+```
+to check the training log
+
 ### Multi-task Instruction Tuning
 ```
 deepspeed train_lora.py \
