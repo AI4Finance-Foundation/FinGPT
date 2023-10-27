@@ -78,6 +78,8 @@ deepspeed train_lora.py \
 --num_epochs 8
 ```
 
+Please be aware that "localhost:2" refers to a particular GPU device.
+
 ```
 #llama2-13b
 deepspeed -i "localhost:2" train_lora.py \
