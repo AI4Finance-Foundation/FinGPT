@@ -144,9 +144,11 @@ def parse_model_name(name, from_remote=False):
         'chatglm2': ('THUDM/chatglm2-6b', 'base_models/chatglm2-6b'),
         'llama2': ('meta-llama/Llama-2-7b-hf', 'base_models/Llama-2-7b-hf'),
         'llama2-13b': ('meta-llama/Llama-2-13b-hf', 'base_models/Llama-2-13b-hf'),
+        'llama2-13b-nr': ('NousResearch/Llama-2-13b-hf', 'base_models/Llama-2-13b-hf-nr'),
         'falcon': ('tiiuae/falcon-7b', 'base_models/falcon-7b'),
         'internlm': ('internlm/internlm-7b', 'base_models/internlm-7b'),
         'qwen': ('Qwen/Qwen-7B', 'base_models/Qwen-7B'),
+        'baichuan': ('baichuan-inc/Baichuan2-7B-Base', 'base_models/Baichuan2-7B-Base'),
         'mpt': ('cekal/mpt-7b-peft-compatible', 'base_models/mpt-7b-peft-compatible'),
         'bloom': ('bigscience/bloom-7b1', 'base_models/bloom-7b1')
     }
