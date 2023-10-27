@@ -18,7 +18,7 @@ peft==0.5.0
 
 wandb produces some nice charts like the following:
 
-<img width="500" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/04a08b3d-58e3-47aa-8b07-3ec6ff9dfea4">
+<img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/04a08b3d-58e3-47aa-8b07-3ec6ff9dfea4">
 <img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/f207a64b-622d-4a41-8e0f-1959a2d25450">
 
 
