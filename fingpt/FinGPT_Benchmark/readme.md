@@ -20,6 +20,8 @@ wandb produces some nice charts like the following:
 
 <img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/04a08b3d-58e3-47aa-8b07-3ec6ff9dfea4">
 <img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/f207a64b-622d-4a41-8e0f-1959a2d25450">
+<img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/e7699c64-7c3c-4130-94b3-59688631120a">
+<img width="440" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/65ca7853-3d33-4856-80e5-f03476efcc78">
 
 
 ## Ready-to-use Demo
