@@ -18,28 +18,59 @@ lora_module_dict = {
 }
 
 
-# Function to generate prompts based on the instruction, input, and chosen template.
-def get_prompt(template, instruction, input):
-    # If there's an instruction, format the prompt accordingly.
-    # Otherwise, just return the input as is.
-    if instruction:
-        return template_dict[template].format(instruction=instruction, input=input)
-    else:
-        return input
+def get_prompt(template, instruction, input_text):
+    """
+    Generates a prompt based on a predefined template, instruction, and input.
 
-# Function to map the dataset features to prompt for testing.
+    Args:
+    template (str): The key to select the prompt template from the predefined dictionary.
+    instruction (str): The instruction text to be included in the prompt.
+    input_text (str): The input text to be included in the prompt.
+
+    Returns:
+    str: The generated prompt.
+
+    Raises:
+    KeyError: If the provided template key is not found in the template dictionary.
+    """
+    if not instruction:
+        return input_text
+
+    if template not in template_dict:
+        raise KeyError(f"Template '{template}' not found. Available templates: {', '.join(template_dict.keys())}")
+
+    return template_dict[template].format(instruction=instruction, input=input_text)
+
+
 def test_mapping(args, feature):
-    # Generate the prompt based on the instruction and input from the feature.
+    """
+    Generate a mapping for testing purposes by constructing a prompt based on given instructions and input.
+
+    Args:
+    args (Namespace): A namespace object that holds various configurations, including the instruction template.
+    feature (dict): A dictionary containing 'instruction' and 'input' fields used to construct the prompt.
+
+    Returns:
+    dict: A dictionary containing the generated prompt.
+
+    Raises:
+    ValueError: If 'instruction' or 'input' are not provided in the feature dictionary.
+    """
+    # Ensure 'instruction' and 'input' are present in the feature dictionary.
+    if 'instruction' not in feature or 'input' not in feature:
+        raise ValueError("Both 'instruction' and 'input' need to be provided in the feature dictionary.")
+
+    # Construct the prompt using the provided instruction and input.
     prompt = get_prompt(
         args.instruct_template,
         feature['instruction'],
         feature['input']
-    )    
+    )
+
     return {
         "prompt": prompt,
     }
 
-# Function to tokenize the prompts and targets for training/testing.
 def tokenize(args, tokenizer, feature):
     """
     Tokenizes the input prompt and target/output for model training or evaluation.
