@@ -14,6 +14,9 @@ transformers==4.32.0
 peft==0.5.0
 ```
 
+[Weights & Biases](https://wandb.ai/site) is a good tool for tracking model training and inference, you need to register, get a free API, and create a new project.
+
+
 ## Ready-to-use Demo
 
 For users who want ready-to-use financial multi-task language models, please refer to `demo.ipynb`.
