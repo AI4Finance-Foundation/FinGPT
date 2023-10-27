@@ -16,6 +16,10 @@ peft==0.5.0
 
 [Weights & Biases](https://wandb.ai/site) is a good tool for tracking model training and inference, you need to register, get a free API, and create a new project.
 
+wandb produces some nice charts:
+
+<img width="721" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/04a08b3d-58e3-47aa-8b07-3ec6ff9dfea4">
+
 
 ## Ready-to-use Demo
 
