@@ -17,6 +17,7 @@ lora_module_dict = {
     'llama2-13b-nr': ['q_proj', 'k_proj', 'v_proj'],
     'qwen': ["c_attn"],
     'mpt': ['Wqkv'],
+    'baichuan': ['q_proj', 'k_proj', 'v_proj'],
 }
 
 
