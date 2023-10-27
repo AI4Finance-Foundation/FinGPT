@@ -1,27 +1,33 @@
-from transformers.integrations import TensorBoardCallback
-from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
-from transformers import TrainingArguments, Trainer, DataCollatorForSeq2Seq
-from transformers.trainer import TRAINING_ARGS_NAME
-from torch.utils.tensorboard import SummaryWriter
-import datasets
-import torch
 import os
 import sys
-import wandb
 import argparse
 from datetime import datetime
 from functools import partial
-from utils import *
-
-# LoRA
+import datasets
+import torch
+from torch.utils.tensorboard import SummaryWriter
+import wandb
+from transformers import (
+    AutoTokenizer,
+    AutoModel,
+    AutoModelForCausalLM,
+    TrainingArguments,
+    Trainer,
+    DataCollatorForSeq2Seq
+)
+from transformers.trainer import TRAINING_ARGS_NAME
+from transformers.integrations import TensorBoardCallback
+# Importing LoRA specific modules
 from peft import (
     TaskType,
     LoraConfig,
     get_peft_model,
     get_peft_model_state_dict,
     prepare_model_for_int8_training,
-    set_peft_model_state_dict,   
+    set_peft_model_state_dict
 )
+from utils import *
+
 
 # Replace with your own api_key and project name
 os.environ['WANDB_API_KEY'] = 'ecf1e5e4f47441d46822d38a3249d62e8fc94db4'
@@ -29,43 +35,52 @@ os.environ['WANDB_PROJECT'] = 'fingpt-benchmark'
 
 
 def main(args):
-        
+    """
+    Main function to execute the training script.
+
+    :param args: Command line arguments
+    """
+
+    # Parse the model name and determine if it should be fetched from a remote source
     model_name = parse_model_name(args.base_model, args.from_remote)
     
-    # load model
+    # Load the pre-trained causal language model
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         # load_in_8bit=True,
         # device_map="auto",
         trust_remote_code=True
     )
+    # Print model architecture for the first process in distributed training
     if args.local_rank == 0:
         print(model)
-    
+
+    # Load tokenizer associated with the pre-trained model
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+
+    # Apply model specific tokenization settings
     if args.base_model != 'mpt':
         tokenizer.padding_side = "left"
     if args.base_model == 'qwen':
         tokenizer.eos_token_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
         tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('<|extra_0|>')
+    # Ensure padding token is set correctly
     if not tokenizer.pad_token or tokenizer.pad_token_id == tokenizer.eos_token_id:
         tokenizer.add_special_tokens({'pad_token': '[PAD]'})
         model.resize_token_embeddings(len(tokenizer))
     
-    # load data
+    # Load training and testing datasets
     dataset_list = load_dataset(args.dataset, args.from_remote)
-    
     dataset_train = datasets.concatenate_datasets([d['train'] for d in dataset_list]).shuffle(seed=42)
     
     if args.test_dataset:
         dataset_list = load_dataset(args.test_dataset, args.from_remote)
-            
     dataset_test = datasets.concatenate_datasets([d['test'] for d in dataset_list])
     
     dataset = datasets.DatasetDict({'train': dataset_train, 'test': dataset_test})
-        
+    # Display first sample from the training dataset
     print(dataset['train'][0])
-    
+    # Filter out samples that exceed the maximum token length and remove unused columns
     dataset = dataset.map(partial(tokenize, args, tokenizer))
     print('original dataset length: ', len(dataset['train']))
     dataset = dataset.filter(lambda x: not x['exceed_max_length'])
@@ -73,10 +88,12 @@ def main(args):
     dataset = dataset.remove_columns(['instruction', 'input', 'output', 'exceed_max_length'])
     
     print(dataset['train'][0])
-    
+
+    # Create a timestamp for model saving
     current_time = datetime.now()
     formatted_time = current_time.strftime('%Y%m%d%H%M')
-    
+
+    # Set up training arguments
     training_args = TrainingArguments(
         output_dir=f'finetuned_models/{args.run_name}_{formatted_time}', # 保存位置
         logging_steps=args.log_interval,
@@ -109,7 +126,7 @@ def main(args):
     )
     # model = prepare_model_for_int8_training(model
 
-    # setup peft
+    # setup peft for lora
     peft_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
         inference_mode=False,
@@ -121,9 +138,10 @@ def main(args):
     )
     model = get_peft_model(model, peft_config)
     
-    # Train
+    # Initialize TensorBoard for logging
     writer = SummaryWriter()
-    
+
+    # Initialize the trainer
     trainer = Trainer(
         model=model, 
         args=training_args, 
@@ -138,17 +156,18 @@ def main(args):
     
     # if torch.__version__ >= "2" and sys.platform != "win32":
     #     model = torch.compile(model)
-    
+
+    # Clear CUDA cache and start training
     torch.cuda.empty_cache()
-    
     trainer.train()
     writer.close()
-    # save model
+
+    # Save the fine-tuned model
     model.save_pretrained(training_args.output_dir)
 
 
 if __name__ == "__main__":
-    
+    # Argument parser for command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--local_rank", default=0, type=int)
     parser.add_argument("--run_name", default='local-test', type=str)
@@ -171,6 +190,9 @@ if __name__ == "__main__":
     parser.add_argument("--eval_steps", default=0.1, type=float)    
     parser.add_argument("--from_remote", default=False, type=bool)    
     args = parser.parse_args()
-    
+
+    # Login to Weights and Biases
     wandb.login()
+
+    # Run the main function
     main(args)
