@@ -13,6 +13,8 @@ lora_module_dict = {
     'bloom': ['query_key_value'],
     'internlm': ['q_proj', 'k_proj', 'v_proj'],
     'llama2': ['q_proj', 'k_proj', 'v_proj'],
+    'llama2-13b': ['q_proj', 'k_proj', 'v_proj'],
+    'llama2-13b-nr': ['q_proj', 'k_proj', 'v_proj'],
     'qwen': ["c_attn"],
     'mpt': ['Wqkv'],
 }
