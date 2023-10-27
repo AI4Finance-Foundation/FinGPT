@@ -41,6 +41,17 @@ def test_mapping(args, feature):
 
 # Function to tokenize the prompts and targets for training/testing.
 def tokenize(args, tokenizer, feature):
+    """
+    Tokenizes the input prompt and target/output for model training or evaluation.
+
+    Args:
+    args (Namespace): A namespace object containing various settings and configurations.
+    tokenizer (Tokenizer): A tokenizer object used to convert text into tokens.
+    feature (dict): A dictionary containing 'input', 'instruction', and 'output' fields.
+
+    Returns:
+    dict: A dictionary containing tokenized 'input_ids', 'labels', and a flag 'exceed_max_length'.
+    """
     # Generate the prompt.
     prompt = get_prompt(
         args.instruct_template,
@@ -49,29 +60,34 @@ def tokenize(args, tokenizer, feature):
     )
     # Tokenize the prompt.
     prompt_ids = tokenizer(
-        prompt, padding=False,
-        max_length=args.max_length, truncation=True
+        prompt,
+        padding=False,
+        max_length=args.max_length,
+        truncation=True
     )['input_ids']
 
     # Tokenize the target/output.
     target_ids = tokenizer(
-        feature['output'].strip(), padding=False,
-        max_length=args.max_length, truncation=True,
+        feature['output'].strip(),
+        padding=False,
+        max_length=args.max_length,
+        truncation=True,
         add_special_tokens=False
     )['input_ids']
 
-    # Combine the tokenized prompt and target.
+    # Combine tokenized prompt and target output.
     input_ids = prompt_ids + target_ids
 
     # Check if the combined length exceeds the maximum allowed length.
     exceed_max_length = len(input_ids) >= args.max_length
-    
-    # Add an EOS token if it's not already there,
-    # and if we haven't exceeded the max length.
+
+    # Add an end-of-sequence (EOS) token if it's not already present
+    # and if the sequence length is within the limit.
     if input_ids[-1] != tokenizer.eos_token_id and not exceed_max_length:
         input_ids.append(tokenizer.eos_token_id)
 
-    # Prepare the labels for training. The labels should start from where the prompt ends.
+    # Create label IDs for training.
+    # The labels should start from where the prompt ends, and be padded for the prompt portion.
     label_ids = [tokenizer.pad_token_id] * len(prompt_ids) + input_ids[len(prompt_ids):]
     
     return {
