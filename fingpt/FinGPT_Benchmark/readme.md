@@ -152,6 +152,17 @@ python benchmarks.py \
 --max_length 512
 ```
 
+```
+#llama2-13b sentiment analysis
+CUDA_VISIBLE_DEVICES=1 python benchmarks.py \
+--dataset fpb,fiqa,tfns,nwgi \
+--base_model llama2-13b-nr \
+--peft_model ../finetuned_models/sentiment-llama2-13b-8epoch-16batch_202310271908  \
+--batch_size 8 \
+--max_length 512 \
+--from_remote True 
+```
+
 For Zero-shot Evaluation on Sentiment Analysis, we use multiple prompts and evaluate each of them.
 The task indicators are `fiqa_mlt` and `fpb_mlt`.
 
