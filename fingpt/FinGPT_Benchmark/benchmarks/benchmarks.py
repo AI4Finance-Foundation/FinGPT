@@ -22,7 +22,7 @@ from utils import *
 
 def main(args):
 
-    model_name = '../' + parse_model_name(args.base_model)
+    model_name = '../' + parse_model_name(args.base_model, args.from_remote)
 
     model = AutoModelForCausalLM.from_pretrained(
         model_name, trust_remote_code=True, 
@@ -101,6 +101,8 @@ if __name__ == "__main__":
     parser.add_argument("--max_length", default=512, type=int)
     parser.add_argument("--batch_size", default=4, type=int, help="The train batch size per device")
     parser.add_argument("--instruct_template", default='default')
+    parser.add_argument("--from_remote", default=False, type=bool)    
+
     args = parser.parse_args()
     
     print(args.base_model)
