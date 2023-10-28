@@ -168,6 +168,10 @@ The datasets we used, and the **multi-task financial LLM** models are available 
   | [TFNS](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) | 0.896/0.895 | 0.893/0.893 | **0.907**/**0.907** | 0.840/0.840 | 0.859/0.858 | 0.883/0.882|0.729/0.731|
   | [NWGI](https://huggingface.co/datasets/oliverwang15/news_with_gpt_instructions) | **0.649/0.651**   | 0.636/0.638  | 0.640/0.641| 0.573/0.574| 0.619/0.629 |0.638/0.643|0.498/0.503|
 
+### All Thanks To Our Contributors :
+<a href="https://github.com/AI4Finance-Foundation/FinGPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AI4Finance-Foundation/FinGPT" />
+</a>
 
 ## News
 
