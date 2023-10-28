@@ -21,8 +21,11 @@ from utils import *
 
 
 def main(args):
-
-    model_name = '../' + parse_model_name(args.base_model, args.from_remote)
+    if args.from_remote:
+        model_name = parse_model_name(args.base_model, args.from_remote)
+    else:
+        model_name = '../' + parse_model_name(args.base_model)
+        
 
     model = AutoModelForCausalLM.from_pretrained(
         model_name, trust_remote_code=True, 
