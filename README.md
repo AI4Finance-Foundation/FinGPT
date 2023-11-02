@@ -28,6 +28,8 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 
 ## Instruction Tuning Datasets and Models
 The datasets we used, and the **multi-task financial LLM** models are available at <https://huggingface.co/FinGPT>
+
+[Our Code](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark)
   
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
