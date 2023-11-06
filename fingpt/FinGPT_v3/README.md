@@ -4,7 +4,7 @@
 
 ### You can reproduce the results of our experiment by running [benchmarks](./benchmark/benchmarks.ipynb), the detailed tutorial is on the way.
 
-## Ⅰ. Try our model ( [FinGPT v3](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) )
+## Ⅰ. Try our model ( [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) )
 
 ### Code:
 
@@ -14,7 +14,7 @@ from peft import PeftModel  # 0.5.0
 
 # Load Models
 base_model = "NousResearch/Llama-2-13b-hf" 
-peft_model = "oliverwang15/FinGPT_v33_Llama2_13B_Sentiment_Instruction_LoRA_FT_8bit"
+peft_model = "FinGPT/fingpt-sentiment_llama2-13b_lora"
 tokenizer = LlamaTokenizerFast.from_pretrained(base_model, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
 model = LlamaForCausalLM.from_pretrained(base_model, trust_remote_code=True, device_map = "cuda:0", load_in_8bit = True,)
