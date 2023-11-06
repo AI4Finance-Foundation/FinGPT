@@ -45,7 +45,7 @@ python3 main.py \
 ## Testing
 Use the following command to implement inference.
 ```
-python ./inference/batchbot_torch.py --path checkpoints/actor-models/sent-llama-7b --max_new_tokens 16
+python ./inference/batchbot.py --path checkpoints/actor-models/sent-llama-7b --max_new_tokens 16 --local_rank 0
 ```
 
 
