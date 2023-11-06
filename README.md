@@ -59,14 +59,16 @@ The datasets we used, and the **multi-task financial LLM** models are available 
       'Please extract entities and their types from the input sentence, entity types should be chosen from {person/organization/location}.',]
 ```
 
-  | Models | Description  |
-  | --------- | --------------------- |
-  | [fingpt-mt_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_llama2-7b_lora)| Fine-tuned Llama2-7b model with LoRA |
-  | [fingpt-mt_falcon-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_falcon-7b_lora)| Fine-tuned falcon-7b model with LoRA |
-  | [fingpt-mt_bloom-7b1_lora](https://huggingface.co/FinGPT/fingpt-mt_bloom-7b1_lora) | Fine-tuned bloom-7b1 model with LoRA|
-  | [fingpt-mt_mpt-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_mpt-7b_lora) | Fine-tuned mpt-7b model with LoRA|
-  | [fingpt-mt_chatglm2-6b_lora](https://huggingface.co/FinGPT/fingpt-mt_chatglm2-6b_lora) | Fine-tuned chatglm-6b model with LoRA|
-  | [fingpt-mt_qwen-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_qwen-7b_lora) | Fine-tuned qwen-7b model with LoRA|
+  | Models | Description  | Function |
+  | --------- | --------------------- |---------------- |
+  | [fingpt-mt_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_llama2-7b_lora)| Fine-tuned Llama2-7b model with LoRA | Multi-Task |
+  | [fingpt-mt_falcon-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_falcon-7b_lora)| Fine-tuned falcon-7b model with LoRA  | Multi-Task |
+  | [fingpt-mt_bloom-7b1_lora](https://huggingface.co/FinGPT/fingpt-mt_bloom-7b1_lora) | Fine-tuned bloom-7b1 model with LoRA | Multi-Task |
+  | [fingpt-mt_mpt-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_mpt-7b_lora) | Fine-tuned mpt-7b model with LoRA | Multi-Task |
+  | [fingpt-mt_chatglm2-6b_lora](https://huggingface.co/FinGPT/fingpt-mt_chatglm2-6b_lora) | Fine-tuned chatglm-6b model with LoRA | Multi-Task |
+  | [fingpt-mt_qwen-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_qwen-7b_lora) | Fine-tuned qwen-7b model with LoRA | Multi-Task |
+  | [fingpt-sentiment_llama2-13b_lora](FinGPT/fingpt-sentiment_llama2-13b_lora) | Fine-tuned llama2-13b model with LoRA | Single-Task |
+
   
 
 ## FinGPT Demos: Current State-of-the-arts for Financial Sentiment Analysis
