@@ -57,7 +57,7 @@ for sentiment in out_text:
 | [FinGPT v3](https://huggingface.co/oliverwang15/FinGPT_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [THUDM/chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) | LoRA+FP16       | 0.734                      | 0.730                                |
 | [FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) | [THUDM/chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) | LoRA+FP16       | 0.860                      | 0.805                                |
 | [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) | [meta-llama/Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) | LoRA+8bit       | 0.868                      | 0.809                                |
-| [FinGPT v3.3](https://huggingface.co/oliverwang15/FinGPT_v33_Llama2_13B_Sentiment_Instruction_LoRA_FT_8bit) | [meta-llama/Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) | LoRA+8bit       | **0.886**                  | **0.826**                            |
+| [FinGPT v3.3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) | [meta-llama/Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) | LoRA+8bit       | **0.886**                  | **0.826**                            |
 
 
 ## Ⅱ. Benchmark Results
