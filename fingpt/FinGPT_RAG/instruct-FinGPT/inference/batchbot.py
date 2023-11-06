@@ -100,10 +100,10 @@ def main(args):
     # args.local_rank=int(os.getenv("LOCAL_RANK", -1))
     # local_rank = args.local_rank
     generator = get_generator(args.path, args.local_rank)
-    generator.model = deepspeed.init_inference(generator.model,
-                                           mp_size=world_size,
-                                           dtype=torch.half,
-                                           replace_with_kernel_inject=True)
+    # generator.model = deepspeed.init_inference(generator.model,
+    #                                       mp_size=world_size,
+    #                                       dtype=torch.half,
+    #                                       replace_with_kernel_inject=True)
     
     set_seed(42)
 
