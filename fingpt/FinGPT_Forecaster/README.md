@@ -22,12 +22,18 @@ Then, click Submit！You'll get a response like this
 
 ![demo_response](figs/response.png)
 
-This model  Inference in this demo uses fp16 and **welcomes any ticker symbol**.
+This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased.
+For more detailed and customized usage, scroll down and continue your reading.
 
+## Deploy FinGPT-Forecaster
+
+We have released our FinGPT-Forecaster trained on DOW30 market data from 2022-12-30 to 2023-9-1 on HuggingFace <https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora>
+
+## Data Preparation
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
 
-This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased.
+## Train your own FinGPT-Forecaster
 
-For more detailed and customized implementation, refer to our **FinGPT project** <https://github.com/AI4Finance-Foundation/FinGPT>
+
 
 **Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
