@@ -1,19 +1,28 @@
----
-title: FinGPT Forecaster
-emoji: 📈
-colorFrom: yellow
-colorTo: purple
-sdk: gradio
-sdk_version: 4.1.1
-app_file: app.py
-pinned: false
----
+# FinGPT-Forecaster
 
-# This is a demo of FinGPT-Forecaster.
+## What is FinGPT-Forecaster?
+- FinGPT-Forecaster takes market news and optional basic financials related to the specified company from the past few weeks as input and responds with the company's **positive developments** and **potential concerns**. Then it gives out a **prediction** of stock price movement for the coming week and its **analysis** summary.
+- FinGPT-Forecaster is finetuned on Llama-2-7b-chat-hf with LoRA on the past year's DOW30 market data. But also has shown great generalization ability on other ticker symbols.
+- FinGPT-Forecaster is an easy-to-deploy junior robo-advisor, a milestone towards our goal.
 
-FinGPT-Forecaster takes random market news and optional basic financials related to the specified company from the past few weeks as input and responds with the company's **positive developments** and **potential concerns**. Then it gives out a **prediction** of stock price movement for the coming week and its **analysis** summary.
+## Try out the demo!
 
-This model is finetuned on Llama2-7b-chat-hf with LoRA on the past year's DOW30 market data. Inference in this demo uses fp16 and **welcomes any ticker symbol**.
+Try our demo at <https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster>
+
+![demo_interface](figs/interface.png)
+
+Enter the following inputs:
+
+1) ticker symbol (e.g. AAPL, MSFT, NVDA)
+2) the day from which you want the prediction to happen (yyyy-mm-dd)
+3) the number of past weeks where market news are retrieved
+4) whether to add latest basic financials as additional information
+
+Then, click Submit！You'll get a response like this
+
+![demo_response](figs/response.png)
+
+This model  Inference in this demo uses fp16 and **welcomes any ticker symbol**.
 
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
 
