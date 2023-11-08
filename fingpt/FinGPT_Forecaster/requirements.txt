@@ -1,0 +1,7 @@
+torch==2.0.1
+transformers==4.32.0
+peft==0.5.0
+pandas
+yfinance
+finnhub-python
+nvidia-ml-py3
