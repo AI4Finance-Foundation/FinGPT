@@ -12,7 +12,6 @@ executable_path=ChromeDriverManager().install()
 service=ChromiumService(executable_path=executable_path)
 driver = webdriver.Chrome(service=service, options=options)
 
-# Now you can use the driver object to interact with the browser
 driver.get('https://www.google.com')
 print(driver.title)
 driver.quit()
