@@ -1,4 +1,4 @@
-# Data-Centric FinGPT: Open-source for Open Finance. 
+# FinGPT: Open-Source Financial Large Language Models
 [![Downloads](https://static.pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
 [![Downloads](https://static.pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
 [![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
@@ -10,16 +10,19 @@
 <img align="center" src=figs/logo_transparent_background.png width="40%"/>
 </div>
 
-Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTech institutes' internal regulations and policies.
+Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
 
-**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
-
-
 [![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
 
-
+## What's New:
+ - [Model Release] Nov, 2023: We release [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)! 😊 [Demo](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster) & [Model](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) are available on Huggingface!
+ - [Paper Acceptance] Oct, 2023: ["FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets"]() is accepted🎉 by Instruction Workshop @ NeurIPS 2023 
+ - [Paper Acceptance] Oct, 2023: ["FinGPT: Democratizing Internet-scale Data for Financial Large Language Models"]() is accepted🎉 by Instruction Workshop @ NeurIPS 2023
+ - [Model Release] Oct, 2023: We release the [financial multi-task LLMs](https://huggingface.co/FinGPT) 🔥 produced when evaluating base-LLMs on [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark)
+ - [Paper Acceptance] Sep, 2023: ["Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models"](https://arxiv.org/abs/2306.12659) ...
+ - [Model Release] ...
 
 ## Why FinGPT?
 
@@ -29,43 +32,86 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
-## FinGPT Demos
-* [FinGPT V3 (Updated on 8/4/2023)](./fingpt)
+## Instruction Tuning Datasets and Models
+The datasets we used, and the **multi-task financial LLM** models are available at <https://huggingface.co/FinGPT>
+
+[Our Code](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark)
   
-  + **FinGPT v3 series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.**
-  + FinGPT v3.1 uses chatglm2-6B as base model; FinGPT v3.2 uses llama2-7b as base model
-  + Benchmark Results:
-    | Weighted F1   | [BloombergGPT](https://arxiv.org/abs/2303.17564) | [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) |  [Llama2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf) |[FinGPT v3.1](https://huggingface.co/oliverwang15/FinGPT_v31_ChatGLM2_Sentiment_Instruction_LoRA_FT) |v3.1.1 (8bit)|v3.1.2 (QLoRA)| [FinGPT v3.2](https://huggingface.co/oliverwang15/FinGPT_v32_Llama2_Sentiment_Instruction_LoRA_FT) |
-    | ---------------------- | ------------ | -------- | ---------------- | --------- | ----------------- | ----------------- |----------------- |
-    | FPB       | 0.511        | 0.381      | 0.390      | **0.855**      | 0.855           |  0.777          | 0.850          |
-    | FiQA-SA   | 0.751        | 0.790      | 0.800      | 0.850          | 0.847            | 0.752      |**0.860**      |
-    | TFNS      | -            | 0.189      | 0.296      | 0.875          | 0.879           | 0.828       |**0.894**        |
-    | NWGI      | -            | 0.449      | 0.503      | **0.642**      | 0.632            |0.583            |0.636            |
-    | Devices   | 512 × A100   | 64 × A100  |  2048 × A100     | 8 × A100     | A100    | A100        |8 × A100        |
-    | Time      | 53 days      | 2.5 days   |  21 days     |  2 hours      | 6.47 hours    |   4.15 hours        | 2 hours        |   
-    | Cost      | $2.67 million      | $ 14,976   |  $4.23 million    |  $65.6     | $25.88     |  $17.01     |  $65.6     | 
-**Cost per GPU hour.** For A100 GPUs, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**
-
-  * Reproduce the results by running [benchmarks](./fingpt/FinGPT-v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
-  * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT-v3/training_8bit/train.ipynb) in 8bit or this [notebook](./fingpt/FinGPT-v3/training_int4/train.ipynb) in int4 (QLoRA)
-  
-* [FinGPT V1](./fingpt)
-  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
-
-## Tutorials
-[[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
-
-## Instruction Tuning Datasets
-
   | Datasets | Train Rows |  Test Rows |Description  |
   | --------- | ----------------- | ------------ | --------------------- |
   | [fingpt-sentiment-train](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train) | 76.8K | N/A|Sentiment Analysis Training Instructions |
-  | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instrutions |
+  | [fingpt-finred](https://huggingface.co/datasets/FinGPT/fingpt-finred)| 27.6k | 5.11k | Financial Relation Extraction Instructions |
   | [fingpt-headline](https://huggingface.co/datasets/FinGPT/fingpt-headline) | 82.2k | 20.5k | Financial Headline Analysis Instructions|
   | [fingpt-ner](https://huggingface.co/datasets/FinGPT/fingpt-ner) | 511   | 98  | Financial Named-Entity Recognition Instructions|
   | [fingpt-fiqa_qa](https://huggingface.co/datasets/FinGPT/fingpt-fiqa_qa) | 17.1k   | N/A  | Financial Q&A Instructions|
   | [fingpt-fineval](https://huggingface.co/datasets/FinGPT/fingpt-fineval) | 1.06k   | 265  | Chinese Multiple-Choice Questions Instructions|
 
+  Multi-task financial LLMs Models:
+```python
+  demo_tasks = [
+      'Financial Sentiment Analysis',
+      'Financial Relation Extraction',
+      'Financial Headline Classification',
+      'Financial Named Entity Recognition',]
+  demo_inputs = [
+      "Glaxo's ViiV Healthcare Signs China Manufacturing Deal With Desano",
+      "Apple Inc. Chief Executive Steve Jobs sought to soothe investor concerns about his health on Monday, saying his weight loss was caused by a hormone imbalance that is relatively simple to treat.",
+      'gold trades in red in early trade; eyes near-term range at rs 28,300-28,600',
+      'This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (" Bank "), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste .',]
+  demo_instructions = [
+      'What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}.',
+      'Given phrases that describe the relationship between two words/phrases as options, extract the word/phrase pair and the corresponding lexical relationship between them from the input text. The output format should be "relation1: word1, word2; relation2: word3, word4". Options: product/material produced, manufacturer, distributed by, industry, position held, original broadcaster, owned by, founded by, distribution format, headquarters location, stock exchange, currency, parent organization, chief executive officer, director/manager, owner of, operator, member of, employer, chairperson, platform, subsidiary, legal form, publisher, developer, brand, business division, location of formation, creator.',
+      'Does the news headline talk about price going up? Please choose an answer from {Yes/No}.',
+      'Please extract entities and their types from the input sentence, entity types should be chosen from {person/organization/location}.',]
+```
+
+  | Models | Description  | Function |
+  | --------- | --------------------- |---------------- |
+  | [fingpt-mt_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_llama2-7b_lora)| Fine-tuned Llama2-7b model with LoRA | Multi-Task |
+  | [fingpt-mt_falcon-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_falcon-7b_lora)| Fine-tuned falcon-7b model with LoRA  | Multi-Task |
+  | [fingpt-mt_bloom-7b1_lora](https://huggingface.co/FinGPT/fingpt-mt_bloom-7b1_lora) | Fine-tuned bloom-7b1 model with LoRA | Multi-Task |
+  | [fingpt-mt_mpt-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_mpt-7b_lora) | Fine-tuned mpt-7b model with LoRA | Multi-Task |
+  | [fingpt-mt_chatglm2-6b_lora](https://huggingface.co/FinGPT/fingpt-mt_chatglm2-6b_lora) | Fine-tuned chatglm-6b model with LoRA | Multi-Task |
+  | [fingpt-mt_qwen-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_qwen-7b_lora) | Fine-tuned qwen-7b model with LoRA | Multi-Task |
+  | [fingpt-sentiment_llama2-13b_lora](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) | Fine-tuned llama2-13b model with LoRA | Single-Task |
+  | [fingpt-forecaster_dow30_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) | Fine-tuned llama2-7b model with LoRA | Single-Task |
+
+
+## FinGPT Demos: Current State-of-the-arts for Financial Sentiment Analysis
+* [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
+  
+  * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
+  
+  * [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
+  
+  * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
+  
+  * Benchmark Results:
+  
+  * | Weighted F1                                                  |    FPB    |  FiQA-SA  |   TFNS    |   NWGI    |      Devices       |    Time     |      Cost      |
+    | ------------------------------------------------------------ | :-------: | :-------: | :-------: | :-------: | :----------------: | :---------: | :------------: |
+    | [FinGPT v3.3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora)| **0.882** |   0.874   | **0.903** | **0.643** |    1 × RTX 3090    | 17.25 hours |     $17.25     |
+    | FinGPT v3.2|   0.850   |   0.860   |   0.894   |   0.636   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | FinGPT v3.1|   0.855   |   0.850   |   0.875   |   0.642   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | FinGPT (8bit)                                                |   0.855   |   0.847   |   0.879   |   0.632   |    1 × RTX 3090    | 6.47 hours  |     $ 6.47     |
+    | FinGPT (QLoRA)                                               |   0.777   |   0.752   |   0.828   |   0.583   |    1 × RTX 3090    | 4.15 hours  |     $ 4.15     |
+    | OpenAI Fine-tune                                             |   0.878   | **0.887** |   0.883   |     -     |         -          |      -      |       -        |
+    | GPT-4                                                        |   0.833   |   0.630   |   0.808   |     -     |         -          |      -      |       -        |
+    | FinBERT                                                      |   0.880   |   0.596   |   0.733   |   0.538   | 4 × NVIDIA K80 GPU |      -      |       -        |
+    | Llama2-7B                                                    |   0.390   |   0.800   |   0.296   |   0.503   |    2048 × A100     |   21 days   | $ 4.23 million |
+    | BloombergGPT                                                 |   0.511   |   0.751   |     -     |     -     |     512 × A100     |   53 days   | $ 2.67 million |
+  
+    **Cost per GPU hour.** For **A100 GPUs**, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**. For **RTX 3090**, we assume its cost per hour is approximately **$1.0**, which is actually much higher than available GPUs from platforms like vast.ai.
+  
+  * Reproduce the results by running [benchmarks](./fingpt/FinGPT_v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
+  * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT_v3/training_8bit/train_Llama2_13B.ipynb) in 8bit or this [notebook](./fingpt/FinGPT_v3/training_int4/train.ipynb) in int4 (QLoRA)
+  
+* [FinGPT V1](./fingpt)
+  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
+
+  
+## Tutorials
+[[Training] Beginner’s Guide to FinGPT: Training with LoRA and ChatGLM2–6B One Notebook, $10 GPU](https://byfintech.medium.com/beginners-guide-to-fingpt-training-with-lora-chatglm2-6b-9eb5ace7fe99)
 
 ## Understanding FinGPT: An Educational Blog Series
 + [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications
@@ -90,7 +136,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 <img align="center" src=figs/FinGPT_framework_20231003.png>
 </div>
 
-* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
+* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
 
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
@@ -102,7 +148,7 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
 <img align="center" src=figs/FinGPT_FinNLP_data_source.png>
 </div>
 
-* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-task, and zero-shot instruction tuning tasks. 
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark): We introduce a novel Instruction Tuning paradigm optimized for open-source Large Language Models (LLMs) in finance, enhancing their adaptability to diverse financial datasets while also facilitating cost-effective, systematic benchmarking from task-specific, multi-task, and zero-shot instruction tuning tasks. 
 
 
 <div align="center">
@@ -132,6 +178,10 @@ Let us DO NOT expect Wall Street to open-source LLMs nor open APIs, due to FinTe
   | [TFNS](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) | 0.896/0.895 | 0.893/0.893 | **0.907**/**0.907** | 0.840/0.840 | 0.859/0.858 | 0.883/0.882|0.729/0.731|
   | [NWGI](https://huggingface.co/datasets/oliverwang15/news_with_gpt_instructions) | **0.649/0.651**   | 0.636/0.638  | 0.640/0.641| 0.573/0.574| 0.619/0.629 |0.638/0.643|0.498/0.503|
 
+### All Thanks To Our Contributors :
+<a href="https://github.com/AI4Finance-Foundation/FinGPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AI4Finance-Foundation/FinGPT" />
+</a>
 
 ## News
 
@@ -266,6 +316,13 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
  journal = {ACM International Conference on AI in Finance (ICAIF)},
   year={2023}
 }
+
+@article{wang2023fingptbenchmark,
+  title={FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets},
+  author={Wang, Neng and Yang, Hongyang and Wang, Christina Dan},
+  journal={NeurIPS Workshop on Instruction Tuning and Instruction Following},
+  year={2023}
+}
 ```
 
 <div align="center">
@@ -273,7 +330,10 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 <img align="center" src=figs/fingpt_best_presentation.png width="65%">
 </div>
 
-## Links
 
-+ [LLM Survey](https://github.com/RUCAIBox/LLMSurvey)
-+ [Awesome GPT-3 Examples](https://github.com/elyase/awesome-gpt3)
+## LICENSE
+
+MIT License
+
+**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
