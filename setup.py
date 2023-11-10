@@ -10,9 +10,9 @@ except:
 
 setup(
     name="FinGPT",
-    version="0.0.0",
+    version="0.0.1",
     include_package_data=True,
-    author="Hongyang Yang, Xiao-Yang Liu, Guoxuan Wang",
+    author="Bruce Yang",
     author_email="hy2500@columbia.edu",
     url="https://github.com/AI4Finance-Foundation/FinGPT",
     license="MIT",

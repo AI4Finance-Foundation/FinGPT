@@ -1,16 +1,12 @@
 # FinGPT's playground
 
 ## Ⅰ. FinGPT Models
-
-1. [FinGPT-v1](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-v1): FinGPT for Chinese Market
-
-2. [FinGPT-v2](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-v2): Low Code Development
-
-3. [FinGPT-v3](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-v3): FinGPT for US Market Sentiment Analysis
-
-4. [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-RAG): FinGPT using Retrieval Augmented Generation pipeline
-
-5. [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT-Benchmark): FinGPT Instruction Tuning paradigm for task-specific, multi-task, and zero-shot instruction tuning tasks
+* [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster): FinGPT for Company News Analysis and Stock Price Prediction
+* [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark): FinGPT Instruction Tuning paradigm for task-specific, multi-task, and zero-shot instruction tuning tasks
+* [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG): FinGPT using Retrieval Augmented Generation pipeline
+* [FinGPT-v1](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_v1): FinGPT from Market labels in Chinese Market
+* [FinGPT-v2](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_v2): FinGPT building POC using ChatGPT, such as Robo-advisor, low-code development, and trading
+* [FinGPT-v3](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_v3): FinGPT for Sentiment Analysis in U.S. Market
 
 
 
