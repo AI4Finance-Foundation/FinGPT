@@ -26,6 +26,7 @@ from sentence_processing.split_sentence import split_sentence
 from scrapers.cnbc import scrape_cnbc
 from scrapers.market_screener import scrape_market_screener
 from scrapers import url_encode
+from scrapers.google.scrape_google import scrape_google
 
 # TODO: Twitter API requests # https://twitter.com/bryan4665/
 
@@ -607,24 +608,20 @@ def select_column_and_classify():
                                                 choices=column_names)
                 if not sentence_column:
                     raise ValueError("Invalid context selected selection")
-                classification_column = gui.buttonbox("Column Selection",
-                                                      "Select the column for classification in the CSV:",
-                                                      choices=column_names)
-                if not classification_column:
-                    raise ValueError("Invalid context classification column selection")
 
                 counter = 0  # Counter variable to track the number of rows processed
-                row_index_input = gui.enterbox("Enter the row index to classify", "Row Index Input")
+                row_index_input = gui.enterbox("Enter the row index to classify", "Row Index Input", 1)
                 if row_index_input is None or not row_index_input.isdigit() or int(row_index_input) >= len(df):
                     row_index = 1  # Set a default starting index
                 else:
                     row_index = int(row_index_input)
 
+                print("loaded file as df: ", df)
+
                 for row_index, row in itertools.islice(df.iterrows(), row_index, None):
                     # If role is not empty or N/A or has the same sentence as "contextualized_sentence", means context is added, then skip
-                    if process_existing_file and row["link"] != "N/A" and not pd.isnull(row["link"]) and row[sentence_column] != row["contextualized_sentence"]:
-                        continue
-
+                    # if process_existing_file and row["link"] != "N/A" and not pd.isnull(row["link"]) and row[sentence_column] != row["contextualized_sentence"]:
+                    #     continue
                     target_sentence = row[sentence_column]
                     ticker, remaining_sentence, link = split_sentence(target_sentence)
 
