@@ -9,8 +9,8 @@
 
 ## Setup
 
-* Visit environment_news_scraping.yml for the environment setup
 * Set up your .env file, can refer to /FinGPT_sentiment/.env.example
+* Visit FinGPT_RAG/requirements.txt for the environment setup
 
 ``` python
 
