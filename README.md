@@ -152,7 +152,7 @@ The datasets we used, and the **multi-task financial LLM** models are available 
 
 
 <div align="center">
-<img align="center" src=figs/FinGPT_Benchmark_update1.png>
+<img align="center" src=figs/FinGPT_Benchmark_20231110.png>
 </div>
 
 
