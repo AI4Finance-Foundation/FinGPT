@@ -32,6 +32,61 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
+
+## FinGPT Demos: 
+
+### Current State-of-the-arts for Financial Sentiment Analysis
+
+* [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
+  
+  * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
+  
+  * [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
+  
+  * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
+  
+  * Benchmark Results:
+  
+  * | Weighted F1                                                  |    FPB    |  FiQA-SA  |   TFNS    |   NWGI    |      Devices       |    Time     |      Cost      |
+    | ------------------------------------------------------------ | :-------: | :-------: | :-------: | :-------: | :----------------: | :---------: | :------------: |
+    | [FinGPT v3.3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora)| **0.882** |   0.874   | **0.903** | **0.643** |    1 × RTX 3090    | 17.25 hours |     $17.25     |
+    | FinGPT v3.2|   0.850   |   0.860   |   0.894   |   0.636   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | FinGPT v3.1|   0.855   |   0.850   |   0.875   |   0.642   |      1 × A100      |  5.5 hours  |    $ 22.55     |
+    | FinGPT (8bit)                                                |   0.855   |   0.847   |   0.879   |   0.632   |    1 × RTX 3090    | 6.47 hours  |     $ 6.47     |
+    | FinGPT (QLoRA)                                               |   0.777   |   0.752   |   0.828   |   0.583   |    1 × RTX 3090    | 4.15 hours  |     $ 4.15     |
+    | OpenAI Fine-tune                                             |   0.878   | **0.887** |   0.883   |     -     |         -          |      -      |       -        |
+    | GPT-4                                                        |   0.833   |   0.630   |   0.808   |     -     |         -          |      -      |       -        |
+    | FinBERT                                                      |   0.880   |   0.596   |   0.733   |   0.538   | 4 × NVIDIA K80 GPU |      -      |       -        |
+    | Llama2-7B                                                    |   0.390   |   0.800   |   0.296   |   0.503   |    2048 × A100     |   21 days   | $ 4.23 million |
+    | BloombergGPT                                                 |   0.511   |   0.751   |     -     |     -     |     512 × A100     |   53 days   | $ 2.67 million |
+  
+    **Cost per GPU hour.** For **A100 GPUs**, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**. For **RTX 3090**, we assume its cost per hour is approximately **$1.0**, which is actually much higher than available GPUs from platforms like vast.ai.
+  
+  * Reproduce the results by running [benchmarks](./fingpt/FinGPT_v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
+  * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT_v3/training_8bit/train_Llama2_13B.ipynb) in 8bit or this [notebook](./fingpt/FinGPT_v3/training_int4/train.ipynb) in int4 (QLoRA)
+  
+* [FinGPT V1](./fingpt)
+  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
+ 
+
+### Milestone of AI Robo-Advisor: FinGPT-Forecaster
+
+Try the latest released FinGPT-Forecaster demo at our [HuggingFace Space](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster)
+
+![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
+
+Enter the following inputs:
+
+1) ticker symbol (e.g. AAPL, MSFT, NVDA)
+2) the day from which you want the prediction to happen (yyyy-mm-dd)
+3) the number of past weeks where market news are retrieved
+4) whether to add the latest basic financials as additional information
+
+Click Submit！ And you'll be responded with a well-rounded analysis of the company and a prediction for next week's stock price movement!
+
+For detailed and more customized implementation, please refer to [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)
+
+
 ## Instruction Tuning Datasets and Models
 The datasets we used, and the **multi-task financial LLM** models are available at <https://huggingface.co/FinGPT>
 
@@ -75,60 +130,6 @@ The datasets we used, and the **multi-task financial LLM** models are available 
   | [fingpt-mt_qwen-7b_lora](https://huggingface.co/FinGPT/fingpt-mt_qwen-7b_lora) | Fine-tuned qwen-7b model with LoRA | Multi-Task |
   | [fingpt-sentiment_llama2-13b_lora](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) | Fine-tuned llama2-13b model with LoRA | Single-Task |
   | [fingpt-forecaster_dow30_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) | Fine-tuned llama2-7b model with LoRA | Single-Task |
-
-
-## FinGPT Demos: 
-
-### Current State-of-the-arts for Financial Sentiment Analysis
-
-* [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
-  
-  * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
-  
-  * [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
-  
-  * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
-  
-  * Benchmark Results:
-  
-  * | Weighted F1                                                  |    FPB    |  FiQA-SA  |   TFNS    |   NWGI    |      Devices       |    Time     |      Cost      |
-    | ------------------------------------------------------------ | :-------: | :-------: | :-------: | :-------: | :----------------: | :---------: | :------------: |
-    | [FinGPT v3.3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora)| **0.882** |   0.874   | **0.903** | **0.643** |    1 × RTX 3090    | 17.25 hours |     $17.25     |
-    | FinGPT v3.2|   0.850   |   0.860   |   0.894   |   0.636   |      1 × A100      |  5.5 hours  |    $ 22.55     |
-    | FinGPT v3.1|   0.855   |   0.850   |   0.875   |   0.642   |      1 × A100      |  5.5 hours  |    $ 22.55     |
-    | FinGPT (8bit)                                                |   0.855   |   0.847   |   0.879   |   0.632   |    1 × RTX 3090    | 6.47 hours  |     $ 6.47     |
-    | FinGPT (QLoRA)                                               |   0.777   |   0.752   |   0.828   |   0.583   |    1 × RTX 3090    | 4.15 hours  |     $ 4.15     |
-    | OpenAI Fine-tune                                             |   0.878   | **0.887** |   0.883   |     -     |         -          |      -      |       -        |
-    | GPT-4                                                        |   0.833   |   0.630   |   0.808   |     -     |         -          |      -      |       -        |
-    | FinBERT                                                      |   0.880   |   0.596   |   0.733   |   0.538   | 4 × NVIDIA K80 GPU |      -      |       -        |
-    | Llama2-7B                                                    |   0.390   |   0.800   |   0.296   |   0.503   |    2048 × A100     |   21 days   | $ 4.23 million |
-    | BloombergGPT                                                 |   0.511   |   0.751   |     -     |     -     |     512 × A100     |   53 days   | $ 2.67 million |
-  
-    **Cost per GPU hour.** For **A100 GPUs**, the AWS p4d.24xlarge instance, equipped with 8 A100 GPUs is used as a benchmark to estimate the costs. Note that BloombergGPT also used p4d.24xlarge As of July 11, 2023, the hourly rate for this instance stands at $32.773. Consequently, the estimated cost per GPU hour comes to $32.77 divided by 8, resulting in approximately **$4.10**. With this value as the reference unit price (1 GPU hour). **BloombergGPT estimated cost= 512 x 53 x 24 = 651,264 GPU hours x $4.10 = $2,670,182.40**. For **RTX 3090**, we assume its cost per hour is approximately **$1.0**, which is actually much higher than available GPUs from platforms like vast.ai.
-  
-  * Reproduce the results by running [benchmarks](./fingpt/FinGPT_v3/benchmark/benchmarks.ipynb), and the detailed tutorial is on the way.
-  * Finetune your own FinGPT v3 model with the LoRA method on only an RTX 3090 with this [notebook](./fingpt/FinGPT_v3/training_8bit/train_Llama2_13B.ipynb) in 8bit or this [notebook](./fingpt/FinGPT_v3/training_int4/train.ipynb) in int4 (QLoRA)
-  
-* [FinGPT V1](./fingpt)
-  + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
- 
-
-### Milestone of AI Robo-Advisor: FinGPT-Forecaster
-
-Try our latest released FinGPT-Forecaster demo at <https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster>
-
-![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
-
-Enter the following inputs:
-
-1) ticker symbol (e.g. AAPL, MSFT, NVDA)
-2) the day from which you want the prediction to happen (yyyy-mm-dd)
-3) the number of past weeks where market news are retrieved
-4) whether to add the latest basic financials as additional information
-
-Click Submit！ And you'll be responded with a well-rounded analysis of the company and a prediction for next week's stock price movement!
-
-For detailed and more customized implementation, please refer to [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)
 
   
 ## Tutorials
