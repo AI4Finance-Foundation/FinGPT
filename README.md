@@ -77,7 +77,10 @@ The datasets we used, and the **multi-task financial LLM** models are available 
   | [fingpt-forecaster_dow30_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) | Fine-tuned llama2-7b model with LoRA | Single-Task |
 
 
-## FinGPT Demos: Current State-of-the-arts for Financial Sentiment Analysis
+## FinGPT Demos: 
+
+### Current State-of-the-arts for Financial Sentiment Analysis
+
 * [FinGPT V3 (Updated on 10/12/2023)](./fingpt)
   
   * What's new: **Best trainable and inferable FinGPT for sentiment analysis on a single RTX 3090, which is even better than GPT-4 and ChatGPT Finetuning.**
@@ -108,6 +111,24 @@ The datasets we used, and the **multi-task financial LLM** models are available 
   
 * [FinGPT V1](./fingpt)
   + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
+ 
+
+### Milestone of AI Robo-Advisor: FinGPT-Forecaster
+
+Try our latest released FinGPT-Forecaster demo at <https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster>
+
+![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
+
+Enter the following inputs:
+
+1) ticker symbol (e.g. AAPL, MSFT, NVDA)
+2) the day from which you want the prediction to happen (yyyy-mm-dd)
+3) the number of past weeks where market news are retrieved
+4) whether to add the latest basic financials as additional information
+
+Click Submit！ And you'll be responded with a well-rounded analysis of the company and a prediction for next week's stock price movement!
+
+For detailed and more customized implementation, please refer to [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)
 
   
 ## Tutorials
