@@ -13,6 +13,7 @@
 Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
 
 [Blueprint of FinGPT](https://arxiv.org/abs/2306.06031)
+
 <https://huggingface.co/FinGPT>
 
 [![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
