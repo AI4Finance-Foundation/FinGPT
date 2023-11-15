@@ -23,6 +23,7 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
  - [Paper Acceptance] Oct, 2023: ["FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets"]() is accepted🎉 by [Instruction Workshop](https://an-instructive-workshop.github.io/) @ NeurIPS 2023 
  - [Paper Acceptance] Oct, 2023: ["FinGPT: Democratizing Internet-scale Data for Financial Large Language Models"]() is accepted🎉 by [Instruction Workshop](https://an-instructive-workshop.github.io/) @ NeurIPS 2023
  - [Model Release] Oct, 2023: We release the [financial multi-task LLMs](https://huggingface.co/FinGPT) 🔥 produced when evaluating base-LLMs on [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark)
+ -  - [Paper Acceptance] Oct, 2023: ["Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models"](https://arxiv.org/abs/2310.04027) is accepted🎉 by [ACM International Conference on AI in Finance (ICAIF-23)](https://ai-finance.org/icaif-23-accepted-papers/)
  - [Paper Acceptance] Sep, 2023: ["Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models"](https://arxiv.org/abs/2306.12659) is accepted🎉 by [FinLLM 2023](https://finllm.github.io/workshop/#/)@IJCAI 2023
  - [Model Release] ...
 
