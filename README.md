@@ -25,10 +25,9 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
  - [Model Release] Oct, 2023: We release the [financial multi-task LLMs](https://huggingface.co/FinGPT) 🔥 produced when evaluating base-LLMs on [FinGPT-Benchmark](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Benchmark)
  - [Paper Acceptance] Sep, 2023: ["Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models"](https://arxiv.org/abs/2310.04027) is accepted🎉 by [ACM International Conference on AI in Finance (ICAIF-23)](https://ai-finance.org/icaif-23-accepted-papers/)
  - [Model Release] Aug, 2023: We release the [financial sentiment analysis model](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) 🔥
- - [Paper Acceptance] July, 2023: ["Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models"](https://arxiv.org/abs/2306.12659) is accepted🎉 by [FinLLM 2023](https://finllm.github.io/workshop/#/fcb)@IJCAI 2023
- - [Paper Acceptance] July, 2023: ["FinGPT: Open-Source Financial Large Language Models"](https://arxiv.org/abs/2306.06031) is accepted🎉 by [FinLLM 2023](https://finllm.github.io/workshop/#/fcb)@IJCAI 2023
-
- - [Model Release] ...
+ - [Paper Acceptance] Jul, 2023: ["Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models"](https://arxiv.org/abs/2306.12659) is accepted🎉 by [FinLLM 2023](https://finllm.github.io/workshop/#/fcb)@IJCAI 2023
+ - [Paper Acceptance] Jul, 2023: ["FinGPT: Open-Source Financial Large Language Models"](https://arxiv.org/abs/2306.06031) is accepted🎉 by [FinLLM 2023](https://finllm.github.io/workshop/#/fcb)@IJCAI 2023
+ - [Medium Blog] Jun 2023: [FinGPT: Powering the Future of Finance with 20 Cutting-Edge Applications](https://medium.datadriveninvestor.com/fingpt-powering-the-future-of-finance-with-20-cutting-edge-applications-7c4d082ad3d8)
 
 ## Why FinGPT?
 
