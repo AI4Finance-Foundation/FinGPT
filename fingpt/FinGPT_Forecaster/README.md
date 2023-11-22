@@ -45,7 +45,7 @@ base_model = AutoModelForCausalLM.from_pretrained(
     device_map="auto",
     torch_dtype=torch.float16,   # optional if you have enough VRAM
 )
-tokenizer = AutoTokenizer.from_pretrained('FinGPT/fingpt-forecaster_dow30_llama2-7b_lora')
+tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
 
 model = PeftModel.from_pretrained('FinGPT/fingpt-forecaster_dow30_llama2-7b_lora')
 model = model.eval()
