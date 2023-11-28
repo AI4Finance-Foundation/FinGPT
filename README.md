@@ -38,6 +38,24 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 3). The key technology is "RLHF (Reinforcement learning from human feedback)", which is missing in BloombergGPT. RLHF enables an LLM model to learn individual preferences (risk-aversion level, investing habits, personalized robo-advisor, etc.), which is the "secret" ingredient of ChatGPT and GPT4.
 
 
+### Milestone of AI Robo-Advisor: FinGPT-Forecaster
+
+Try the latest released FinGPT-Forecaster demo at our [HuggingFace Space](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster)
+
+![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
+
+Enter the following inputs:
+
+1) ticker symbol (e.g. AAPL, MSFT, NVDA)
+2) the day from which you want the prediction to happen (yyyy-mm-dd)
+3) the number of past weeks where market news are retrieved
+4) whether to add the latest basic financials as additional information
+
+Click Submit！ And you'll be responded with a well-rounded analysis of the company and a prediction for next week's stock price movement!
+
+For detailed and more customized implementation, please refer to [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)
+
+
 ## FinGPT Demos: 
 
 ### Current State-of-the-arts for Financial Sentiment Analysis
@@ -73,25 +91,6 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 * [FinGPT V1](./fingpt)
   + **FinGPT by finetuning ChatGLM2 / Llama2 with LoRA with the market-labeled data for the Chinese Market**
  
-
-### Milestone of AI Robo-Advisor: FinGPT-Forecaster
-
-Try the latest released FinGPT-Forecaster demo at our [HuggingFace Space](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster)
-
-![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
-
-Enter the following inputs:
-
-1) ticker symbol (e.g. AAPL, MSFT, NVDA)
-2) the day from which you want the prediction to happen (yyyy-mm-dd)
-3) the number of past weeks where market news are retrieved
-4) whether to add the latest basic financials as additional information
-
-Click Submit！ And you'll be responded with a well-rounded analysis of the company and a prediction for next week's stock price movement!
-
-For detailed and more customized implementation, please refer to [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)
-
-
 ## Instruction Tuning Datasets and Models
 The datasets we used, and the **multi-task financial LLM** models are available at <https://huggingface.co/FinGPT>
 
