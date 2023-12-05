@@ -2,18 +2,20 @@
 
 ## Ⅰ. Results & Findings
 
-|             Metrics$^{[1]}$             | Llama2-chat | Ours  | Improvement |
+|             Metrics $^{[1]}$             | Llama2-chat | Ours  | Improvement |
 | :-------------------------------------: | :---------: | :---: | :---------: |
-| Accuracy / Micro f1 (7 classes$^{[2]}$) |    12.61    | 14.59 |   15.7 %    |
-|     Weighted F1 (7 classes$^{[2]}$)     |    4.17     | 11.11 |    166 %    |
-|      Macro F1 (7 classse$^{[2]}$)       |    0.16     | 9.23  |   1000+ %   |
-| Accuracy / Micro f1 (3 classes$^{[3]}$) |    26.85    | 41.35 |    54 %     |
-|     Weighted F1 (3 classes$^{[3]}$)     |    14.29    | 35.67 |   149.6 %   |
-|      Macro F1 (3 classes$^{[3]}$)       |    12.69    | 22.73 |   79.12 %   |
+| Accuracy / Micro f1 (7 classes $^{[2]}$ ) |    12.61    | 14.59 |   15.7 %    |
+|     Weighted F1 (7 classes $^{[2]}$ )     |    4.17     | 11.11 |    166 %    |
+|      Macro F1 (7 classse $^{[2]}$ )       |    0.16     | 9.23  |   1000+ %   |
+| Accuracy / Micro f1 (3 classes $^{[3]}$ ) |    26.85    | 41.35 |    54 %     |
+|     Weighted F1 (3 classes $^{[3]}$ )     |    14.29    | 35.67 |   149.6 %   |
+|      Macro F1 (3 classes $^{[3]}$ )       |    12.69    | 22.73 |   79.12 %   |
 
 $^{[1]}$ The groud-true label for the result is generated from the market, please refer to 2.3 section.
+
 $^{[2]}$ 7 classse means the result is one of `Severely Negative`, `Moderately Negative`, `Mildly Negative`, `Neutral`, `Mildly Positive`, `Moderately Positive`, `Severely Positive`. 
-$^{[3]}$For 3 classes, `Severely Negative` and `Moderately Negative` are considered `Negative`; `Mildly Negative`,  `Neutral` and `Mildly Positive` are considered `Neutral`; `Severely Positive`and `Moderately Positive` are considered `Positive`
+
+$^{[3]}$ For 3 classes, `Severely Negative` and `Moderately Negative` are considered `Negative`; `Mildly Negative`,  `Neutral` and `Mildly Positive` are considered `Neutral`; `Severely Positive`and `Moderately Positive` are considered `Positive`
 
 * The analysis of LLM itself might not align with the market, but we are able to finetune our model to make it align with the market.
 
