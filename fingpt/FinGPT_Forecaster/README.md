@@ -37,6 +37,7 @@ First let's load the model:
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
+import torch
 
 
 base_model = AutoModelForCausalLM.from_pretrained(
