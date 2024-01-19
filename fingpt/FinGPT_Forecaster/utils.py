@@ -49,7 +49,7 @@ def parse_model_name(name, from_remote=False):
     if name == 'chatglm2':
         return 'THUDM/chatglm2-6b' if from_remote else 'base_models/chatglm2-6b'
     elif name == 'llama2':
-        return 'meta-llama/Llama-2-7b-chat-hf' if from_remote else 'base_models/Llama-2-7b-chat-hf'
+        return 'meta-llama/Llama-2-7b-chat-hf' # if from_remote else 'base_models/Llama-2-7b-chat-hf'
     else:
         raise ValueError(f"Undefined base model {name}")
         
@@ -75,11 +75,11 @@ def load_dataset(names, from_remote=False):
 
 def parse_answer(answer):
     
-    match_res = re.match(r"^\s*\[Positive Developments\]:\s*(.*)\s*\[Potential Concerns\]:\s*(.*)\s*\[Prediction & Analysis\]:\s*(.*)\s*$", answer, flags=re.DOTALL)
+    match_res = re.match(r"^\s*\[Positive Developments\]:\s*(.*)\s*\[Potential Concerns\]:\s*(.*)\s*\[Prediction (&|and) Analysis\]:\s*(.*)\s*$", answer, flags=re.DOTALL)
     if not match_res:
         return None
     
-    pros, cons, pna = match_res.group(1), match_res.group(2), match_res.group(3)
+    pros, cons, pna = match_res.group(1), match_res.group(2), match_res.group(4)
         
     match_res = re.match(r'^Prediction:\s*(.*)\s*Analysis:\s*(.*)\s*$', pna, flags=re.DOTALL)
     if not match_res:
