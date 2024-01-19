@@ -27,7 +27,7 @@ from peft import (
 )
 
 # Replace with your own api_key and project name
-os.environ['WANDB_API_KEY'] = 'ecf1e5e4f47441d46822d38a3249d62e8fc94db4'
+os.environ['WANDB_API_KEY'] = ''    # TODO: Replace with your environment variable
 os.environ['WANDB_PROJECT'] = 'fingpt-forecaster'
 
 
@@ -97,12 +97,14 @@ def main(args):
     tokenizer.padding_side = "right"
     
     # load data
-    dataset_list = load_dataset(args.dataset, args.from_remote)
+    dataset_fname = "./data/" + args.dataset
+    dataset_list = load_dataset(dataset_fname, args.from_remote)
     
     dataset_train = datasets.concatenate_datasets([d['train'] for d in dataset_list]).shuffle(seed=42)
     
     if args.test_dataset:
-        dataset_list = load_dataset(args.test_dataset, args.from_remote)
+        test_dataset_fname = "./data/" + args.test_dataset
+        dataset_list = load_dataset(test_dataset_fname, args.from_remote)
             
     dataset_test = datasets.concatenate_datasets([d['test'] for d in dataset_list])
     
