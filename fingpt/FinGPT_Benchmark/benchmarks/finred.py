@@ -8,8 +8,9 @@ from functools import partial
 import re
 import sys
 import numpy as np
+from fingpt.FinGPT_Benchmark.utils import *
+from pathlib import Path
 sys.path.append('../')
-from utils import *
     
 
 relations = [
@@ -102,7 +103,7 @@ def calc_metric(gt_list, pred_list):
 
 def test_re(args, model, tokenizer):
 
-    dataset = load_from_disk('../data/fingpt-finred-re')['test']#.select(range(50))
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/fingpt-finred-re')['test']
     dataset = dataset.train_test_split(0.2, seed=42)['test']
     dataset = dataset.map(partial(test_mapping, args), load_from_cache_file=False)
     

@@ -6,6 +6,7 @@ from datasets import load_dataset, load_from_disk
 from tqdm import tqdm
 import datasets
 import torch
+from pathlib import Path
 
 dic = {
     0:"negative",
@@ -32,7 +33,7 @@ def change_target(x):
 def test_tfns(args, model, tokenizer, prompt_fun=None):
     batch_size = args.batch_size
     # dataset = load_dataset('zeroshot/twitter-financial-news-sentiment')
-    dataset = load_from_disk('../data/twitter-financial-news-sentiment')
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/twitter-financial-news-sentiment')
     dataset = dataset['validation']
     dataset = dataset.to_pandas()
     dataset['label'] = dataset['label'].apply(lambda x:dic[x])
