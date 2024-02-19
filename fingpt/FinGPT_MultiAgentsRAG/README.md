@@ -1,10 +1,22 @@
-# MultiAgentsRAG
-This is a experiment to mitigate fact-conflict hallucination in LLM, and will do further more experiment on financial domain
+# Financial Language Models for Reducing Hallucinations 💡
 
-1) I choose the FiQA as the fine-tuning data to trained two base-models --- Llama2-7b and ChatGLM2-6b under the help of LoRA. And also, I would to take the advantage of thre evaluation Benchmarks -- MMLU, HaluEval, and TruthfulQA, to test the ability to mitigate the hallucination.
+## Introduction 🚀
 
-2) training your baselines
- 
-3) training your experiments: the key parts includes: Multi-Agents Debate (MAD) and Retrieval Augmentation Generation(RAG), (1) for the Multi-Agents parts, we basically set up to 2 agents because of the limited computation resource, and set up several debate rounds. (2) for RAG part, we also utilize some reranking strategies and query rewriting strategies to improve the chance of getting more relevant documents as context.
+Welcome to our project repository, where we aim to address the challenge of fact-conflict hallucinations in Large Language Models (LLMs) with a focus on the financial domain. Our approach integrates innovative techniques like Multi-Agent Systems (MAS) and Retrieval-Augmented Generation (RAG) to enhance the factuality of LLM outputs.
 
-4) evaluating your model output (scoring, sampling, etc)
+## Project Overview 📊
+
+- **Hallucination Mitigation**: Tackling financial fact-conflict hallucinations with our novel framework.
+- **MAS Debates**: Implementing a debate framework within MAS to improve reasoning and accuracy.
+- **RAG**: Leveraging up-to-date external knowledge to inform and refine the language model responses.
+- **Financial Expertise**: Fine-tuning our models with rich financial datasets for domain-specific expertise.
+
+## Dataset 📁
+
+We utilize diverse financial datasets including FiQA and WealthAlpaca, equipping our models with robust financial knowledge.
+
+## Methodology 🛠️
+
+1. **Instruction-Tuning**: Leveraging instruction-tuning to enhance the financial acumen of our models.
+2. **MAS Integration**: Orchestrating debates among agents to critique and refine responses.
+3. **RAG Workflow**: Incorporating a custom retrieval engine to supplement model responses with external knowledge.
