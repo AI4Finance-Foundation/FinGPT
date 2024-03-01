@@ -159,7 +159,7 @@ The datasets we used, and the **multi-task financial LLM** models are available 
 * FinGPT Framework: Open-Source Financial Large Language Models
 
 <div align="center">
-<img align="center" src=figs/FinGPT_framework_20231003.png>
+<img align="center" src=figs/FinGPT_framework_20240301.png>
 </div>
 
 * [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
