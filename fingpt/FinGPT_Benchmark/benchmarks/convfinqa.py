@@ -8,9 +8,9 @@ from functools import partial
 import re
 import sys
 import numpy as np
+from fingpt.FinGPT_Benchmark.utils import *
+from pathlib import Path
 sys.path.append('../')
-from utils import *
-    
 
 def cvt_text_to_pred(text):
     if not text:
@@ -32,9 +32,8 @@ def map_output(feature):
     return {'label': label, 'pred': pred}
 
 
-def test_convfinqa(args, model, tokenizer):
-
-    dataset = load_from_disk('../data/fingpt-convfinqa')['test']#.select(range(30))
+    
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/fingpt-convfinqa')['test']
     dataset = dataset.map(partial(test_mapping, args), load_from_cache_file=False)
     
     def collate_fn(batch):

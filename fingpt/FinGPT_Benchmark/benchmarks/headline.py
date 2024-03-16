@@ -5,11 +5,11 @@ import datasets
 import torch
 from torch.utils.data import DataLoader
 from functools import partial
-
+from pathlib import Path
+from fingpt.FinGPT_Benchmark.utils import *
 
 import sys
 sys.path.append('../')
-from utils import *
     
     
     
@@ -34,8 +34,8 @@ def map_output(feature):
 
 def test_headline(args, model, tokenizer):
     
-    # dataset = load_from_disk('../data/fingpt-headline')['test']#.select(range(300))
-    dataset = load_from_disk('../data/fingpt-headline-instruct')['test']#.select(range(300))
+    # dataset = load_from_disk('../data/fingpt-headline')['test']
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/fingpt-headline-instruct')['test']
     dataset = dataset.map(partial(test_mapping, args), load_from_cache_file=False)
     
     def collate_fn(batch):
