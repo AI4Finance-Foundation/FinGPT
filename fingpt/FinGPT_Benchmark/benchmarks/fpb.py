@@ -9,6 +9,7 @@ import torch
 
 from torch.utils.data import DataLoader
 from functools import partial
+from pathlib import Path
 
 dic = {
         0:"negative",
@@ -16,7 +17,7 @@ dic = {
         2:'positive',
     }
 
-with open('sentiment_templates.txt') as f:
+with open(Path(__file__).parent / 'sentiment_templates.txt') as f:
     templates = [l.strip() for l in f.readlines()]
     
 
@@ -52,7 +53,7 @@ def vote_output(x):
 def test_fpb(args, model, tokenizer, prompt_fun=None):
     batch_size = args.batch_size
     # instructions = load_dataset("financial_phrasebank", "sentences_50agree")
-    instructions = load_from_disk("../data/financial_phrasebank-sentences_50agree/")
+    instructions = load_from_disk(Path(__file__).parent.parent / "data/financial_phrasebank-sentences_50agree/")
     instructions = instructions["train"]
     instructions = instructions.train_test_split(seed = 42)['test']
     instructions = instructions.to_pandas()
@@ -105,8 +106,8 @@ def test_fpb(args, model, tokenizer, prompt_fun=None):
 
 def test_fpb_mlt(args, model, tokenizer):
     batch_size = args.batch_size
-    # instructions = load_dataset("financial_phrasebank", "sentences_50agree")
-    dataset = load_from_disk('../data/financial_phrasebank-sentences_50agree/')
+    # dataset = load_dataset("financial_phrasebank", "sentences_50agree")
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/financial_phrasebank-sentences_50agree/')
     dataset = dataset["train"]#.select(range(300))
     dataset = dataset.train_test_split(seed=42)['test']
     dataset = dataset.to_pandas()

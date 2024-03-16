@@ -8,9 +8,9 @@ from functools import partial
 import re
 import sys
 import numpy as np
+from fingpt.FinGPT_Benchmark.utils import *
+from pathlib import Path
 sys.path.append('../')
-from utils import *
-    
 
 ent_dict = {
     'PER': 'person',
@@ -53,7 +53,7 @@ def map_output(feature):
 
 def test_ner(args, model, tokenizer):
 
-    dataset = load_from_disk('../data/fingpt-ner')['test']#.select(range(30))
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/fingpt-ner')['test']
     dataset = dataset.map(partial(test_mapping, args), load_from_cache_file=False)
     
     def collate_fn(batch):

@@ -6,6 +6,7 @@ from datasets import load_dataset, load_from_disk
 from tqdm import tqdm
 import datasets
 import torch
+from pathlib import Path
 
 dic = {
     'strong negative':"negative",
@@ -36,8 +37,7 @@ def change_target(x):
 def test_nwgi(args, model, tokenizer, prompt_fun=None):
     batch_size = args.batch_size
     # dataset = load_dataset('oliverwang15/news_with_gpt_instructions')
-    dataset = load_from_disk('../data/news_with_gpt_instructions/')
-    dataset = dataset['test'].to_pandas()
+    dataset = load_from_disk(Path(__file__).parent.parent / 'data/news_with_gpt_instructions/')
     dataset['output'] = dataset['label'].apply(lambda x:dic[x])
 
     if prompt_fun is None:
