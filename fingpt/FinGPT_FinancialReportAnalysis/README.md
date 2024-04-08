@@ -19,6 +19,8 @@ Before starting, ensure you have the following installed:
 - Jupyter Notebook
 - Necessary Python packages (pandas, matplotlib, openai, etc.)
 
+Obtain the sec-api (which is used to grab the 10-K report) from https://sec-api.io/profile for free.
+
 ## Getting Started
 
 To begin analyzing financial reports:
