@@ -25,7 +25,7 @@ Obtain the sec-api (which is used to grab the 10-K report) from https://sec-api.
 
 To begin analyzing financial reports:
 
-0. **(optional) Clone the Repository**:
+0. **(optional) Prepare the local LLM**:
    If you want to run the analysis with the locally deployed models, please download Ollama and have it running: https://ollama.com/download.
    Also, download the model you want to use in the list of available models: https://ollama.com/library with command:
    ```bash
