@@ -21,6 +21,8 @@ Before starting, ensure you have the following installed:
 
 Obtain the sec-api (which is used to grab the 10-K report) from https://sec-api.io/profile for free.
 
+(Optional) Obtain the fmp api for target price (paid) from https://site.financialmodelingprep.com/developer/docs/dashboard.
+
 ## Getting Started
 
 To begin analyzing financial reports:
