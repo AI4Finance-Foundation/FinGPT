@@ -1,4 +1,4 @@
-<center>AI4Finance</center> 
+<center> AI4Finance </center> 
 
 # FinGPT: Open-Source Financial Large Language Models
 [![Downloads](https://static.pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
