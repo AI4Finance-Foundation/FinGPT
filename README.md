@@ -8,7 +8,10 @@
 [![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![PyPI](https://img.shields.io/pypi/v/fingpt.svg)](https://pypi.org/project/fingpt/)
 ![License](https://img.shields.io/github/license/AI4Finance-Foundation/fingpt.svg?color=brightgreen)
-
+![](https://img.shields.io/github/issues-raw/AI4Finance-Foundation/fingpt?label=Issues)
+![](https://img.shields.io/github/issues-closed-raw/AI4Finance-Foundation/fingpt?label=Closed+Issues)
+![](https://img.shields.io/github/issues-pr-raw/AI4Finance-Foundation/fingpt?label=Open+PRs)
+![](https://img.shields.io/github/issues-pr-closed-raw/AI4Finance-Foundation/fingpt?label=Closed+PRs)
 
 <div align="center">
 <img align="center" src=figs/logo_transparent_background.png width="40%"/>
@@ -21,6 +24,9 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 <https://huggingface.co/FinGPT>
 
 [![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
+
+![Visitors](https://api.visitorbadge.io/api/VisitorHit?user=AI4Finance-Foundation&repo=FinGPT&countColor=%23B17A)
+
 
 ## What's New:
  - [Model Release] Nov, 2023: We release [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)!  🔥[Demo](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster), [Medium Blog](https://medium.datadriveninvestor.com/introducing-fingpt-forecaster-the-future-of-robo-advisory-services-50add34e3d3c) & [Model](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) are available on Huggingface🤗!
