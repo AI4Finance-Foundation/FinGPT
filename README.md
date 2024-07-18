@@ -52,6 +52,8 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 
 Try the latest released FinGPT-Forecaster demo at our [HuggingFace Space](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster)
 
+The dataset for FinGPT-Forecaster: https://huggingface.co/datasets/FinGPT/fingpt-forecaster-dow30-202305-202405
+
 ![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
 
 Enter the following inputs:
