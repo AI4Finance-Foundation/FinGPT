@@ -5,7 +5,7 @@
 # FinGPT: Open-Source Financial Large Language Models
 [![Downloads](https://static.pepy.tech/badge/fingpt)](https://pepy.tech/project/fingpt)
 [![Downloads](https://static.pepy.tech/badge/fingpt/week)](https://pepy.tech/project/fingpt)
-[![Python 3.8](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![PyPI](https://img.shields.io/pypi/v/fingpt.svg)](https://pypi.org/project/fingpt/)
 ![License](https://img.shields.io/github/license/AI4Finance-Foundation/fingpt.svg?color=brightgreen)
 ![](https://img.shields.io/github/issues-raw/AI4Finance-Foundation/fingpt?label=Issues)
@@ -78,7 +78,7 @@ For detailed and more customized implementation, please refer to [FinGPT-Forecas
   
   * [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) series are LLMs finetuned with the LoRA method on the News and Tweets sentiment analysis dataset which achieve the best scores on most of the financial sentiment analysis datasets with low cost.
   
-  * FinGPT v3.3 use llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
+  * FinGPT v3.3 uses llama2-13b as base model; FinGPT v3.2 uses llama2-7b as base model; FinGPT v3.1 uses chatglm2-6B as base model.
   
   * Benchmark Results:
   
