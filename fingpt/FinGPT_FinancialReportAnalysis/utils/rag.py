@@ -280,9 +280,9 @@ class Raptor:
         print(f"--Generated {len(all_clusters)} clusters--")
 
         # Summarization
-        template = """Here is a sub-set of LangChain Expression Langauge doc. 
+        template = """Here is a sub-set of LangChain Expression Language doc. 
         
-        LangChain Expression Langauge provides a way to compose chain in LangChain.
+        LangChain Expression Language provides a way to compose chain in LangChain.
         
         Give a detailed summary of the documentation provided.
         
