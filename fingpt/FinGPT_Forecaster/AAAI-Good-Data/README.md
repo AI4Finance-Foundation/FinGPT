@@ -1,4 +1,3 @@
-![title](figs/title.png)
 
 ## What is FinGPT-Forecaster?
 - FinGPT-Forecaster takes market news and optional basic financials related to the specified company from the past few weeks as input and responds with the company's **positive developments** and **potential concerns**. Then it gives out a **prediction** of stock price movement for the coming week and its **analysis** summary.
