@@ -8,28 +8,35 @@ import torch
 import gradio as gr
 import pandas as pd
 import yfinance as yf
+from dotenv import load_dotenv
 from pynvml import *
 from peft import PeftModel
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 
-
-access_token = os.environ["HF_TOKEN"]
-finnhub_client = finnhub.Client(api_key=os.environ["FINNHUB_API_KEY"])
+load_dotenv(override=True)
+access_token = os.getenv("HF_TOKEN")
+finnhub_client = finnhub.Client(api_key=os.getenv("FINNHUB_API_KEY"))
+print(finnhub_client.api_key)
+# access_token = os.environ["HF_TOKEN"]
+# finnhub_client = finnhub.Client(api_key=os.environ["FINNHUB_API_KEY"])
 
 base_model = AutoModelForCausalLM.from_pretrained(
     'meta-llama/Llama-2-7b-chat-hf',
     token=access_token,
+    cache_dir="E:/FinGPT/llama_cache",
     trust_remote_code=True, 
-    device_map="auto",
+    device_map="cpu",
     torch_dtype=torch.float16,
     offload_folder="offload/"
 )
 model = PeftModel.from_pretrained(
     base_model,
     'FinGPT/fingpt-forecaster_dow30_llama2-7b_lora',
-    offload_folder="offload/"
+    offload_folder="E:/FinGPT/offload/",
+    cache_dir="E:/FinGPT/llama_cache"
+    # device_map="cpu"
 )
 model = model.eval()
 
@@ -49,10 +56,13 @@ SYSTEM_PROMPT = "You are a seasoned stock market analyst. Your task is to list t
 
 def print_gpu_utilization():
     
-    nvmlInit()
-    handle = nvmlDeviceGetHandleByIndex(0)
-    info = nvmlDeviceGetMemoryInfo(handle)
-    print(f"GPU memory occupied: {info.used//1024**2} MB.")
+    try:
+        nvmlInit()
+        handle = nvmlDeviceGetHandleByIndex(0)
+        info = nvmlDeviceGetMemoryInfo(handle)
+        print(f"GPU memory occupied: {info.used // 1024 ** 2} MB.")
+    except Exception as e:
+        print(f"GPU utilization not available: {e}")
 
 
 def get_curday():
@@ -81,12 +91,12 @@ def get_stock_data(stock_symbol, steps):
     for date in steps[:-1]:
         for i in range(len(stock_data)):
             if available_dates[i] >= date:
-                prices.append(stock_data['Close'][i])
+                prices.append(stock_data['Close'].iloc[i])
                 dates.append(datetime.strptime(available_dates[i], "%Y-%m-%d"))
                 break
 
     dates.append(datetime.strptime(available_dates[-1], "%Y-%m-%d"))
-    prices.append(stock_data['Close'][-1])
+    prices.append(stock_data['Close'].iloc[-1])
     
     return pd.DataFrame({
         "Start Date": dates[:-1], "End Date": dates[1:],
@@ -136,26 +146,50 @@ def get_company_prompt(symbol):
 
 
 def get_prompt_by_row(symbol, row):
+    try:
+        start_date = row['Start Date'].strftime('%Y-%m-%d') if not isinstance(row['Start Date'], str) else row['Start Date']
+        end_date = row['End Date'].strftime('%Y-%m-%d') if not isinstance(row['End Date'], str) else row['End Date']
 
-    start_date = row['Start Date'] if isinstance(row['Start Date'], str) else row['Start Date'].strftime('%Y-%m-%d')
-    end_date = row['End Date'] if isinstance(row['End Date'], str) else row['End Date'].strftime('%Y-%m-%d')
-    term = 'increased' if row['End Price'] > row['Start Price'] else 'decreased'
-    head = "From {} to {}, {}'s stock price {} from {:.2f} to {:.2f}. Company news during this period are listed below:\n\n".format(
-        start_date, end_date, symbol, term, row['Start Price'], row['End Price'])
-    
-    news = json.loads(row["News"])
-    news = ["[Headline]: {}\n[Summary]: {}\n".format(
-        n['headline'], n['summary']) for n in news if n['date'][:8] <= end_date.replace('-', '') and \
-        not n['summary'].startswith("Looking for stock market analysis and research with proves results?")]
+        # Safe extraction
+        start_price = row['Start Price']
+        end_price = row['End Price']
 
-    basics = json.loads(row['Basics'])
-    if basics:
-        basics = "Some recent basic financials of {}, reported at {}, are presented below:\n\n[Basic Financials]:\n\n".format(
-            symbol, basics['period']) + "\n".join(f"{k}: {v}" for k, v in basics.items() if k != 'period')
-    else:
-        basics = "[Basic Financials]:\n\nNo basic financial reported."
-    
-    return head, news, basics
+        # Handle Series or scalar
+        if isinstance(start_price, pd.Series):
+            start_price = start_price.iloc[0]
+        if isinstance(end_price, pd.Series):
+            end_price = end_price.iloc[0]
+
+        start_price = float(start_price) if pd.notna(start_price) else 0.0
+        end_price = float(end_price) if pd.notna(end_price) else 0.0
+
+        term = 'increased' if end_price > start_price else 'decreased'
+
+        head = "From {} to {}, {}'s stock price {} from {:.2f} to {:.2f}. Company news during this period are listed below:\n\n".format(
+            start_date, end_date, symbol, term, start_price, end_price
+        )
+
+        news = json.loads(row["News"])
+        news = [
+            "[Headline]: {}\n[Summary]: {}\n".format(n['headline'], n['summary'])
+            for n in news
+            if n['date'][:8] <= end_date.replace('-', '') and
+            not n['summary'].startswith("Looking for stock market analysis")
+        ]
+
+        basics = json.loads(row.get('Basics', '{}'))
+        if basics:
+            basics_str = "Some recent basic financials of {}, reported at {}, are presented below:\n\n[Basic Financials]:\n\n".format(
+                symbol, basics.get('period', 'N/A')) + \
+                "\n".join(f"{k}: {v}" for k, v in basics.items() if k != 'period')
+        else:
+            basics_str = "[Basic Financials]:\n\nNo basic financial reported."
+
+        return head, news, basics_str
+
+    except Exception as e:
+        print("Error in get_prompt_by_row:", e)
+        raise gr.Error(f"Failed to process row for symbol {symbol}: {e}")
 
 
 def sample_news(news, k=5):
@@ -260,7 +294,7 @@ def predict(ticker, date, n_weeks, use_basics):
     print("Inputs loaded onto devices.")
         
     res = model.generate(
-        **inputs, max_length=4096, do_sample=True,
+        **inputs, max_length=6000, do_sample=True,
         eos_token_id=tokenizer.eos_token_id,
         use_cache=True, streamer=streamer
     )
@@ -317,4 +351,4 @@ For more detailed and customized implementation, refer to our FinGPT project: <h
 """
 )
 
-demo.launch()
+demo.launch(share=True)
