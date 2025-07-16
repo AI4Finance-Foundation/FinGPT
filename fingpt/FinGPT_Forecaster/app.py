@@ -35,7 +35,6 @@ model = PeftModel.from_pretrained(
     'FinGPT/fingpt-forecaster_dow30_llama2-7b_lora',
     offload_folder="E:/FinGPT/offload/",
     cache_dir="E:/FinGPT/llama_cache"
-    # device_map="cpu"
 )
 model = model.eval()
 
