@@ -18,7 +18,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 load_dotenv(override=True)
 access_token = os.getenv("HF_TOKEN")
 finnhub_client = finnhub.Client(api_key=os.getenv("FINNHUB_API_KEY"))
-print(finnhub_client.api_key)
 # access_token = os.environ["HF_TOKEN"]
 # finnhub_client = finnhub.Client(api_key=os.environ["FINNHUB_API_KEY"])
 
