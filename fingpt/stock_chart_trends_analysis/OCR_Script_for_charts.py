@@ -4,6 +4,7 @@ import re
 import datetime
 import matplotlib.pyplot as plt
 
+
 def normalize_ocr_texts(ocr_texts):
     cleaned = []
     for t in ocr_texts:
@@ -12,8 +13,7 @@ def normalize_ocr_texts(ocr_texts):
             (r'(^|\s)0\.', r'\1O:'), (r'\bO\.', 'O:'), (r'\bH\.', 'H:'),
             (r'\bL\.', 'L:'), (r'\bC\.', 'C:'), (r'\bV\.', 'V:')
         ]
-        for p, r_ in substitutions:
-            t = re.sub(p, r_, t)
+        for p, r_ in substitutions: t = re.sub(p, r_, t)
         t = t.replace('，', ',').replace('：', ':')
         cleaned.append(t.strip())
     return cleaned
@@ -21,22 +21,32 @@ def normalize_ocr_texts(ocr_texts):
 def convert_compact_number(val):
     val = val.replace(',', '').strip().lower()
     try:
-        if val.endswith('k'):
-            return float(val[:-1]) * 1e3
-        if val.endswith('m'):
-            return float(val[:-1]) * 1e6
-        if val.endswith('b'):
-            return float(val[:-1]) * 1e9
+        if val.endswith('k'): return float(val[:-1]) * 1e3
+        if val.endswith('m'): return float(val[:-1]) * 1e6
+        if val.endswith('b'): return float(val[:-1]) * 1e9
         return float(val)
-    except:
-        return None
+    except: return None
+
+def extract_axis_dates_with_months(texts):
+    # E.g. 'May '25', then a line '21' or '28'
+    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    month_pat = re.compile(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", re.I)
+    out = []
+    last_month = None
+    for idx, t in enumerate(texts):
+        tokens = re.split(r"[ ,]", t)
+        for tok in tokens:
+            if month_pat.fullmatch(tok):
+                last_month = tok.title()
+            elif last_month and tok.isdigit() and 1 <= int(tok) <= 31:
+                out.append((f"{tok} {last_month}", idx))
+    return out
 
 def extract_dates_with_pos(texts):
-    # Handles e.g. "Jul 25", "Jun 2025", "May '25", "12/25", etc.
     patterns = [
-        r"\b([A-Za-z]{3,9}[, ]+'\d{2,4})\b",    # May '25
-        r"\b([A-Za-z]{3,9} ?\d{1,2}(?:, ?\d{2,4})?)\b", # Jul 25, Jun 2025
-        r"(\d{1,2}/\d{1,2}(?:/\d{2,4})?)",             # 12/25/2023
+        r"\b([A-Za-z]{3,9}[, ]+'\d{2,4})\b",
+        r"\b([A-Za-z]{3,9}\s*\d{1,2}(?:,?\s*\d{2,4})?)\b",
+        r"(\d{1,2}/\d{1,2}(?:/\d{2,4})?)",
         r"(\d{1,2}-\d{1,2}(?:-\d{2,4})?)"
     ]
     date_matches = []
@@ -49,110 +59,94 @@ def extract_dates_with_pos(texts):
     return date_matches
 
 def extract_times_with_pos(texts):
-    # Handles 24h, 12h, and ambiguous times
-    patterns = [
-        (r"(\d{1,2}[:.]\d{2})\s*([APMapm]{2})", "ampm"),   # 2:30 PM
-        (r"(\d{1,2}[:.]\d{2})", "24h")                     # 14:00, 23.30
-    ]
+    pattern = re.compile(r'(\d{1,2}[.:]?\d{2})\s*([APMapm]{2})')
     results = []
     for idx, t in enumerate(texts):
-        found = False
-        for pat, mode in patterns:
-            for match in re.finditer(pat, t):
-                h = match.group(1).replace('.', ':')
-                if mode == "ampm":
-                    ap = match.group(2)
-                    try:
-                        tm = datetime.datetime.strptime(f"{h} {ap.upper()}", "%I:%M %p").strftime("%I:%M %p").lstrip("0")
-                        results.append((tm, idx))
-                        found = True
-                    except:
-                        continue
-                elif mode == "24h":
-                    try:
-                        tm = datetime.datetime.strptime(h, "%H:%M").strftime("%H:%M")
-                        results.append((tm, idx))
-                        found = True
-                    except:
-                        continue
-        if found:
-            continue
+        for h, ap in pattern.findall(t):
+            h_fmt = h.replace('.', ':')
+            if ':' not in h_fmt and len(h_fmt)==3:
+                h_fmt = h_fmt[0]+':' + h_fmt[1:]
+            elif ':' not in h_fmt and len(h_fmt)==4:
+                h_fmt = h_fmt[:2]+':' + h_fmt[2:]
+            try:
+                tm = datetime.datetime.strptime(f"{h_fmt} {ap.upper()}", "%I:%M %p").strftime("%I:%M %p").lstrip("0")
+                results.append((tm, idx))
+            except: continue
     return results
 
 def infer_previous_trading_day(first_dt):
-    # Unchanged from original
     try:
-        parts = first_dt.split('/')
-        today = datetime.datetime.now()
-        if len(parts) >= 2:
-            year = today.year if len(parts) == 2 else int(parts[2])
-            ref_day = datetime.datetime(year, int(parts[0]), int(parts[1]))
-            d = ref_day - datetime.timedelta(days=1)
-            while d.weekday() >= 5:
-                d -= datetime.timedelta(days=1)
-            return f"{d.month}/{d.day}" if len(parts) == 2 else f"{d.month}/{d.day}/{d.year}"
+        # Handles "7/10" and "Jul 10" formats
+        if '/' in first_dt:
+            parts = first_dt.split('/')
+            today = datetime.datetime.now()
+            if len(parts) >= 2:
+                year = today.year if len(parts) == 2 else int(parts[2])
+                ref_day = datetime.datetime(year, int(parts[0]), int(parts[1]))
+        else:
+            month_lookup = {m: i+1 for i, m in enumerate(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])}
+            tokens = first_dt.split()
+            if len(tokens) == 2 and tokens[0].isdigit() and tokens[1] in month_lookup:
+                year = datetime.datetime.now().year
+                ref_day = datetime.datetime(year, month_lookup[tokens[1]], int(tokens[0]))
+            else:
+                return "prev"
+        d = ref_day - datetime.timedelta(days=1)
+        while d.weekday() >= 5:
+            d -= datetime.timedelta(days=1)
+        return d.strftime("%m/%d")
     except:
         return "prev"
-    return "prev"
 
 def map_sessions(texts):
-    dates_with_idx = extract_dates_with_pos(texts)
+    # Prefer month+day, else fallback to numeric/date
+    month_dates = extract_axis_dates_with_months(texts)
+    explicit_dates = month_dates if month_dates else extract_dates_with_pos(texts)
     times_with_idx = extract_times_with_pos(texts)
     sessions = []
-    all_date_indices = [idx for _, idx in dates_with_idx]
+    all_date_indices = [idx for d, idx in explicit_dates]
     orphan_times = [(tm, idx) for tm, idx in times_with_idx if idx < (all_date_indices[0] if all_date_indices else len(texts))]
     if orphan_times and all_date_indices:
-        prev_date = infer_previous_trading_day(dates_with_idx[0][0])
-        orph_group = sorted(set(tm for tm, _ in orphan_times))
-        if orph_group:
-            sessions.append({'date': prev_date, 'time_range': (orph_group[0], orph_group[-1])})
-    for i, (dt, idx) in enumerate(dates_with_idx):
+        prev_date = infer_previous_trading_day(explicit_dates[0][0])
+        orph_t_sorted = sorted(tm for tm, _ in orphan_times)
+        if orph_t_sorted:
+            sessions.append({'date': prev_date, 'time_range': (orph_t_sorted[0], orph_t_sorted[-1])})
+    # Map between date/month markers
+    for i, (dt, idx) in enumerate(explicit_dates):
         block_times = []
         start_idx = idx + 1
-        end_idx = dates_with_idx[i + 1][1] if i + 1 < len(dates_with_idx) else len(texts)
+        end_idx = explicit_dates[i+1][1] if i+1 < len(explicit_dates) else len(texts)
         for tm, t_idx in times_with_idx:
             if start_idx <= t_idx < end_idx:
                 block_times.append(tm)
-        block_times = sorted(set(block_times))
+        block_times = sorted(set(block_times), key=lambda x: datetime.datetime.strptime(x, "%I:%M %p"))
         if block_times:
             sessions.append({'date': dt, 'time_range': (block_times[0], block_times[-1])})
-        elif block_times == []:
-            sessions.append({'date': dt, 'time_range': ("unknown", "unknown")})
+        else:
+            sessions.append({'date': dt})
     return sessions
 
 def extract_ohlc(texts):
-    ohlc = {}
-    block = re.search(r'O[: ]?([\d\.]+).*?H[: ]?([\d\.]+).*?L[: ]?([\d\.]+).*?C[: ]?([\d\.]+).*?V[: ]?([\d\.,kKmMbB]+)', " ".join(texts))
+    block = re.search(r'O[: ]?([\d\.]+).*?H[: ]?([\d\.]+).*?L[: ]?([\d\.]+).*?C[: ]?([\d\.]+)', " ".join(texts))
     if block:
-        ohlc['O'] = float(block.group(1))
-        ohlc['H'] = float(block.group(2))
-        l_str = block.group(3)
-        ohlc['L'] = float(l_str[:-2] + '.' + l_str[-2:]) if l_str.replace('.', '').isdigit() and len(l_str.replace('.', '')) == 4 and '.' not in l_str else float(l_str)
-        ohlc['C'] = float(block.group(4))
-        ohlc['V'] = convert_compact_number(block.group(5))
-    else:
-        pats = {'O': r'O[: ]?([\d]{2,4}\.?\d*)', 'H': r'H[: ]?([\d]{2,4}\.?\d*)',
-                'L': r'L[: ]?([\d]{2,4}\.?\d*)', 'C': r'C[: ]?([\d]{2,4}\.?\d*)'}
-        for label, pat in pats.items():
-            for t in texts:
-                m = re.search(pat, t)
-                if m:
-                    num = m.group(1)
-                    if num.isdigit() and len(num) == 4:
-                        ohlc[label] = float(num[:-2] + '.' + num[-2:])
-                    else:
-                        try: ohlc[label] = float(num)
-                        except: continue
-                    break
-    return ohlc
+        try:
+            o, h, l, c = float(block.group(1)), float(block.group(2)), float(block.group(3)), float(block.group(4))
+            return {'O': o, 'H': h, 'L': l, 'C': c}
+        except: return {}
+    alt = re.search(r'H[ :]?([\d\.]+)\s*L[ :]?([\d\.]+)\s*C[ :]?([\d\.]+)', " ".join(texts))
+    if alt:
+        try:
+            h, l, c = float(alt.group(1)), float(alt.group(2)), float(alt.group(3))
+            return {'H': h, 'L': l, 'C': c}
+        except: return {}
+    return {}
 
 def extract_volume(texts):
     for t in texts:
-        m = re.search(r'vol undr[\D]*([\d\.,]+[kKmMbB]?)', t, re.IGNORECASE)
+        m = re.search(r'vol undr[\D]*([\d\.,]+)', t, re.IGNORECASE)
         if m:
             v = convert_compact_number(m.group(1))
-            if v:
-                return v
+            if v: return v
     candidates = []
     for t in texts:
         found_v = re.findall(r'V[: ]?([\d\.,]+[kKmMbB]?)', t)
@@ -164,94 +158,99 @@ def extract_volume(texts):
 
 def extract_price_range(texts, ohlc_vals):
     plausible = []
-    if not ohlc_vals:
-        return None
-    oh_vals = [v for v in ohlc_vals if v is not None and 1.0 < v < 10000]
-    if not oh_vals:
-        return None
+    if not ohlc_vals: return None
+    oh_vals = [v for v in ohlc_vals if v is not None and 1.0 < abs(v) < 1e7]
+    if not oh_vals: return None
     oh_min, oh_max = min(oh_vals), max(oh_vals)
     for t in texts:
-        # Accept prices and also months/dates, skip if letters exist
-        if re.fullmatch(r'\d{2,4}(?:\.\d{2})?', t.strip()):
-            num = float(t.strip())
-            if (oh_min * 0.8) <= num <= (oh_max * 1.2) and 1.0 < num < 1000:
+        value = t.replace(',', '').replace('-', '').strip()
+        if re.fullmatch(r'\d{2,7}(?:\.\d{2})?', value):
+            num = float(value)
+            if (oh_min * 0.8) <= num <= (oh_max * 1.2):
                 plausible.append(num)
     plausible = sorted(set(plausible))
     if len(plausible) >= 2:
         return (min(plausible), max(plausible))
     return None
 
-def flexible_ticker_extract(texts):
-    # Look for tickers as (TICKER), NASDAQ:TICKER, TICKER only, or company name fallback
+def flexible_ticker_and_company_extract(texts):
     for t in texts:
         if (m := re.search(r'\(([A-Z0-9\-./]{1,10})\)', t)):
-            return m.group(1)
-        # Exchange-prefixed: NASDAQ:AAPL
-        if (m := re.search(r'(NASDAQ|NYSE|BSE|LSE|HKEX|TSX)[:\s\-\.]*([A-Z]{1,8})', t)):
-            return m.group(2)
-        # All-uppercase tickets
-        if (m := re.match(r'^([A-Z]{2,8})$', t.strip())):
-            return m.group(1)
-    # Company name fallback: first capitalized phrase not all upper
-    for t in texts:
-        if t.istitle() and not t.isupper() and len(t.strip()) > 2:
-            return "unknown", t
-    return "unknown"
+            return {'ticker': m.group(1), 'company_name': None}
+        if (m := re.search(r'(NASDAQ|NYSE|BSE|LSE|HKEX|TSX)[:\s\-\.]+([A-Z]{2,8})', t)):
+            if m.group(2) not in ['NASDAQ', 'NYSE', 'BSE', 'LSE', 'HKEX', 'TSX']:
+                return {'ticker': m.group(2), 'company_name': None}
+        if (m := re.match(r'^([A-Z]{2,8})$', t.strip())) and t.strip() not in ['NASDAQ', 'NYSE', 'BSE', 'LSE', 'HKEX', 'TSX']:
+            return {'ticker': m.group(1), 'company_name': None}
+    return {'ticker': None, 'company_name': None}
 
 def parse_chart_metadata(ocr_texts):
     texts = normalize_ocr_texts(ocr_texts)
     metadata = {}
-    # Ticker extraction now robust/flexible
-    ticker_or_fallback = flexible_ticker_extract(texts)
-    if isinstance(ticker_or_fallback, tuple):
-        metadata['ticker'] = ticker_or_fallback[0]
-        metadata['company_name'] = ticker_or_fallback[1]
-    else:
-        metadata['ticker'] = ticker_or_fallback
+
+    id_fields = flexible_ticker_and_company_extract(texts)
+    if id_fields['ticker']: metadata['ticker'] = id_fields['ticker']
+    if id_fields.get('company_name'): metadata['company_name'] = id_fields['company_name']
     for line in texts:
         exch = re.search(r'\b(NYSE|BSE|NASDAQ|TSX|LSE|HKEX)\b', line)
-        if exch:
-            metadata['exchange'] = exch.group(1)
-    if any("USD" in t for t in texts):
-        metadata["currency"] = "USD"
-    elif any("INR" in t for t in texts):
-        metadata["currency"] = "INR"
+        if exch: metadata['exchange'] = exch.group(1)
+    if any("USD" in t for t in texts): metadata["currency"] = "USD"
+    elif any("INR" in t for t in texts): metadata["currency"] = "INR"
+
     ohlc = extract_ohlc(texts)
+    vol = extract_volume(texts)
     if ohlc:
-        pr = extract_price_range(texts, list(ohlc.values()))
-        if pr:
-            metadata['price_range'] = pr
+        if vol: ohlc['V'] = vol
         metadata['ohlc'] = ohlc
+
     price_range = extract_price_range(texts, list(ohlc.values()) if ohlc else [])
-    if price_range:
-        metadata['price_range'] = price_range
+    if price_range: metadata['price_range'] = price_range
+
     sessions = map_sessions(texts)
     if sessions:
         metadata['sessions'] = sessions
         metadata['dates'] = [sess['date'] for sess in sessions]
+
     return metadata
 
-# ---- OCR + Parsing Pipeline ----
 
-reader = easyocr.Reader(['en'])
-img_path = "E:\\FinGPT-M\\Datasets\\Stock Charts for OCR\\NLX-2_png.rf.f368e80d3051404e1de82d9022332588.jpg"  # Replace with your image path
-results = reader.readtext(img_path)
+# General-purpose function to extract metadata from any image source
+def extract_image_metadata(image_source):
+    """Extract metadata from an image source (path or image object)."""
+    # Load image
+    if isinstance(image_source, str):
+        img = cv2.imread(image_source)
+        if img is None:
+            raise ValueError(f"Unable to load image from path: {image_source}")
+        img_path = image_source
+    else:
+        img = image_source
+        img_path = None
 
-img = cv2.imread(img_path)
-for (bbox, text, confidence) in results:
-    top_left = tuple(map(int, bbox[0]))
-    bottom_right = tuple(map(int, bbox[2]))
-    img = cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 2)
-    img = cv2.putText(img, text, top_left, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,255,255), 2)
+    reader = easyocr.Reader(['en'])
+    # OCR on full image
+    results = reader.readtext(img_path if img_path else img)
+    # OCR on cropped and resized axis region
+    height = img.shape[0]
+    cropped = img[int(height * 0.85):, :]
+    resized = cv2.resize(cropped, None, fx=2.5, fy=2.5, interpolation=cv2.INTER_CUBIC)
+    results += reader.readtext(resized)
 
-plt.figure(figsize=(12,8))
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.axis("off")
-plt.show()
+    # Visualization (optional)
+    plt.figure(figsize=(14, 10))
+    plt.imshow(cv2.cvtColor(resized, cv2.COLOR_BGR2RGB))
+    plt.axis("off")
+    plt.title("OCR Results on Cropped & Resized X-Axis Region")
+    plt.show()
 
-for bbox, text, conf in results:
-    print(f"{text} ({conf:.2f})")
+    print("\n--- OCR Results ---")
+    for bbox, text, conf in results:
+        print(f"{text} ({conf:.2f})")
 
-raw_texts = [text for _, text, _ in results]
-metadata = parse_chart_metadata(raw_texts)
-print(metadata)
+    raw_texts = [text for _, text, _ in results]
+    metadata = parse_chart_metadata(raw_texts)
+    print(metadata)
+    return metadata
+
+# Example usage:
+metadata = extract_image_metadata(r"E:\\FinGPT-M\\Datasets\\Stock Charts for OCR\\AIG2_png.rf.1fc60fef6a377e18b489802cb465786b.jpg")
