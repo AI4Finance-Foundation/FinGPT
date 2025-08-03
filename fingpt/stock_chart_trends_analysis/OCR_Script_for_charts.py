@@ -34,7 +34,9 @@ class StockChartMetadataExtractor:
                 (r'\bV\.', 'V:')
             ]
             t = t.replace('0:', 'O:')
-            t = t.replace(r'^0\.', 'O:')
+            pattern = r'\b0(?!\.\d)([a-zA-Z0-9]*)'
+            t = re.sub(pattern, r'O\1', t)
+            t = t.replace('.O', '.0')
             for p, r_ in substitutions:
                 t = re.sub(p, r_, t)
 
@@ -154,39 +156,59 @@ class StockChartMetadataExtractor:
                 sessions.append({'date': dt})
         return sessions
 
+    # def extract_ohlc(self, texts):
+    #     block = re.search(r'O[: ]?([\d\.]+).*?H[: ]?([\d\.]+).*?L[: ]?([\d\.]+).*?C[: ]?([\d\.]+)', " ".join(texts))
+    #     if block:
+    #         try:
+    #             o, h, l, c = float(block.group(1)), float(block.group(2)), float(block.group(3)), float(block.group(4))
+    #             return {'O': o, 'H': h, 'L': l, 'C': c}
+    #         except:
+    #             return {}
+    #     return {}
+
     def extract_ohlc(self, texts):
-        block = re.search(r'O[: ]?([\d\.]+).*?H[: ]?([\d\.]+).*?L[: ]?([\d\.]+).*?C[: ]?([\d\.]+)', " ".join(texts))
+        joined_text = " ".join(texts)
+
+        block = re.search(
+            r'O[: ]?([\d,]+(?:\.\d+)?).*?'
+            r'H[: ]?([\d,]+(?:\.\d+)?).*?'
+            r'L[: ]?([\d,]+(?:\.\d+)?).*?'
+            r'C[: ]?([\d,]+(?:\.\d+)?)',
+            joined_text
+        )
+
         if block:
             try:
-                o, h, l, c = float(block.group(1)), float(block.group(2)), float(block.group(3)), float(block.group(4))
+                o = float(block.group(1).replace(",", ""))
+                h = float(block.group(2).replace(",", ""))
+                l = float(block.group(3).replace(",", ""))
+                c = float(block.group(4).replace(",", ""))
+
                 return {'O': o, 'H': h, 'L': l, 'C': c}
-            except:
+            except ValueError:
                 return {}
-        alt = re.search(r'H[ :]?([\d\.]+)\s*L[ :]?([\d\.]+)\s*C[ :]?([\d\.]+)', " ".join(texts))
-        if alt:
-            try:
-                h, l, c = float(alt.group(1)), float(alt.group(2)), float(alt.group(3))
-                return {'H': h, 'L': l, 'C': c}
-            except:
-                return {}
+
         return {}
+
 
     def extract_volume(self, texts):
         preferred = set()
         fallback = set()
-    
+
         interval_keywords = {'1d', '5d', '1m', '3m', '6m', 'ytd', '1y', '5y', 'all', 'ty', 'aii'}
-    
-        for t in texts:
+
+        for i, t in enumerate(texts):
             matches = re.findall(r'\b[vV][o0]?[l1]?[^\w\d]{0,2}[:\s]?([\d,.]+[kKmMbB]?)', t)
             preferred.update(matches)
-    
-            m = re.search(r'\b[vV][o0]?[l1]\s*undr[^0-9]*([\d,.]+)', t)
-            if m:
-                preferred.add(m.group(1))
 
-            bars = re.findall(r'\b\d{1,3}(?:,\d{3})*(?:\.\d+)?[kKmMbB]\b', t)
-            fallback.update(bars)
+            if re.search(r'\b[vV][o0]?[l1]\b', t) and i + 1 < len(texts):
+                next_line = texts[i + 1].strip()
+                if re.match(r'^[\d,.]+[kKmMbB]?$', next_line):
+                    preferred.add(next_line)
+
+            if not re.search(r'\b[vV][o0]?[l1]\b', t):
+                bars = re.findall(r'\b\d{1,3}(?:,\d{3})*(?:\.\d+)?[kKmMbB]\b', t)
+                fallback.update(bars)
 
         preferred_vals = [self.convert_compact_number(v) for v in preferred if self.convert_compact_number(v)]
         if preferred_vals:
@@ -198,6 +220,7 @@ class StockChartMetadataExtractor:
             if v.lower() not in interval_keywords and self.convert_compact_number(v)
         ]
         return max(fallback_vals) if fallback_vals else None
+
 
     EXCHANGES   = {"ACRONYM", "ZSE", "ZOBEX", "ZCE", "ZBX", "ZARX", "XTRD", "XTND", "XOFF", "XMIO", "XMFE", "XETRA MIDPOINT", "XETRA", "XBERRY", "XABX", "WSE", "WSAG", "WINS", "WFSE", "WEL SI", "WCHV", "WBC SI", "WBAG", "WABR", "VUB, A.S.", "VNDM", "VMX", "VLEX", "VIRTU SI", "VIRTU OTC", "VFIL", "VFEX", "VFCM", "VERT", "VEQ", "VCMM", "VCM OTF", "VAL", "VAGM MTF", "VAGLOBAL", "UZSE", "USE", "US QUOTE", "UPCOM", "UKRSE", "UICE", "UFEX", "UBS ATS", "UBIS", "UBI", "UBECU", "TWSEF", "TWSE", "TURKDEX", "TTSE", "TSXV DRK", "TSX-V", "TSX DRK", "TSX", "TSE", "TSAF OTC", "TSAF", "TRB", "TRAD-X", "TRADEGATE EXCHANGE", "TPSG", "TPIE", "TPEX", "TOCOM", "TISE", "THEM", "TGE", "TGAG", "TFX", "TFSC", "TFS", "TFEX", "TERM", "TDX", "TD BANK", "TASE", "TAIFEX", "TAH", "T212CY", "T212 IE", "SYFX", "SWAPEX", "SVGEX", "SVEX", "SUPERX EU", "STFL", "STF", "ST", "SSX", "SSWMM", "SSIL", "SSE", "SSBTCO", "SSBI", "SPX", "SPSE", "SPOTEX", "SPIMEX", "SPHR", "SPCEX", "SPBEX", "SPB", "SOHO", "SNUK", "SIX", "SISI", "SIMEX", "SIDAC", "SICOM", "SIBE", "SIB", "SHFE", "SGX-DT", "SGX-BT", "SGX", "SGOE SI", "SGMT", "SGE", "SGAS", "SG SI", "SFOX", "SFMP", "SFE", "SET", "SEND", "SENAF", "SEHK", "SEED CX", "SEDEX", "SEBA", "SEB", "SCIEX", "SB1M", "SASE", "SANT", "SAFEX", "S3FM", "RTSPL", "RTSL", "RSEF (RFS)", "RSEF", "RSE", "ROFEX", "RMS CZ", "RIVERX", "RFQ", "REGS", "REGF", "RCBX", "RCB", "RBS PLC", "RBM", "RBHU-SI", "RBCZ", "RBCCM", "RBC", "RASDAQ", "R4G", "QWIK", "PXE", "PVBL", "PUMA", "PTP", "PTE", "PT LSEG", "PSX", "PSE", "PROS", "PROPEX", "POTC", "POSIT", "PO CAP", "PNGX", "PMX", "PMEX", "PLUS-SX", "PLUS-DX", "PKO BP", "PJSC NDU", "PHLX", "PGT", "PGSL", "PFTS", "PESL", "PEKAO", "PEEL", "PDQX", "PAVE", "OYLD", "OTC-X", "OTCEI", "OTCBB", "OSLSG", "OSLDS", "OSE", "OPTX", "OPRA", "OPEX", "OP", "OMIP", "OMIE", "OMICLEAR", "ODX", "ODE", "NZX", "NYSEDARK", "NYSE", "NYPC", "NYMEX MTF LIMITED", "NYMEX ECM", "NYMEX", "NXVWAP", "NXT", "NXSE", "NXJP", "NXFO", "NWM NV", "NURODARK", "NSXA", "NSX", "NSL", "NSE IFSC", "NSE", "NSDQDARK", "NSC", "NQBXDARK", "NPM", "NP RTS", "NOTC", "NOS", "NOREXECO", "NLX", "NLB", "NIBOR", "NGX", "NGS", "NGM", "NFX", "NEX", "NEWEX", "NEO-N", "NEO-L", "NEO-D", "NEO CONNECT", "NEEQ", "NDXB", "NDX", "NCSE", "NCDEX", "NBF", "NBCT", "NATX", "NASDOTC", "NASDAQ", "NAMEX", "NADEX", "NABE", "NAB", "MUTI", "MUFP", "MUBP SI", "MUBM SI", "MUBL SI", "MUBE SI", "MTS ITALY", "MTA", "MSX", "MSNT", "MSM", "MSIL OTF", "MSEU", "MSEL OTF", "MSE", "MSDM", "MSCX", "MSAX", "MSA", "MPRL", "MOT", "MOSENEX", "MOEX", "MOCX", "MNSE", "MLIX", "MLI", "MLFE", "MLCX", "MIX", "MIV", "MILLENNIUMBCP", "MIHI", "MICEX FAR EAST", "MIBL", "MIBGAS", "MHI", "MHEU", "MGEX", "MFB", "MFAO", "MEXDER", "MESI", "MERVAROS", "MERVAL", "MERJ", "MERF", "MEPD", "MEMXDARK", "MEMX", "MELO", "MEFF", "MEDIP", "ME", "MDX", "MCX", "MBANK", "MATBA", "MARF", "MARCH", "MANUAL OTC", "MAE", "MAC", "MAB", "LXJP", "LTSE", "LTAA", "LSX", "LSE APA", "LSE", "LQNT H20", "LQNT", "LQNF", "LQNA", "LQFI", "LPPM", "LMNX", "LMEC", "LME", "LLBW", "LH", "LFX", "LEVEL", "LDX", "LCX", "LCM", "LBCM", "LATINEX", "LATG", "LAMP", "KSL", "KSE", "KRX SM", "KRX FM", "KOSDAQ", "KONEX", "KISE", "KEX", "KCP", "KCGM", "KCBT", "KAZE", "JX", "JSF", "JSE", "JPX", "JPMX", "JPMI", "JPBX", "J-NET", "JLQD", "JLEQ", "JAX", "JASDAQ", "IXSP", "ITS", "ISX", "ISM", "ISL OTF", "ISE GEM", "ISE ASM", "ISE", "IPSX", "IPEX/GME", "IOM", "INE", "INDX", "INDIA INX", "IMC", "IMAREX", "IFXC MTF", "IFSM", "IFB", "IEX DAX", "IEX", "IEOS", "IDX", "IDEM", "ICEX", "ICE ENDEX SPOT", "ICE ENDEX RM", "ICE ENDEX OTF", "ICE ENDEX OCM", "ICE ENDEX EQUITY", "ICE", "ICBCS", "ICAPS", "IBSC", "IBKR", "IBGH", "IBEX", "IBERCAJA", "IBCO", "IBA", "IATS", "IAB", "HUPX", "HUDEX", "HSBC SI", "HRT", "HPPO", "HPF", "HPC IS", "HPC", "HOSE", "HNX", "HKMEX", "HKFE", "HKEX", "HK GEM", "HENEX S.A.", "HENEX", "HDAT", "GTX", "GTSX", "GSX", "GSPIC", "GSIB", "GSI", "GSET", "GSE", "GSCO", "GRIFFIN MARKETS LIMITED", "GPWB", "GPN", "GOVEX", "GMX", "GMGLDN", "GMGDXB", "GMEX", "GME", "GLPX", "GLPS", "GLOBALCOAL", "GGI", "GFO-X", "GFIA", "GFI SEF", "GFEX", "GET BALTIC", "GEMMA", "GDX", "GCX", "GBS", "GAI", "FXSWAP", "FXM", "FXCM", "FXCLR", "FRTSIL", "FNXB", "FMXX", "FMX NDF", "FLOWDARK", "FIS", "FINN", "FICONEX", "FGM", "FEX", "FBSI", "EXSE", "EXLP", "EXIST", "EXEU", "EXDC", "EXANE BNP PARIBAS", "EXAA", "EWSM", "EVOL", "EUWAX", "EUROFIN", "ETPA", "ETFPLUS", "ESPEED", "ESE", "EPRL", "EPRD", "ENC", "ENAX", "EMTS", "EMLD", "EMBX", "EGM", "EEXCHANGE", "EEX", "EDXM", "EDGXDARK", "EDGX", "EDGO", "EDGADARK", "EDGA", "ECSE", "ECC", "EBS", "EBI", "EBB", "DWSEF", "DVFX", "DSM", "DSE", "DOTS", "DGCX", "DFM", "DDT", "DCX", "DCSX", "DCE", "DCA", "DBX", "DBOT", "DBMID", "DBES", "DARK", "DANSK AMP", "CXE OFF-BOOK", "CXE DARK", "CXA BIDS BLOCK", "CXA BIDS BIDS TWPI", "CXA", "CX LDFX", "CX", "CTSE", "CSZ", "CSX", "CSSEL SI", "CSOB SK", "CSOB", "CSI SI", "CSI", "CSE-PURE", "CSEB", "CSE LISTED", "CSE", "CSD SI", "CSD", "CSAGLB SI", "CSA OHS", "CSA", "CROPEX", "CREDEM SI", "CONTICAP OTF", "COMEX", "CODA", "CNX MTF", "CNODE", "CME (FLOOR)", "CME", "CM SEF", "CM MTF", "CM ETP", "CM", "CLX", "CLST", "CLEARCORP", "CIOI", "CIC", "CIBC WM PLC", "CIBC", "CHI-X", "CGML", "CFIM", "CFI", "CFETSBC", "CFETS", "CFE", "CF", "CENTRAL RISK BOOK", "CDE", "CCX", "C-COM", "CCLUX", "CCGTRIPARTY", "CCGEUROBONDS", "CCGEQUITYDER", "CCGEQUITY", "CCGENERGYDER", "CCGBONDS", "CCGAGRIDER", "CCG", "CBSX", "CBOT (FLOOR)", "CBOT", "CBOE OFF-BOOK", "CBOE OFF EXCHANGE", "CBOE NL CEDX", "CBOE FX", "CBOE EUROPE B.V.", "CBOE EUROPE", "CBOE EU RM", "CBOE EU REGM OFF BOOK", "CBOE EU REGM LIT", "CBOE EU REGM DARK", "CBOE EU OFF EXCHANGE", "CBOE EU LIS", "CBOE EU DXE PERIODIC", "CBOE EU DXE OFF BOOK", "CBOE EU DXE DARK", "CBOE EU DXE", "CBOE EU DARK", "CBOE EU CXE", "CBOE EU BXE OFF BOOK", "CBOE EU BXE", "CBOE DARK", "CBOE  REGM OFF BOOK", "CBOE  REGM LIT", "CBOE  REGM DARK", "CBOE  LIS", "CBOE  EUROPE", "CBOE", "CBLC", "CATS", "CASE", "CAR", "CAPI", "CANTOR", "CANNEX", "CANDEAL", "CACIB UK SI", "CACIB SI", "CABK", "C2OX", "BZXDARK", "BZ WBK", "BYXX", "BYXDARK", "BXE PERIODIC", "BVRD", "BVPASA", "BVMT", "BVM", "BVL", "BVCC", "BVC", "BVB", "BTSL", "BTL", "BTEC CHICAGO", "BSX", "BSSE", "BSE-MTF", "BSEF", "BSE SME", "BSE", "BSAB", "BRVM", "BRUT", "BRM", "BPAG", "BP2S LB SI", "BP2S", "BOX", "BOT", "BOSS", "BOLCHILE", "BOFASE", "BODIVA", "BOATS", "BNYMEL", "BNYM", "BNV", "BNPX", "BNPPF SI", "BNPP SA SI", "BNPP SA LB SI", "BNPP A SI", "BNDS", "BMO", "BMFMS", "BME APA", "BME", "BLSE", "BLPX", "BLOX", "BLKX", "BIVA", "BITGEM", "BISX", "BILV", "BIL", "BIDS", "BHW SI", "BGUK", "BGL", "BGFX", "BGFU", "BGFI", "BGCDML", "BGC SKL", "BETP", "BET", "BESA", "BERN-X", "BEM", "BELEX", "BELEN/MEPX", "BEAM", "BCV", "BCSL SI", "BCSL", "BCSE", "BCR", "BCEE", "BCE", "BCDX", "BCC", "BCBA", "BCAP LX", "BBX", "BBVA", "BBSI", "BBPLC SI", "BBPLC", "BBOK", "BBJ", "BBI SI", "BBI", "BATS", "BATO", "BANA LONDON", "BANA", "BAMLI DAC", "BAMLI", "BAFR", "B3", "AWEX", "AWB", "AUCTIONS", "ATHEXD", "ATHEXC", "ATHEX APA", "ATFUND", "ATDF", "ASX", "ASTROID", "ASE", "ARTEX GM", "ARKX", "AREX", "ARCADARK", "AQX", "AQUIS-EIX", "AQSE", "AQS", "APEX CLEAR", "APEX", "APA CAPI OTF", "ANZBGL", "ANTS", "AMX", "AMPX", "AMEXDARK", "AMEX", "ALTX UGANDA", "ALTX", "ALSI", "ALSE", "ALLT-OTF", "AKIS", "AIX", "AIAF", "AFDLAPA", "ADSM", "ACM", "ACKFI", "ABM", "ABG", "AACB SI", "A2X", "4AX", "42FS", "24EX", "21X"}
     CURRENCIES  = {'INR','USD','EUR','GBP','JPY','CNY','CAD','AUD','SGD','CHF'}
@@ -257,6 +280,46 @@ class StockChartMetadataExtractor:
             return True
         return False
 
+    # def extract_company_name(self, texts):
+    #     texts = self.merge_company_name_lines(texts)
+
+    #     if isinstance(self.EXCHANGES, (set, list, tuple)):
+    #         exchanges_pattern = r"(" + "|".join(sorted(self.EXCHANGES)) + r")"
+    #     else:
+    #         exchanges_pattern = self.EXCHANGES
+
+    #     for i, t in enumerate(texts):
+    #         t = t.strip()
+    #         if not self.is_probably_company_name(t):
+    #             continue
+
+    #         t_clean = re.sub(r'\s+', ' ', t)
+
+    #         m = re.match(rf"^(.+?)\s+{exchanges_pattern}\b", t_clean, re.IGNORECASE)
+    #         if m:
+    #             return m.group(1).strip()
+
+    #         m = re.match(rf"^([A-Za-z0-9 &.,'\-]+)\s+(?:[·\-\.\|]| {2,})\s+{exchanges_pattern}", t_clean, re.IGNORECASE)
+    #         if m:
+    #             return m.group(1).strip()
+
+    #         m = re.match(r"^(.+?)\s+\(\s*([A-Z]{1,6}(?::[A-Z]{1,6})?)\s*\)$", t_clean)
+    #         if m:
+    #             return m.group(1).strip()
+
+    #         if re.match(r"^[A-Z]{1,5}\s+[A-Z][a-zA-Z0-9&.,'\-]{2,}", t_clean) and not self.looks_like_garbage(t_clean):
+    #             return re.sub(r"^[A-Z]{1,5}\s+", "", t_clean).strip()
+
+    #         if t_clean.isupper() and any(word in t_clean for word in ["LTD", "INC", "CORP", "PLC"]):
+    #             return t_clean.strip()
+
+    #         if i + 1 < len(texts):
+    #             next_line = texts[i + 1].strip()
+    #             if re.search(rf"\b{exchanges_pattern}\b", next_line, re.IGNORECASE):
+    #                 return t_clean
+
+    #     return None
+
     def extract_company_name(self, texts):
         texts = self.merge_company_name_lines(texts)
 
@@ -271,6 +334,7 @@ class StockChartMetadataExtractor:
                 continue
 
             t_clean = re.sub(r'\s+', ' ', t)
+            t_clean = re.sub(r"^\d{1,7}(?:,\d{3})*(?:\.\d+)?\s+", "", t_clean)
 
             m = re.match(rf"^(.+?)\s+{exchanges_pattern}\b", t_clean, re.IGNORECASE)
             if m:
@@ -297,14 +361,11 @@ class StockChartMetadataExtractor:
 
         return None
 
-
-    import re
-
-    def flexible_ticker_and_company_extract(self, texts):
+    def extract_ticker(self, texts):
             garbage_keywords = {
                 "BUY", "SELL", "VOL", "TRADINGVIEW", "ADJ", "RTH", "UTC",
                 "OPEN", "HIGH", "LOW", "CLOSE", "MARKET", "USD",
-                "O", "H", "L", "C", "1D", "5D", "1M", "3M", "6M", "YTD", "ALL"
+                "O", "H", "L", "C", "1D", "5D", "1M", "3M", "6M", "YTD", "ALL", "SD"
             }
 
             def is_garbage(word):
@@ -358,22 +419,57 @@ class StockChartMetadataExtractor:
             return {"ticker": "N/A", "company_name": company_name}
 
 
+    # def extract_price_range(self, texts, ohlc_vals):
+    #     plausible = []
+    #     if not ohlc_vals: return None
+    #     oh_vals = [v for v in ohlc_vals if v is not None and 1.0 < abs(v) < 1e7]
+    #     if not oh_vals: return None
+    #     oh_min, oh_max = min(oh_vals), max(oh_vals)
+    #     for t in texts:
+    #         value = t.replace(',', '').replace('-', '').strip()
+    #         if re.fullmatch(r'\d{2,7}(?:\.\d{1,3})?', value):
+    #             num = float(value)
+    #             if (oh_min * 0.8) <= num <= (oh_max * 1.2):
+    #                 plausible.append(num)
+    #     plausible = sorted(set(plausible))
+    #     if len(plausible) >= 2:
+    #         return (min(plausible), max(plausible))
+    #     return None
+
     def extract_price_range(self, texts, ohlc_vals):
         plausible = []
-        if not ohlc_vals: return None
-        oh_vals = [v for v in ohlc_vals if v is not None and 1.0 < abs(v) < 1e7]
-        if not oh_vals: return None
+        if not ohlc_vals:
+            return None
+
+        raw_oh_vals = [v for v in ohlc_vals if v is not None and v > 0]
+
+        if not raw_oh_vals:
+            return None
+
+        median_price = sorted(raw_oh_vals)[len(raw_oh_vals) // 2]
+
+        oh_vals = [v for v in raw_oh_vals if v <= median_price * 5]
+
+        if not oh_vals:
+            return None
+
         oh_min, oh_max = min(oh_vals), max(oh_vals)
+
         for t in texts:
             value = t.replace(',', '').replace('-', '').strip()
-            if re.fullmatch(r'\d{2,7}(?:\.\d{1,3})?', value):
+
+            if re.fullmatch(r'\d{1,7}(?:\.\d{1,3})?', value):
                 num = float(value)
+
                 if (oh_min * 0.8) <= num <= (oh_max * 1.2):
                     plausible.append(num)
+
         plausible = sorted(set(plausible))
         if len(plausible) >= 2:
             return (min(plausible), max(plausible))
+
         return None
+
 
     def parse_chart_metadata(self, ocr_texts):
         texts = self.normalize_ocr_texts(ocr_texts)
@@ -382,7 +478,7 @@ class StockChartMetadataExtractor:
         if company:
             metadata['company_name'] = company
 
-        id_fields = self.flexible_ticker_and_company_extract(texts)
+        id_fields = self.extract_ticker(texts)
         if id_fields['ticker']:
             metadata['ticker'] = id_fields['ticker']
 
@@ -406,12 +502,39 @@ class StockChartMetadataExtractor:
             metadata['dates'] = [sess['date'] for sess in sessions]
         return metadata
 
+    # def extract_metadata(self):
+    #     img_gray = self.load_image()
+    #     results = self.reader.readtext(img_gray)
+    #     raw_texts = [text for _, text, _ in results]
+    #     metadata = self.parse_chart_metadata(raw_texts)
+    #     return metadata
+
+
     def extract_metadata(self):
         img_gray = self.load_image()
+
         results = self.reader.readtext(img_gray)
         raw_texts = [text for _, text, _ in results]
+
+        h, w = img_gray.shape[:2]
+        x_axis_crop = img_gray[int(h * 0.9):h, 0:w]  # bottom 10%
+
+        # If image already grayscale, skip conversion
+        if len(x_axis_crop.shape) == 3:
+            gray = cv2.cvtColor(x_axis_crop, cv2.COLOR_BGR2GRAY)
+        else:
+            gray = x_axis_crop
+
+        _, binarized = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY)
+
+        x_axis_results = self.reader.readtext(binarized)
+        x_axis_texts = [text for _, text, _ in x_axis_results]
+
+        raw_texts.extend(x_axis_texts)
+
         metadata = self.parse_chart_metadata(raw_texts)
         return metadata
+
 
     def save_metadata_to_json(self, filename):
         path = "output/"+filename
