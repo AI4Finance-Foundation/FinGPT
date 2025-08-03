@@ -5,11 +5,14 @@ import json
 import easyocr
 import datetime
 import matplotlib.pyplot as plt
+import holidays
+import warnings
+# warnings.filterwarnings("ignore")
 
 class StockChartMetadataExtractor:
-    def __init__(self, image_source):
+    def __init__(self, image_source, load_reader = True):
         self.image_source = image_source
-        self.reader = easyocr.Reader(['en'])
+        self.reader = easyocr.Reader(['en']) if load_reader else None
         self.metadata = {}
 
     def load_image(self):
@@ -109,6 +112,8 @@ class StockChartMetadataExtractor:
 
     def infer_previous_trading_day(self, first_dt):
         try:
+            ind_holidays = holidays.India()
+            usd_holidays = holidays.US()
             if '/' in first_dt:
                 parts = first_dt.split('/')
                 today = datetime.datetime.now()
@@ -124,7 +129,7 @@ class StockChartMetadataExtractor:
                 else:
                     return "prev"
             d = ref_day - datetime.timedelta(days=1)
-            while d.weekday() >= 5:
+            while d.weekday() >= 5 or d in ind_holidays or d in usd_holidays:
                 d -= datetime.timedelta(days=1)
             return d.strftime("%m/%d")
         except:
