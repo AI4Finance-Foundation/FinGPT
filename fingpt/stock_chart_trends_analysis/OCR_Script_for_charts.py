@@ -5,6 +5,7 @@ import json
 import easyocr
 import datetime
 import matplotlib.pyplot as plt
+from collections import OrderedDict
 
 class StockChartMetadataExtractor:
     def __init__(self, image_source):
@@ -50,7 +51,6 @@ class StockChartMetadataExtractor:
             print(f"Normalized text: {final_text}")
 
         return cleaned
-
 
     def convert_compact_number(self, val):
         val = val.replace(',', '').strip().lower()
@@ -130,30 +130,79 @@ class StockChartMetadataExtractor:
         except:
             return "prev"
 
+    def normalize_ocr_times_and_dates(self, texts):
+        normalized = []
+        for t in texts:
+            t = t.replace('O', '0').replace('o', '0').replace('d', '0')
+            t = t.replace('-', ':').replace('.', ':')
+
+            t = re.sub(r":{2,}", ":", t)
+
+            t = re.sub(r"\'(\d{2})", r"20\1", t)
+
+            normalized.append(t.strip())
+        return normalized
+
+    def deduplicate_in_order(self, texts):
+        return list(OrderedDict.fromkeys(texts))
+
+
     def map_sessions(self, texts):
+        texts = self.normalize_ocr_times_and_dates(texts)
+
         month_dates = self.extract_axis_dates_with_months(texts)
+
         explicit_dates = month_dates if month_dates else self.extract_dates_with_pos(texts)
+
         times_with_idx = self.extract_times_with_pos(texts)
+
         sessions = []
-        all_date_indices = [idx for d, idx in explicit_dates]
-        orphan_times = [(tm, idx) for tm, idx in times_with_idx if idx < (all_date_indices[0] if all_date_indices else len(texts))]
-        if orphan_times and all_date_indices:
-            prev_date = self.infer_previous_trading_day(explicit_dates[0][0])
-            orph_t_sorted = sorted(tm for tm, _ in orphan_times)
-            if orph_t_sorted:
-                sessions.append({'date': prev_date, 'time_range': (orph_t_sorted[0], orph_t_sorted[-1])})
-        for i, (dt, idx) in enumerate(explicit_dates):
-            block_times = []
-            start_idx = idx + 1
-            end_idx = explicit_dates[i + 1][1] if i + 1 < len(explicit_dates) else len(texts)
-            for tm, t_idx in times_with_idx:
-                if start_idx <= t_idx < end_idx:
-                    block_times.append(tm)
-            block_times = sorted(set(block_times), key=lambda x: datetime.datetime.strptime(x, "%I:%M %p"))
-            if block_times:
-                sessions.append({'date': dt, 'time_range': (block_times[0], block_times[-1])})
-            else:
-                sessions.append({'date': dt})
+
+        def add_session(date, times):
+            date = date if date else "N/A"
+            times = sorted(set(times), key=lambda x: datetime.datetime.strptime(x, "%I:%M %p")) if times else []
+            sessions.append({"date": date, "time": times})
+
+        if month_dates and any("Jul" in d for d, _ in month_dates):
+            month_split_idx = min(idx for d, idx in month_dates if "Jul" in d)
+            for d, idx in month_dates:
+                date = d
+                if idx < month_split_idx and "Jul" in date:
+                    date = date.replace("Jul", "June")
+                block_times = [t for t, t_idx in times_with_idx if idx < t_idx < month_split_idx] if idx < month_split_idx else \
+                            [t for t, t_idx in times_with_idx if t_idx > month_split_idx]
+                add_session(date, block_times)
+            return sessions
+
+        slash_date_idx = None
+        for d, idx in explicit_dates:
+            if "/" in d:
+                slash_date_idx = idx
+                m, day = map(int, d.split("/")[:2])
+                month_name = datetime.date(1900, m, 1).strftime("%B")
+                curr_date = f"{day} {month_name}"
+                prev_day = day - 1
+                prev_date = f"{prev_day} {month_name}"
+                before_times = [t for t, t_idx in times_with_idx if t_idx < slash_date_idx]
+                after_times = [t for t, t_idx in times_with_idx if t_idx > slash_date_idx]
+                add_session(prev_date, before_times)
+                add_session(curr_date, after_times)
+                return sessions
+
+        if explicit_dates:
+            for i, (dt, idx) in enumerate(explicit_dates):
+                start_idx = idx + 1
+                end_idx = explicit_dates[i + 1][1] if i + 1 < len(explicit_dates) else len(texts)
+                block_times = [tm for tm, t_idx in times_with_idx if start_idx <= t_idx < end_idx]
+                add_session(dt, block_times)
+            return sessions
+
+        if times_with_idx:
+            times = [t for t, _ in times_with_idx]
+            add_session("N/A", times)
+            return sessions
+
+        add_session("N/A", [])
         return sessions
 
     # def extract_ohlc(self, texts):
