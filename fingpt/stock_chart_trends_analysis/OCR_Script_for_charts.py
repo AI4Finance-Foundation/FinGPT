@@ -8,8 +8,33 @@ import matplotlib.pyplot as plt
 import holidays
 import warnings
 from collections import OrderedDict
+import numpy as np
 
 class StockChartMetadataExtractor:
+
+    def debug_draw_ocr_boxes(self, ocr_results, save_path=None, show_labels=True):
+        """
+        Draw bounding boxes and labels for OCR results on the image for debugging.
+        Args:
+            ocr_results: List of (box, text, conf) as returned by easyocr.Reader.readtext
+            save_path: If provided, save the image to this path
+            show_labels: If True, draw the recognized text near the box
+        """
+        img = cv2.imread(self.image_source)
+        for i, (box, text, conf) in enumerate(ocr_results):
+            pts = [(int(x), int(y)) for x, y in box]
+            cv2.polylines(img, [np.array(pts)], isClosed=True, color=(0, 255, 0), thickness=2)
+            if show_labels:
+                label = f"{i}: {text}"
+                cv2.putText(img, label, (pts[0][0], pts[0][1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1, cv2.LINE_AA)
+        if save_path:
+            cv2.imwrite(save_path, img)
+            print(f"OCR debug image saved to {save_path}")
+        else:
+            cv2.imshow("OCR Debug", img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
     def __init__(self, image_source, load_reader = True):
         self.image_source = image_source
         self.reader = easyocr.Reader(['en']) if load_reader else None
@@ -67,29 +92,55 @@ class StockChartMetadataExtractor:
         month_pat = re.compile(r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", re.I)
         out = []
         last_month = None
+        garbage = {"Luci0", "Lucio", "Volume", "VOL", "Open", "High", "Low", "Close", "Market", "USD", "TradingView"}
         for idx, t in enumerate(texts):
             tokens = re.split(r"[ ,]", t)
             for tok in tokens:
                 if month_pat.fullmatch(tok):
                     last_month = tok.title()
                 elif last_month and tok.isdigit() and 1 <= int(tok) <= 31:
-                    out.append((f"{tok} {last_month}", idx))
+                    candidate = f"{tok} {last_month}"
+                    if candidate not in garbage and not any(g.lower() in candidate.lower() for g in garbage):
+                        out.append((candidate, idx))
+                    else:
+                        print(f"[DEBUG] Ignored suspicious date: {candidate}")
         return out
 
     def extract_dates_with_pos(self, texts):
+        print("[DEBUG] OCR texts for date extraction:", texts)
+        # Map common OCR month typos to correct month
+        month_corrections = {
+            'jut': 'jul', 'ju1': 'jul', 'jui': 'jul', 'jan': 'jan', 'feb': 'feb', 'mar': 'mar', 'apr': 'apr',
+            'may': 'may', 'jun': 'jun', 'jul': 'jul', 'aug': 'aug', 'sep': 'sep', 'oct': 'oct', 'nov': 'nov', 'dec': 'dec'
+        }
+        def normalize_month(s):
+            for wrong, right in month_corrections.items():
+                s = re.sub(rf'\b{wrong}\b', right, s, flags=re.IGNORECASE)
+            return s
+
         patterns = [
-            r"\b([A-Za-z]{3,9}[, ]+'\d{2,4})\b",
-            r"\b([A-Za-z]{3,9}\s*\d{1,2}(?:,?\s*\d{2,4})?)\b",
-            r"(\d{1,2}/\d{1,2}(?:/\d{2,4})?)",
-            r"(\d{1,2}-\d{1,2}(?:-\d{2,4})?)"
+            r"\b([A-Za-z]{3,9}[, ]+'\d{2,4})\b",  # e.g. Jul '24
+            r"\b([A-Za-z]{3,9}\s*\d{1,2}(?:,?\s*\d{2,4})?)\b",  # e.g. July 14, July 14 2024
+            r"(\d{1,2}/\d{1,2}(?:/\d{2,4})?)",  # e.g. 7/14, 7/14/2024
+            r"(\d{1,2}-\d{1,2}(?:-\d{2,4})?)"   # e.g. 7-14, 7-14-2024
         ]
+        garbage = {"Luci0", "Lucio", "Volume", "VOL", "Open", "High", "Low", "Close", "Market", "USD", "TradingView"}
         date_matches = []
         for idx, t in enumerate(texts):
+            t_norm = normalize_month(t)
             for pat in patterns:
-                m = re.search(pat, t)
+                m = re.search(pat, t_norm)
                 if m:
-                    date_matches.append((m.group(1), idx))
+                    candidate = m.group(1)
+                    # Only filter out if it is in garbage and not a plausible numeric date
+                    plausible_numeric = re.match(r"^\d{1,2}/\d{1,2}(/\d{2,4})?$", candidate) or re.match(r"^\d{1,2}-\d{1,2}(-\d{2,4})?$", candidate)
+                    if (candidate not in garbage and not any(g.lower() in candidate.lower() for g in garbage)) or plausible_numeric:
+                        date_matches.append((candidate, idx))
+                        print(f"[DEBUG] Accepted date: {candidate} at idx {idx}")
+                    else:
+                        print(f"[DEBUG] Ignored suspicious date: {candidate}")
                     break
+        print("[DEBUG] All extracted date candidates:", date_matches)
         return date_matches
 
     def extract_times_with_pos(self, texts):
@@ -108,6 +159,72 @@ class StockChartMetadataExtractor:
                 except:
                     continue
         return results
+    
+    # def extract_times_with_pos_24h(self, texts):
+    #     results = []
+    #     pattern_24h = re.compile(r'(?:[01]?\d|2[0-3]):[0-5]\d')
+    #     for idx, t in enumerate(texts):
+    #         clean_t = (
+    #             t.strip()
+    #             .replace('O', '0')
+    #             .replace('o', '0')
+    #             .replace('-', ':')
+    #             .replace('.', ':')
+    #         )
+    #         matches = pattern_24h.findall(clean_t)
+    #         print(f"Found 24h times in text '{t}': {matches}")
+    #         for match in matches:
+    #             try:
+    #                 dt = datetime.datetime.strptime(match, "%H:%M")
+    #                 print("date time:", dt.time())
+    #                 tm = dt.strftime("%I:%M %p").lstrip("0")
+    #                 print("formatted time:", tm)
+    #                 if (tm, idx) not in results:
+    #                     results.append((tm, idx))
+    #             except:
+    #                 continue
+    #     print(f"Extracted 24h times with positions: {results}")
+    #     return results
+    def extract_times_with_pos_24h(self, texts):
+        results = []
+        pattern_24h = re.compile(r'(?:[01]?\d|2[0-3]):[0-5]\d')
+
+        ignore_keywords = {"O", "H", "L", "C", "V", "VOL", "UTC", "RTH", "GMT"}
+
+        for idx, t in enumerate(texts):
+            clean_t = (
+                t.strip()
+                .replace('O', '0')
+                .replace('o', '0')
+                .replace('-', ':')
+                .replace('.', ':')
+            )
+
+            # Skip non-x-axis lines
+            if any(kw in t.upper() for kw in ignore_keywords):
+                continue
+
+            matches = pattern_24h.findall(clean_t)
+            print(f"Found 24h times in text '{t}': {matches}")
+            for match in matches:
+                try:
+                    dt = datetime.datetime.strptime(match, "%H:%M")
+
+                    # Keep only plausible NSE hours (adjust as needed)
+                    if not (4 <= dt.hour <= 16):  
+                        continue
+
+                    tm = dt.strftime("%I:%M %p").lstrip("0")
+                    print("formatted time:", tm)
+
+                    if (tm, idx) not in results:
+                        results.append((tm, idx))
+                except:
+                    continue
+
+        print(f"Extracted 24h times with positions: {results}")
+        return results
+
 
     def infer_previous_trading_day(self, first_dt):
         try:
@@ -145,69 +262,111 @@ class StockChartMetadataExtractor:
             t = re.sub(r"\'(\d{2})", r"20\1", t)
 
             normalized.append(t.strip())
+        print(f"Normalized OCR texts: {normalized}")
         return normalized
 
     def deduplicate_in_order(self, texts):
         return list(OrderedDict.fromkeys(texts))
 
 
-    def map_sessions(self, texts):
-        texts = self.normalize_ocr_times_and_dates(texts)
+    def map_sessions(self, texts, x_axis_texts=None, ocr_results=None):
+        # If x_axis_texts is provided, only use those for time extraction
+        if x_axis_texts is not None:
+            texts = self.normalize_ocr_times_and_dates(x_axis_texts)
+        else:
+            texts = self.normalize_ocr_times_and_dates(texts)
 
         month_dates = self.extract_axis_dates_with_months(texts)
-
-        explicit_dates = month_dates if month_dates else self.extract_dates_with_pos(texts)
-
+        explicit_dates_raw = month_dates if month_dates else self.extract_dates_with_pos(texts)
+        # Deduplicate and filter explicit_dates: keep first occurrence of each unique date string
+        seen_dates = set()
+        explicit_dates = []
+        for dt, idx in explicit_dates_raw:
+            dt_norm = dt.strip().lower()
+            if dt_norm not in seen_dates:
+                explicit_dates.append((dt, idx))
+                seen_dates.add(dt_norm)
         times_with_idx = self.extract_times_with_pos(texts)
+        times_with_idx = (self.extract_times_with_pos_24h(texts) if not times_with_idx else times_with_idx)
+
+        print(f"DEBUG: explicit_dates (date, idx): {explicit_dates}")
+        print(f"DEBUG: times_with_idx (time, idx): {times_with_idx}")
 
         sessions = []
 
-        def add_session(date, times):
-            date = date if date else "N/A"
-            times = sorted(set(times), key=lambda x: datetime.datetime.strptime(x, "%I:%M %p")) if times else []
-            sessions.append({"date": date, "time": times})
-
-        if month_dates and any("Jul" in d for d, _ in month_dates):
-            month_split_idx = min(idx for d, idx in month_dates if "Jul" in d)
-            for d, idx in month_dates:
-                date = d
-                if idx < month_split_idx and "Jul" in date:
-                    date = date.replace("Jul", "June")
-                block_times = [t for t, t_idx in times_with_idx if idx < t_idx < month_split_idx] if idx < month_split_idx else \
-                            [t for t, t_idx in times_with_idx if t_idx > month_split_idx]
-                add_session(date, block_times)
+        # If bounding box info is available, use it for clustering
+        if ocr_results is not None and len(ocr_results) == len(texts):
+            import numpy as np
+            ocr_x_centers = [((box[0][0] + box[2][0]) / 2) for box, _, _ in ocr_results]
+            date_positions = [(dt, ocr_x_centers[idx]) for dt, idx in explicit_dates]
+            time_positions = [(tm, ocr_x_centers[idx]) for tm, idx in times_with_idx]
+            date_positions_sorted = sorted(date_positions, key=lambda x: x[1])
+            # Add a virtual leftmost bin for previous day
+            all_bins = [[] for _ in range(len(date_positions_sorted) + 1)]
+            for tm, x in time_positions:
+                assigned = False
+                for i, (_, date_x) in enumerate(date_positions_sorted):
+                    if x <= date_x:
+                        all_bins[i].append(tm)
+                        assigned = True
+                        break
+                if not assigned:
+                    all_bins[-1].append(tm)
+            # Remove duplicates in each bin, preserve order
+            all_bins = [list(OrderedDict.fromkeys(bin_)) for bin_ in all_bins]
+            sessions = []
+            # Previous day session if any times before first date
+            if all_bins[0]:
+                try:
+                    first_date = date_positions_sorted[0][0]
+                    day_num = int(first_date.split('/')[1]) - 1 if '/' in first_date else int(first_date.split()[0]) - 1
+                    month = first_date.split('/')[0] if '/' in first_date else first_date.split()[1]
+                    prev_date = f"{month}/{day_num}" if '/' in first_date else f"{day_num} {month}"
+                except:
+                    prev_date = "Prev Day"
+                sessions.append({"date": prev_date, "time": all_bins[0]})
+            # Each date session
+            for i, (dt, _) in enumerate(date_positions_sorted):
+                sessions.append({"date": dt, "time": all_bins[i+1]})
+            # Remove empty sessions
+            sessions = [sess for sess in sessions if sess['time']]
             return sessions
 
-        slash_date_idx = None
-        for d, idx in explicit_dates:
-            if "/" in d:
-                slash_date_idx = idx
-                m, day = map(int, d.split("/")[:2])
-                month_name = datetime.date(1900, m, 1).strftime("%B")
-                curr_date = f"{day} {month_name}"
-                prev_day = day - 1
-                prev_date = f"{prev_day} {month_name}"
-                before_times = [t for t, t_idx in times_with_idx if t_idx < slash_date_idx]
-                after_times = [t for t, t_idx in times_with_idx if t_idx > slash_date_idx]
-                add_session(prev_date, before_times)
-                add_session(curr_date, after_times)
-                return sessions
-
+        # Fallback: use text order heuristics
         if explicit_dates:
+            times_sorted = sorted(times_with_idx, key=lambda x: x[1])
+            first_date, first_idx = explicit_dates[0]
+            before_times_idx = [(tm, t_idx) for tm, t_idx in times_sorted if t_idx < first_idx]
+            prev_day_times = [tm for tm, _ in before_times_idx]
+            if prev_day_times:
+                try:
+                    day_num = int(first_date.split('/')[1]) - 1 if '/' in first_date else int(first_date.split()[0]) - 1
+                    month = first_date.split('/')[0] if '/' in first_date else first_date.split()[1]
+                    prev_date = f"{month}/{day_num}" if '/' in first_date else f"{day_num} {month}"
+                except:
+                    prev_date = "Prev Day"
+                sessions.append({"date": prev_date, "time": prev_day_times})
+            # Only keep the first session for each unique date
+            seen_session_dates = set()
             for i, (dt, idx) in enumerate(explicit_dates):
-                start_idx = idx + 1
-                end_idx = explicit_dates[i + 1][1] if i + 1 < len(explicit_dates) else len(texts)
-                block_times = [tm for tm, t_idx in times_with_idx if start_idx <= t_idx < end_idx]
-                add_session(dt, block_times)
+                end_idx = explicit_dates[i + 1][1] if i + 1 < len(explicit_dates) else float('inf')
+                date_times = [tm for tm, t_idx in times_sorted if idx <= t_idx < end_idx]
+                dt_norm = dt.strip().lower()
+                if dt_norm not in seen_session_dates:
+                    sessions.append({"date": dt, "time": date_times})
+                    seen_session_dates.add(dt_norm)
+            # Remove empty sessions
+            sessions = [sess for sess in sessions if sess['time']]
             return sessions
 
+        # If no explicit dates, just return all times as N/A
         if times_with_idx:
             times = [t for t, _ in times_with_idx]
-            add_session("N/A", times)
+            if times:
+                sessions.append({"date": "N/A", "time": sorted(set(times), key=lambda x: datetime.datetime.strptime(x, "%I:%M %p"))})
             return sessions
 
-        add_session("N/A", [])
-        return sessions
+        return []
 
     # def extract_ohlc(self, texts):
     #     block = re.search(r'O[: ]?([\d\.]+).*?H[: ]?([\d\.]+).*?L[: ]?([\d\.]+).*?C[: ]?([\d\.]+)', " ".join(texts))
@@ -256,7 +415,7 @@ class StockChartMetadataExtractor:
 
             if re.search(r'\b[vV][o0]?[l1]\b', t) and i + 1 < len(texts):
                 next_line = texts[i + 1].strip()
-                if re.match(r'^[\d,.]+[kKmMbB]?$', next_line):
+                if re.match(r'^[\d,.]+[kKmMb]?$', next_line):
                     preferred.add(next_line)
 
             if not re.search(r'\b[vV][o0]?[l1]\b', t):
@@ -387,89 +546,93 @@ class StockChartMetadataExtractor:
                 continue
 
             t_clean = re.sub(r'\s+', ' ', t)
-            t_clean = re.sub(r"^\d{1,7}(?:,\d{3})*(?:\.\d+)?\s+", "", t_clean)
 
+            # Match company name followed by exchange acronym
             m = re.match(rf"^(.+?)\s+{exchanges_pattern}\b", t_clean, re.IGNORECASE)
             if m:
                 return m.group(1).strip()
 
-            m = re.match(rf"^([A-Za-z0-9 &.,'\-]+)\s+(?:[·\-\.\|]| {2,})\s+{exchanges_pattern}", t_clean, re.IGNORECASE)
+            # Match company name with separators and exchange acronym
+            m = re.match(rf"^([A-Za-z0-9 &.,'\-]+)\s+(?:[·\-\.\|]| {{2,}})\s+{exchanges_pattern}", t_clean, re.IGNORECASE)
             if m:
                 return m.group(1).strip()
 
+            # Match company name with ticker in parentheses
             m = re.match(r"^(.+?)\s+\(\s*([A-Z]{1,6}(?::[A-Z]{1,6})?)\s*\)$", t_clean)
             if m:
                 return m.group(1).strip()
 
-            if re.match(r"^[A-Z]{1,5}\s+[A-Z][a-zA-Z0-9&.,'\-]{2,}", t_clean) and not self.looks_like_garbage(t_clean):
-                return re.sub(r"^[A-Z]{1,5}\s+", "", t_clean).strip()
-
+            # Match uppercase company names with keywords like LTD, INC, etc.
             if t_clean.isupper() and any(word in t_clean for word in ["LTD", "INC", "CORP", "PLC"]):
                 return t_clean.strip()
 
+            # Match company name followed by ticker or other patterns
+            m = re.match(r"^([A-Za-z0-9 &.,'\-]+)\s+\(([A-Z0-9]{1,10})\)$", t_clean)
+            if m:
+                return m.group(1).strip()
+
+            # Check next line for exchange acronym or ticker
             if i + 1 < len(texts):
                 next_line = texts[i + 1].strip()
-                if re.search(rf"\b{exchanges_pattern}\b", next_line, re.IGNORECASE):
+                if re.search(rf"\b{exchanges_pattern}\b", next_line, re.IGNORECASE) or re.match(r"\(([A-Z0-9]{1,10})\)", next_line):
                     return t_clean
 
         return None
 
+
     def extract_ticker(self, texts):
-            garbage_keywords = {
-                "BUY", "SELL", "VOL", "TRADINGVIEW", "ADJ", "RTH", "UTC",
-                "OPEN", "HIGH", "LOW", "CLOSE", "MARKET", "USD",
-                "O", "H", "L", "C", "1D", "5D", "1M", "3M", "6M", "YTD", "ALL", "SD"
-            }
+        garbage_keywords = {
+            "BUY", "SELL", "VOL", "TRADINGVIEW", "ADJ", "RTH", "UTC",
+            "OPEN", "HIGH", "LOW", "CLOSE", "MARKET", "USD",
+            "O", "H", "L", "C", "1D", "5D", "1M", "3M", "6M", "YTD", "ALL", "SD"
+        }
 
-            def is_garbage(word):
-                if sum(c.isdigit() for c in word) > len(word) / 2:
-                    return True
-                if word.upper() in garbage_keywords:
-                    return True
-                return False
+        def is_garbage(word):
+            if sum(c.isdigit() for c in word) > len(word) / 2:
+                return True
+            if word.upper() in garbage_keywords:
+                return True
+            return False
 
-            possible_tickers = []
 
-            for t in texts:
-                tok = t.strip()
-                if not tok or is_garbage(tok):
-                    continue
+        # Accept tickers if they appear next to an exchange acronym or in explicit ticker patterns
+        for t in texts:
+            tok = t.strip()
+            if not tok or is_garbage(tok):
+                continue
 
-                m = re.match(r'^([A-Z0-9]{1,10})\.([A-Z]{2,6})$', tok)
-                if m:
-                    suffix = m.group(2)
-                    if suffix in self.EXCHANGES:
-                        possible_tickers.append(m.group(1))
-                        continue
+            # Pattern: TICKER.EXCHANGE
+            m = re.match(r'^([A-Z0-9]{1,10})\.([A-Z]{2,6})$', tok)
+            if m:
+                suffix = m.group(2)
+                ticker = m.group(1)
+                if suffix in self.EXCHANGES and len(ticker) >= 1:
+                    return {"ticker": ticker, "company_name": None}
+                continue
 
-                m = re.search(r'\(([A-Z]{1,10})\)', tok)
-                if m:
-                    ticker = m.group(1)
-                    if ticker not in self.EXCHANGES and ticker not in self.CURRENCIES and not is_garbage(ticker):
-                        possible_tickers.append(ticker)
-                        continue
+            # Pattern: (TICKER) after company name
+            m = re.search(r'\(([A-Z]{1,10})\)', tok)
+            if m:
+                ticker = m.group(1)
+                if ticker not in self.EXCHANGES and ticker not in self.CURRENCIES and not is_garbage(ticker):
+                    return {"ticker": ticker, "company_name": None}
+                continue
 
-                m = re.search(r'(NASDAQ|NYSE|BSE|LSE|HKEX|TSX|NSE)[:\s\-]+([A-Z0-9]{1,10})', tok)
-                if m:
-                    ticker = m.group(2)
-                    if ticker not in self.EXCHANGES and ticker not in self.CURRENCIES and not is_garbage(ticker):
-                        possible_tickers.append(ticker)
-                        continue
+            # Pattern: EXCHANGE: TICKER
+            m = re.search(r'(NASDAQ|NYSE|BSE|LSE|HKEX|TSX|NSE)[:\s\-]+([A-Z0-9]{1,10})', tok)
+            if m:
+                ticker = m.group(2)
+                if ticker not in self.EXCHANGES and ticker not in self.CURRENCIES and not is_garbage(ticker):
+                    return {"ticker": ticker, "company_name": None}
+                continue
 
-                if (
-                    re.fullmatch(r'[A-Z]{1,5}\d?', tok)  # 1–5 letters + optional 1 digit
-                    and not is_garbage(tok)
-                    and tok not in self.EXCHANGES
-                    and tok not in self.CURRENCIES
-                ):
-                    possible_tickers.append(tok)
-                    continue
+        # If no valid ticker found, fallback to N/A
+        company_name = self.extract_company_name(texts)
+        return {"ticker": "N/A", "company_name": company_name}
 
-            if possible_tickers:
-                return {"ticker": possible_tickers[0], "company_name": None}
-
-            company_name = self.extract_company_name(texts)
-            return {"ticker": "N/A", "company_name": company_name}
+        # If no valid ticker found, fallback to N/A
+        company_name = self.extract_company_name(texts)
+        return {"ticker": "N/A", "company_name": company_name}
 
 
     # def extract_price_range(self, texts, ohlc_vals):
@@ -524,7 +687,7 @@ class StockChartMetadataExtractor:
         return None
 
 
-    def parse_chart_metadata(self, ocr_texts):
+    def parse_chart_metadata(self, ocr_texts, x_axis_texts=None, ocr_results=None):
         texts = self.normalize_ocr_texts(ocr_texts)
         metadata = {}
         company = self.extract_company_name(texts)
@@ -549,7 +712,7 @@ class StockChartMetadataExtractor:
             metadata['ohlc'] = ohlc
         price_range = self.extract_price_range(texts, list(ohlc.values()) if ohlc else [])
         if price_range: metadata['price_range'] = price_range
-        sessions = self.map_sessions(texts)
+        sessions = self.map_sessions(texts, x_axis_texts=x_axis_texts, ocr_results=ocr_results)
         if sessions:
             metadata['sessions'] = sessions
             metadata['dates'] = [sess['date'] for sess in sessions]
@@ -561,6 +724,7 @@ class StockChartMetadataExtractor:
     #     raw_texts = [text for _, text, _ in results]
     #     metadata = self.parse_chart_metadata(raw_texts)
     #     return metadata
+
 
 
     def extract_metadata(self):
@@ -578,14 +742,22 @@ class StockChartMetadataExtractor:
         else:
             gray = x_axis_crop
 
-        _, binarized = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY)
+        # Try multiple binarization thresholds for x-axis OCR
+        x_axis_texts = set()
+        for thresh in [160, 180, 200, 220]:
+            _, binarized = cv2.threshold(gray, thresh, 255, cv2.THRESH_BINARY)
+            x_axis_results = self.reader.readtext(binarized)
+            for _, text, _ in x_axis_results:
+                x_axis_texts.add(text)
+        x_axis_texts = list(x_axis_texts)
 
-        x_axis_results = self.reader.readtext(binarized)
-        x_axis_texts = [text for _, text, _ in x_axis_results]
-
-        raw_texts.extend(x_axis_texts)
-
-        metadata = self.parse_chart_metadata(raw_texts)
+        # Try x-axis only first, fallback to all if no times found
+        # When using extended raw_texts, do not pass ocr_results (indices do not match)
+        extended_texts = raw_texts + x_axis_texts
+        metadata = self.parse_chart_metadata(extended_texts, x_axis_texts=x_axis_texts, ocr_results=None)
+        if not metadata.get('sessions') or not any(sess['time'] for sess in metadata['sessions']):
+            # Only pass ocr_results when using original OCR output
+            metadata = self.parse_chart_metadata(raw_texts, x_axis_texts=None, ocr_results=results)
         return metadata
 
 
