@@ -127,19 +127,19 @@ def combine_metadata_and_predictions(metadata_path, predictions_output, final_ou
 
     print(f"Combined data saved to {final_output_path}")
 
-model_path = 'E:\\FinGPT-M\\fingpt\\stock_chart_trends_analysis\\best.pt'
-image_path = 'E:\\FinGPT-M\\Datasets\\Stock Charts for OCR\\ICICIBANK-1_png.rf.41ec497ec8e11a58f8a0df076f4cda48.jpg'
+# model_path = 'E:\\FinGPT-M\\fingpt\\stock_chart_trends_analysis\\best.pt'
+# image_path = 'E:\\FinGPT-M\\Datasets\\Stock Charts for OCR\\ICICIBANK-1_png.rf.41ec497ec8e11a58f8a0df076f4cda48.jpg'
 
-metadata_extractor = StockChartMetadataExtractor(image_path)
-metadata = metadata_extractor.extract_metadata()
+# metadata_extractor = StockChartMetadataExtractor(image_path)
+# metadata = metadata_extractor.extract_metadata()
 
-predictor = StockChartTrendPredictor(model_path)
-output, img = predictor.predict(image_path)
+# predictor = StockChartTrendPredictor(model_path)
+# output, img = predictor.predict(image_path)
 
-predictor.show_predictions(img)
+# predictor.show_predictions(img)
 
-predictor.save_predictions_to_json(output, 'final_output.json', img, metadata)
-file_path = ['metadata.json', 'predictions.json']
-for file in file_path:
-    if os.path.exists(file):
-        os.remove(file)
+# predictor.save_predictions_to_json(output, 'final_output.json', img, metadata)
+# file_path = ['metadata.json', 'predictions.json']
+# for file in file_path:
+#     if os.path.exists(file):
+#         os.remove(file)
