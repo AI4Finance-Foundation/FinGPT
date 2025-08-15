@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 10
+names: ['bearish_engulfing_fall', 'bullish_engulfing_rise', 'evening_star_fall', 'hammer_rise', 'hanging_man_fall', 'inverse_hammer_rise', 'morning_star_rise', 'shooting_star_fall', 'three_black_crows_fall', 'three_white_soldiers_rise']
+
+roboflow:
+  workspace: howchan
+  project: stock-chart-zobcb
+  version: 16
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/howchan/stock-chart-zobcb/dataset/16
