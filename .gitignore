@@ -28,8 +28,6 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -55,17 +53,17 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Django stuff
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Flask stuff:
+# Flask stuff
 instance/
 .webassets-cache
 
-# Scrapy stuff:
+# Scrapy stuff
 .scrapy
 
 # Sphinx documentation
@@ -85,20 +83,16 @@ ipython_config.py
 .python-version
 
 # pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
 #Pipfile.lock
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+# PEP 582
 __pypackages__/
 
-# Celery stuff
+# Celery
 celerybeat-schedule
 celerybeat.pid
 
-# SageMath parsed files
+# SageMath
 *.sage.py
 
 # Environments
@@ -110,14 +104,14 @@ ENV/
 env.bak/
 venv.bak/
 
-# Spyder project settings
+# Spyder
 .spyderproject
 .spyproject
 
-# Rope project settings
+# Rope
 .ropeproject
 
-# mkdocs documentation
+# mkdocs
 /site
 
 # mypy
@@ -125,17 +119,82 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
+# Pyre
 .pyre/
-.DS_Store
-.idea/FinGPT.iml
-*.xml
 
-# Job scripts
+# IDE & editor configs
+.DS_Store
+.idea/
+*.iml
+*.xml
+.vscode/
+
+# Temporary & backup files
+*.tmp
+*.bak
+*.swp
+
+# Job scripts & checkpoints
 fingpt/FinGPT_sentiment/instruct-FinGPT/run.sh
-fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints
+fingpt/FinGPT_sentiment/instruct-FinGPT/checkpoints/
 fingpt/FinGPT_sentiment/instruct-FinGPT/ds_results_all_10_v2_1.*
 FinGPT_Training_LoRA_with_Chatglm2_6b_for_beginners.ipynb
 
 # Benchmark data
 fingpt/FinGPT_Benchmark/data/*/**
+
+# ML / LLM large files
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
+*.ckpt
+*.safetensors
+
+# Hugging Face & Transformers cache
+~/.cache/huggingface/
+huggingface/
+transformers_cache/
+cache_dir/
+
+# Datasets (raw or processed)
+Datasets/raw/*
+Datasets/processed/*
+data/*
+*.csv
+*.tsv
+*.parquet
+*.xlsx
+
+# Model outputs / generated files
+outputs/
+predictions/
+logs/
+wandb/
+lightning_logs/
+runs/
+
+# RAG / vector stores
+*.faiss
+*.npy
+*.npz
+*.pkl
+vectorstore/
+index/
+indexes/
+db/
+
+# Temp files during app runs
+tmp/
+temp/
+*.tmp
+*.log
+*.out
+*.err
+
+# Gradio / Streamlit artifacts
+gradio_cached_examples/
+gradio_tmp/
+streamlit_cache/
+*.pem
