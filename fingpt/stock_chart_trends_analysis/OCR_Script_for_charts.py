@@ -540,6 +540,10 @@ class StockChartMetadataExtractor:
         else:
             exchanges_pattern = self.EXCHANGES
 
+        def strip_numbers(s):
+            # Remove leading/trailing numbers, dots, and spaces
+            return re.sub(r"^[\d.,\s$₹€£¥]+|[\d.,\s$₹€£¥]+$", "", s).strip()
+
         for i, t in enumerate(texts):
             t = t.strip()
             if not self.is_probably_company_name(t):
@@ -547,35 +551,29 @@ class StockChartMetadataExtractor:
 
             t_clean = re.sub(r'\s+', ' ', t)
 
-            # Match company name followed by exchange acronym
             m = re.match(rf"^(.+?)\s+{exchanges_pattern}\b", t_clean, re.IGNORECASE)
             if m:
-                return m.group(1).strip()
+                return strip_numbers(m.group(1))
 
-            # Match company name with separators and exchange acronym
             m = re.match(rf"^([A-Za-z0-9 &.,'\-]+)\s+(?:[·\-\.\|]| {{2,}})\s+{exchanges_pattern}", t_clean, re.IGNORECASE)
             if m:
-                return m.group(1).strip()
+                return strip_numbers(m.group(1))
 
-            # Match company name with ticker in parentheses
             m = re.match(r"^(.+?)\s+\(\s*([A-Z]{1,6}(?::[A-Z]{1,6})?)\s*\)$", t_clean)
             if m:
-                return m.group(1).strip()
+                return strip_numbers(m.group(1))
 
-            # Match uppercase company names with keywords like LTD, INC, etc.
             if t_clean.isupper() and any(word in t_clean for word in ["LTD", "INC", "CORP", "PLC"]):
-                return t_clean.strip()
+                return strip_numbers(t_clean)
 
-            # Match company name followed by ticker or other patterns
             m = re.match(r"^([A-Za-z0-9 &.,'\-]+)\s+\(([A-Z0-9]{1,10})\)$", t_clean)
             if m:
-                return m.group(1).strip()
+                return strip_numbers(m.group(1))
 
-            # Check next line for exchange acronym or ticker
             if i + 1 < len(texts):
                 next_line = texts[i + 1].strip()
                 if re.search(rf"\b{exchanges_pattern}\b", next_line, re.IGNORECASE) or re.match(r"\(([A-Z0-9]{1,10})\)", next_line):
-                    return t_clean
+                    return strip_numbers(t_clean)
 
         return None
 
@@ -628,11 +626,20 @@ class StockChartMetadataExtractor:
 
         # If no valid ticker found, fallback to N/A
         company_name = self.extract_company_name(texts)
-        return {"ticker": "N/A", "company_name": company_name}
-
+        try:
+            company_name = company_name.replace(" ", "")
+            search = yf.Ticker(company_name)
+            if search.info.get("symbol"):
+                ticker = search.info["symbol"]
+                print('Ticker : ', ticker)
+                return {"ticker": ticker, "company_name": None}
+            
+            # If no valid ticker found, fallback to N/A
+            return {"ticker": "N/A", "company_name": company_name}
+        
         # If no valid ticker found, fallback to N/A
-        company_name = self.extract_company_name(texts)
-        return {"ticker": "N/A", "company_name": company_name}
+        except Exception as e:
+            return {"ticker": "N/A", "company_name": company_name}
 
 
     # def extract_price_range(self, texts, ohlc_vals):
