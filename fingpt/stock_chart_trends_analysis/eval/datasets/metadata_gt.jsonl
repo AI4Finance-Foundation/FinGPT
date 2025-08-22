@@ -1,0 +1,60 @@
+{"image_id": "AAPL_png.rf.5ee9a8019f7847a408ddee2c46323966.jpg", "company_name": "Apple Inc.", "ticker": "AAPL", "exchange": "NasdaqGS", "ohlc": {"O": 210.04, "H": 210.21, "L": 210.0, "C": 210.06, "V": 121000}, "price_range": [210.0, 213.5], 
+"sessions": [
+    {
+        "date": "7/10", 
+        "time": [
+            "1:30 PM",
+            "2:00 PM",
+            "2:30 PM",
+            "3:00 PM",
+            "3:30 PM"
+        ]
+    },
+    {
+        "date": "7/11",
+        "time": [
+            "10:00 AM",
+            "10:30 AM",
+            "11:00 AM",
+            "11:30 AM",
+            "12:00 PM",
+            "12:30 PM",
+            "1:00 PM"
+        ]
+    }
+]
+, "dates": [
+    "7/10",
+    "7/11"
+    ]}
+{"image_id": "ICICIBANK-1_png.rf.41ec497ec8e11a58f8a0df076f4cda48.jpg", "company_name": "ICICI BANK LTD.", "ticker": "N/A", "exchange": "NSE", "ohlc": {"O": 1421.1, "H": 1422.0, "L": 1420.7, "C": 1420.7, "V": 19490}, "price_range": [1415.00, 1429.00], 
+"sessions": [
+    {
+        "date": "N/A",
+        "time": [
+            "4:00 AM",
+            "4:30 AM",
+            "5:00 AM",
+            "5:30 AM",
+            "6:00 AM",
+            "6:30 AM",
+            "7:00 AM",
+            "7:30 AM",
+            "8:00 AM",
+            "8:30 AM",
+            "9:00 AM",
+            "9:30 AM"
+        ]
+    }
+]
+, "dates": [
+    "N/A"
+    ]}
+{"image_id": "IMG_0003.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0004.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0005.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0006.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0007.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0008.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0009.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}
+{"image_id": "IMG_0010.png", "company_name": "", "ticker": "", "exchange": "", "anchor_date": "", "ohlc": {"O": 0.0, "H": 0.0, "L": 0.0, "C": 0.0, "V": 0}, "price_range": [0.0, 0.0], "sessions": [{"start": "", "end": ""}], "dates": [""]}

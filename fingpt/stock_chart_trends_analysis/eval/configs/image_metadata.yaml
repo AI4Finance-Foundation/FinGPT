@@ -1,0 +1,23 @@
+# image_metadata.yaml
+gt_path: "E:/FinGPT-M/fingpt/stock_chart_trends_analysis/eval/datasets/metadata_gt.jsonl"
+pred_dir: "E:/FinGPT-M/fingpt/stock_chart_trends_analysis/eval/preds/json"
+
+strict: true
+float_tol: 0.0
+case_insensitive_strings: true
+
+compare_fields:
+  company_name: true
+  ticker: true
+  exchange: true
+  sessions: true
+  ohlc: true
+  price_range: true
+  dates: true
+
+outdir: "eval_runs/metadata_strict"
+per_sample_csv: "per_sample.csv"
+summary_json: "metrics_summary.json"
+errors_csv: "failed_cases.csv"
+use_timestamped_dirs: false     
+cleanup_outdir: true           

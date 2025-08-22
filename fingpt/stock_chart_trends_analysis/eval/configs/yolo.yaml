@@ -1,0 +1,36 @@
+
+dataset_yaml: "E:/FinGPT-M/Datasets/stock_charts_for_training/data.yaml"
+
+splits:
+  val_images: "E:/FinGPT-M/Datasets/stock_charts_for_training/valid/images"
+  val_labels: "E:/FinGPT-M/Datasets/stock_charts_for_training/valid/labels"
+
+weights: "E:/FinGPT-M/fingpt/stock_chart_trends_analysis/best.pt"
+
+imgsz: 640
+conf: 0.25
+iou: 0.5
+
+device: 0
+
+batch: 16
+
+outdir: "eval_runs/yolo"
+
+# Robustness slices (evaluate subsets by filename patterns; glob/regex supported)
+slices:
+  - name: "low_light"
+    include: ["*lowlight*", "*dark*"]
+  - name: "noisy"
+    include: ["*noise*", "*noisy*"]
+  - name: "clean"
+    include: ["*clean*"]
+
+# Latency probe: number of warmup + timed iterations
+latency:
+  warmup_batches: 5
+  timed_batches: 20
+
+# Save additional artifacts
+save_json: true     # COCO-style JSON
+save_plots: true    # PR curves, confusion matrix

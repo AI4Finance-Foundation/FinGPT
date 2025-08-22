@@ -198,3 +198,8 @@ gradio_cached_examples/
 gradio_tmp/
 streamlit_cache/
 *.pem
+
+# Ignore evaluation metrics
+eval_runs/
+*.cache
+doc_no_gt/
