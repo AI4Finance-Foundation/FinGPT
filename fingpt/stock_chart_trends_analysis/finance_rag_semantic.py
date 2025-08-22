@@ -23,7 +23,7 @@ from typing import List, Dict, Any, Optional, Tuple, Union
 import numpy as np
 
 # All PDF work stays in this extractor
-from fingpt.stock_chart_trends_analysis.PDFExtractor import PdfExtractor, SimplePdfValidator
+from PDFExtractor import PdfExtractor, SimplePdfValidator
 
 # Optional extractors for non-PDF
 try:
