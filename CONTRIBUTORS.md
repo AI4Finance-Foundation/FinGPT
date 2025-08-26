@@ -1,3 +1,3 @@
 # Contributors
 
-- Kamlesh (@nightsafari-xox) — Guidence improvement
+- Kamlesh (@your-github-username) — Documentation improvement + hello_fingpt example
