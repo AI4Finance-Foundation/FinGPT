@@ -370,6 +370,18 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 ```
 
+
+
+**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
+> Note: Installation may require Python 3.9+.
+
+> ## Examples and Help
+> Please see [examples/hello_fingpt/hello.py](examples/hello_fingpt/hello.py) for a simple script that downloads CNBC news about AAPL.
+- Quick example: see [`examples/run_stock_sentiment.py`](examples/run_stock_sentiment.py) to download CNBC news for a given ticker (default TSLA).
+- First-time issues: see [`docs/FAQ.md`](docs/FAQ.md).
+
+
 <div align="center">
 <a href="https://finllm.github.io/workshop/#/fcb" target="_blank">
 <img align="center" src=figs/fingpt_best_presentation.png width="65%">
@@ -379,9 +391,3 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 ## LICENSE
 
 MIT License
-
-**Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
-
-> Note: Installation may require Python 3.9+.
-> Please see [examples/hello_fingpt/hello.py](examples/hello_fingpt/hello.py) for a simple script that downloads CNBC news about AAPL.
-
