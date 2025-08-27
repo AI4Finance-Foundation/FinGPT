@@ -1,4 +1,5 @@
 import os
+import requests
 import re
 import cv2
 import json
@@ -11,7 +12,28 @@ from collections import OrderedDict
 import numpy as np
 import yfinance as yf
 
+FINNHUB_KEY = os.getenv("FINNHUB_API_KEY", "d1ju9e9r01ql1h39gkl0d1ju9e9r01ql1h39gklg")
+
 class StockChartMetadataExtractor:
+    def fetch_latest_news_finnhub(self, ticker, api_key, max_articles=7):
+        """Fetch latest news for a given ticker from Finnhub."""
+        url = f"https://finnhub.io/api/v1/company-news"
+        from datetime import datetime, timedelta
+        today = datetime.today()
+        last_week = today - timedelta(days=7)
+        params = {
+            'symbol': ticker,
+            'from': last_week.strftime('%Y-%m-%d'),
+            'to': today.strftime('%Y-%m-%d'),
+            'token': api_key
+        }
+        resp = requests.get(url, params=params)
+        if resp.status_code == 200:
+            news_data = resp.json()
+            return news_data[:max_articles]
+        else:
+            print(f"Error fetching news for {ticker}: {resp.status_code}")
+            return []
 
     def debug_draw_ocr_boxes(self, ocr_results, save_path=None, show_labels=True):
         """
@@ -627,20 +649,7 @@ class StockChartMetadataExtractor:
 
         # If no valid ticker found, fallback to N/A
         company_name = self.extract_company_name(texts)
-        try:
-            company_name = company_name.replace(" ", "")
-            search = yf.Ticker(company_name)
-            if search.info.get("symbol"):
-                ticker = search.info["symbol"]
-                print('Ticker : ', ticker)
-                return {"ticker": ticker, "company_name": None}
-            
-            # If no valid ticker found, fallback to N/A
-            return {"ticker": "N/A", "company_name": company_name}
-        
-        # If no valid ticker found, fallback to N/A
-        except Exception as e:
-            return {"ticker": "N/A", "company_name": company_name}
+        return {"ticker": "N/A", "company_name": company_name}
 
 
     # def extract_price_range(self, texts, ohlc_vals):
@@ -768,12 +777,41 @@ class StockChartMetadataExtractor:
             metadata = self.parse_chart_metadata(raw_texts, x_axis_texts=None, ocr_results=results)
         return metadata
 
+    def get_ticker(self, company_name):
+        url = "https://query2.finance.yahoo.com/v1/finance/search"
+        params = {"q": company_name, "quotes_count": 1, "country": "United States"}
+        headers = {"User-Agent": "Mozilla/5.0"}
+        res = requests.get(url, params=params, headers=headers)
+        data = res.json()
+        ticker = data['quotes'][0]['symbol']
+        return ticker
 
     def save_metadata_to_json(self, filename):
-        path = "output/"+filename
+        path = "output/" + filename
         if not os.path.exists("output"):
             os.makedirs("output")
         metadata = self.extract_metadata()
+        API_KEY = FINNHUB_KEY
+        ticker = metadata.get('ticker')
+        company_name = metadata.get('company_name')
+        news = []
+        resolved_ticker = ticker
+        if (not ticker or ticker == "N/A") and company_name and company_name != "N/A":
+            # Try to resolve ticker using company name via yfinance
+            print(f"Ticker not found; resolving ticker using company name '{company_name}'.")
+            try:
+                symbol = self.get_ticker(company_name)
+                ticker_info = yf.Ticker(symbol).info
+                resolved_ticker = ticker_info.get("symbol") or ticker_info.get("ticker")
+                if not resolved_ticker:
+                    print(f"Could not resolve ticker for company name '{company_name}'.")
+            except Exception as e:
+                print(f"Error resolving ticker for company name '{company_name}': {e}")
+        if resolved_ticker and resolved_ticker != "N/A":
+            news = self.fetch_latest_news_finnhub(resolved_ticker, API_KEY)
+        else:
+            print("Neither ticker nor company name could resolve a valid ticker; news fetching skipped.")
+        metadata['latest_news'] = news
         with open(filename, 'w') as f:
             json.dump(metadata, f, indent=4)
         print(f"Metadata saved to {filename}")
