@@ -5,7 +5,7 @@ import finance_rag_semantic as frs
 from helpers.llm_utils import llm_generate
 from config import OPENAI_MODEL, client, logger
 from datetime import datetime, timedelta
-from general_utils import get_curday
+from helpers.general_utils import get_curday
 
 # --- RAG helpers ---
 def _make_unique_index_dir(file_name: str) -> Path:

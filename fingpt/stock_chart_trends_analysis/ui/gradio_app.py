@@ -43,3 +43,5 @@ def create_app():
             inputs=[chat, rag_state],
             outputs=[chat_state, rag_state]
         )
+
+    return demo

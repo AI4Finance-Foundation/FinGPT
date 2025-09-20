@@ -1,4 +1,4 @@
-import pandas as pd, os, re, json
+import pandas as pd, os, re, json, time
 from pathlib import Path
 from datetime import date, datetime, timedelta
 from StockChart_Trend_Prediction import StockChartTrendPredictor, StockChartMetadataExtractor
@@ -10,8 +10,8 @@ from helpers.llm_utils import simple_sentiment_from_patterns, llm_generate, llm_
 from helpers.rag_helpers import prepare_rag_session_for_file, retrieve_across_sessions, format_sources_for_display
 from pipelines.news_fetcher import news_for_window
 from pipelines.market_pipeline import run_market_pipeline
-from helpers.general_utils import get_curday, IMG_EXT, DOC_EXT, OUTPUT_END, _between_markers, finnhub_lookup_ticker_by_name
-from config import YOLO_WEIGHTS, logger, finnhub_client
+from helpers.general_utils import get_curday, _between_markers, finnhub_lookup_ticker_by_name
+from config import YOLO_WEIGHTS, logger, finnhub_client, IMG_EXT, DOC_EXT, OUTPUT_END
 os.environ["YOLO_MODEL_PATH"] = YOLO_WEIGHTS
 os.environ["ULTRALYTICS_VERBOSE"] = "False"
 
@@ -128,8 +128,9 @@ def handle_user_turn(history_pairs, user_text, user_files, rag_sessions, do_news
     for p in file_paths:
         ext = Path(p).suffix.lower()
         if ext in IMG_EXT:
+            input_type = "image"
+            start_time = time.time()
             final_output = ensure_final_output_from_image(p)
-            safe_cleanup(p)
             ticker = final_output.get("ticker")
             if ticker:
                 anchor_date = final_output.get("date") or get_curday()
@@ -150,17 +151,18 @@ def handle_user_turn(history_pairs, user_text, user_files, rag_sessions, do_news
                 last_summary_md, last_sentiment, last_forecast_md = summary_md, sentiment, forecast_md
                 last_json_str, last_news_df, last_json_path = final_json_str, pd.DataFrame(news_items), json_path
         elif ext in DOC_EXT:
+            input_type = "document"
+            start_time = time.time()
             session, meta, summary_text = prepare_rag_session_for_file(p)
-            safe_cleanup(p)
             rag_sessions.append(session)
             assistant_reply_sections.append(f"**Document processed:** {Path(p).name}\n\n{summary_text}")
 
+
     # --- TEXT QUERY HANDLING ---
     if user_text and not file_paths:
-        print('Handling text query...', user_text)
+        input_type = "text"
+        start_time = time.time()
         explicit_ticker, day, company_hint = parse_query(user_text)
-        print(f"Parsed query: explicit_ticker={explicit_ticker}, day={day}, company_hint={company_hint}")
-        print(f"RAG sessions count: {len(rag_sessions)}")
         # 2a) If RAG sessions exist and user did NOT explicitly provide (TICKER), answer from docs
         if rag_sessions and not explicit_ticker:
             ret = retrieve_across_sessions(user_text, rag_sessions, top_k=frs.TOP_K)
@@ -217,6 +219,8 @@ def handle_user_turn(history_pairs, user_text, user_files, rag_sessions, do_news
                     "I didn’t find an explicit `(TICKER)` and there’s no document context to search.\n"
                     "Add `(TICKER)` to your question or upload a financial document."
                 )
-
+    end_time = time.time()
+    latency = end_time - (start_time if 'start_time' in locals() else end_time)
+    print(f"{input_type} latency: {latency:.3f} seconds")
     history_pairs[-1] = (history_pairs[-1][0], "\n\n".join(assistant_reply_sections))
     return history_pairs, last_summary_md, last_sentiment, last_forecast_md, last_json_str, last_news_df, last_json_path

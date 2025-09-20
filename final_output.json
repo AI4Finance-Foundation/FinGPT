@@ -1,0 +1,20 @@
+{
+  "ticker": "GOOGL",
+  "date": "2025-09-20",
+  "source": "text_query",
+  "predictions": [],
+  "sessions": [],
+  "price_range": [
+    251.80999755859375,
+    256.0
+  ],
+  "ohlc": {
+    "O": 253.25999450683594,
+    "H": 256.0,
+    "L": 251.80999755859375,
+    "C": 254.72000122070312,
+    "V": 55216557.0
+  },
+  "exchange": null,
+  "company_name": null
+}

@@ -4,7 +4,7 @@ from helpers.rag_helpers import ensure_min_ohlc
 from helpers.llm_utils import llm_generate, llm_brief_summary, simple_sentiment_from_patterns, build_llm_prompts_for_forecast
 from config import logger, OUTPUT_END
 from typing import Dict, Any, List
-from news_fetcher import news_for_window
+from pipelines.news_fetcher import news_for_window
 import json, pandas as pd, gradio as gr, os
 
 def run_market_pipeline(final_output: Dict[str, Any], do_news: bool):

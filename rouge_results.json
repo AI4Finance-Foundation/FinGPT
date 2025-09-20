@@ -1,0 +1,32 @@
+[
+  {
+    "file": "AAPL.json",
+    "rouge1": 0.5504,
+    "rouge2": 0.2321,
+    "rougeL": 0.3571
+  },
+  {
+    "file": "ICICIBANK.json",
+    "rouge1": 0.5656,
+    "rouge2": 0.186,
+    "rougeL": 0.2674
+  },
+  {
+    "file": "Uber.json",
+    "rouge1": 0.7594,
+    "rouge2": 0.519,
+    "rougeL": 0.6319
+  },
+  {
+    "file": "Walmart.json",
+    "rouge1": 0.6903,
+    "rouge2": 0.3501,
+    "rougeL": 0.4779
+  },
+  {
+    "file": "WarnerBD.json",
+    "rouge1": 0.5948,
+    "rouge2": 0.3567,
+    "rougeL": 0.3832
+  }
+]

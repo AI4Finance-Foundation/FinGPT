@@ -10,6 +10,31 @@ def simple_sentiment_from_patterns(preds: List[Dict[str, Any]]) -> str:
             sum(1 for p in preds if any(b in p.get("class","").lower() for b in bearish))
     return "Positive" if score > 0 else "Negative" if score < 0 else "Neutral"
 
+# --- LLM wrapper (OpenAI Chat Completions) ---
+def llm_generate(system_prompt: str,
+                 user_prompt: str,
+                 max_new_tokens: int = 500,
+                 temperature: float = 0.2,
+                 top_p: float = 0.95,
+                 stop: Optional[List[str]] = None) -> str:
+    """
+    Thin wrapper over OpenAI Chat Completions returning assistant text.
+    """
+    stop = stop or None
+    resp = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": system_prompt.strip()},
+            {"role": "user", "content": user_prompt.strip()},
+        ],
+        temperature=temperature,
+        top_p=top_p,
+        max_tokens=max_new_tokens,
+        stop=stop,
+    )
+    return (resp.choices[0].message.content or "").strip()
+
+
 def build_llm_prompts_for_forecast(final_output, news_snippets) -> Tuple[str, str]:
     ctx = {
         "ticker": final_output.get("ticker"),
@@ -63,27 +88,3 @@ def llm_brief_summary(final_output: Dict[str, Any], sentiment: str, mode: str = 
     raw = llm_generate(system, user, max_new_tokens=280, temperature=0.2, top_p=0.95, stop=[OUTPUT_END])
     bullets = [ln.strip() for ln in _between_markers(raw).splitlines() if ln.strip().startswith("- ")]
     return title + "\n" + "\n".join(bullets)
-
-# --- LLM wrapper (OpenAI Chat Completions) ---
-def llm_generate(system_prompt: str,
-                 user_prompt: str,
-                 max_new_tokens: int = 500,
-                 temperature: float = 0.2,
-                 top_p: float = 0.95,
-                 stop: Optional[List[str]] = None) -> str:
-    """
-    Thin wrapper over OpenAI Chat Completions returning assistant text.
-    """
-    stop = stop or None
-    resp = client.chat.completions.create(
-        model=OPENAI_MODEL,
-        messages=[
-            {"role": "system", "content": system_prompt.strip()},
-            {"role": "user", "content": user_prompt.strip()},
-        ],
-        temperature=temperature,
-        top_p=top_p,
-        max_tokens=max_new_tokens,
-        stop=stop,
-    )
-    return (resp.choices[0].message.content or "").strip()
