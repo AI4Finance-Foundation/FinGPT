@@ -27,6 +27,7 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 [![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
 
 ![Visitors](https://api.visitorbadge.io/api/VisitorHit?user=AI4Finance-Foundation&repo=FinGPT&countColor=%23B17A)
+[![](https://dcbadge.limes.pink/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
 
 
 ## What's New:
