@@ -82,7 +82,7 @@ def test_fpb(args, model, tokenizer, prompt_fun=None):
         tmp_context = context[i* batch_size:(i+1)* batch_size]
         tokens = tokenizer(tmp_context, return_tensors='pt', padding=True, max_length=512, return_token_type_ids=False)
         for k in tokens.keys():
-            tokens[k] = tokens[k].cuda()
+            tokens[k] = tokens[k].to(model.device)
         res = model.generate(**tokens, max_length=512, eos_token_id=tokenizer.eos_token_id)
         res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
         # print(f'{i}: {res_sentences[0]}')
