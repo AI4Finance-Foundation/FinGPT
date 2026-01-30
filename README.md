@@ -26,7 +26,14 @@ Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech i
 
 ![Visitors](https://api.visitorbadge.io/api/VisitorHit?user=AI4Finance-Foundation&repo=FinGPT&countColor=%23B17A)
 [![](https://dcbadge.limes.pink/api/server/trsr8SXpW5?cb=1)](https://discord.gg/trsr8SXpW5)
+## Project Contributors
 
+FinGPT is an open-source financial large language model project developed and maintained by the AI4Finance Foundation.
+
+Key contributors include:
+
+- **Hongyang Yang** – research and development on financial large language models and related applications
+- [other contributors…]
 
 ## What's New:
  - [Model Release] Nov, 2023: We release [FinGPT-Forecaster](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_Forecaster)!  🔥[Demo](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster), [Medium Blog](https://medium.datadriveninvestor.com/introducing-fingpt-forecaster-the-future-of-robo-advisory-services-50add34e3d3c) & [Model](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora) are available on Huggingface🤗!
