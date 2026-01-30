@@ -32,7 +32,7 @@ FinGPT is an open-source financial large language model project developed and ma
 
 Key contributors include:
 
-- **Hongyang Yang** – research and development on financial large language models and related applications
+- [**Hongyang (Bruce) Yang**](https://www.linkedin.com/in/brucehy/) – research and development on financial large language models and related applications
 - [other contributors…]
 
 ## What's New:
