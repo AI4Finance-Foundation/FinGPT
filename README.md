@@ -343,12 +343,15 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 
 ## Citing FinGPT
 ```
-@article{yang2023fingpt,
-  title={FinGPT: Open-Source Financial Large Language Models},
-  author={Yang, Hongyang and Liu, Xiao-Yang and Wang, Christina Dan},
-  journal={FinLLM Symposium at IJCAI 2023},
-  year={2023}
+@article{yang2023fingpt_open,
+  title   = {FinGPT: Open-Source Financial Large Language Models},
+  author  = {Yang, Hongyang and Liu, Xiao-Yang and Wang, Christina Dan},
+  journal = {arXiv preprint arXiv:2306.06031},
+  year    = {2023},
+  url     = {https://arxiv.org/abs/2306.06031},
+  note    = {First official FinGPT paper; FinLLM Workshop at IJCAI 2023}
 }
+
 @article{zhang2023instructfingpt,
       title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
       author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
