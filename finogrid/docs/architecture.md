@@ -1,166 +1,173 @@
-# Finogrid v1 — Technical Architecture
+# Finogrid — Technical Architecture
 
-**Version:** 1.0 | **Date:** March 7, 2026
-
----
-
-## End-to-End Flow
-
-```
-Client API Call
-    │
-    ▼
-[1] Ingress API (FastAPI / Cloud Run)
-    • Auth (API key → client record)
-    • Schema validation (Pydantic)
-    • Corridor permission check
-    • Persist batch + tasks as DRAFT
-    • Publish → batch_events/batch_created
-    │
-    ▼ (Pub/Sub)
-[2] Routing Engine (Worker / Cloud Run)
-    • Load RoutingProfile + ComplianceProfile per corridor
-    • Resolve asset (USDT/USDC), mode (wallet/fiat), partner
-    • Validate amount limits
-    • Update task → COMPLIANCE_CHECK
-    • Publish → task_events/task_routed
-    │
-    ▼ (Pub/Sub)
-[3] Compliance Gate (Worker / Cloud Run)
-    • Sanctions screen (always)
-    • KYT/AML screen (wallet delivery)
-    • Apply corridor risk thresholds
-    • PASS → task_events/task_cleared
-    • HOLD → task_events/task_held (manual review queue)
-    • FAIL → task permanently failed
-    │
-    ▼ (Pub/Sub — only PASS tasks)
-[4] Partner Execution Service (Worker / Cloud Run)
-    • Submit to Bridge via BridgeClient
-    • Capture partner_tx_id
-    • Handle retries (max 3, exponential backoff)
-    • Publish → execution_status_events
-    │
-    ▼ (Scheduled + Pub/Sub callbacks)
-[5] Reconciliation Service
-    • Poll Bridge for executing tasks
-    • Transition states → COMPLETED | FAILED
-    • Update batch counters
-    • Generate client reports (JSON/CSV)
-    • Publish → audit_events
-    │
-    ▼ (Async / Scheduled)
-[6] Client Webhook
-    • POST batch/task status to client webhook_url
-    • Retry on failure
-```
+**Version:** 2.0 | **Updated:** March 8, 2026
 
 ---
 
-## Service Boundaries
+## Platform Overview
 
-| Service | Transport | Runs on | Latency target |
-|---------|-----------|---------|----------------|
-| Ingress API | HTTP | Cloud Run | <200ms |
-| Routing Engine | Pub/Sub | Cloud Run | <500ms per task |
-| Compliance Gate | Pub/Sub | Cloud Run | <2s (KYT call) |
-| Execution Bridge | Pub/Sub | Cloud Run | <5s (Bridge call) |
-| Reconciliation | Scheduled | Cloud Run | Every 5 minutes |
-| Agent layer | Scheduled | Cloud Run | Every 15min / 1hr |
+| Layer | Description |
+|-------|-------------|
+| **v1 Payout Engine** | B2B cross-border payouts via Bridge + 8 corridor adapters. |
+| **Agent Ledger** | A2A stablecoin micro-transactions on Base L2. KYA-gated, Mandate-controlled. |
 
 ---
 
-## Database Schema (PostgreSQL / AlloyDB)
+## Flow 1 — B2B Payout
 
 ```
-clients
-  └─ client_corridor_permissions
+Client → Ingress API (8000) → Pub/Sub → Routing Engine
+      → Compliance Gate → Partner Execution (Bridge MCP 9001)
+      → Reconciliation → Client Webhook
+```
 
-batches
-  └─ payout_tasks
-       └─ payout_instructions
-       └─ execution_events
+Steps: Auth + corridor check → route decision → sanctions + KYT → Bridge submit → poll → callback
 
-routing_profiles          (one per corridor)
-compliance_profiles       (one per corridor)
-audit_logs                (append-only)
+---
+
+## Flow 2 — A2A Stablecoin Micropay
+
+```
+Setup:  AgentAccount → KYA → Mandate → AgentWallet → USDC top-up
+Pay:    closed-loop: PaymentIntent → micropay (10 gates) → off-chain settle
+        open-loop:  micropay (10 gates) → off-chain settle
+Sweep:  chain_watcher → settled_offchain → settled_onchain (Base L2)
+Expiry: intent_sweeper → expired intents → release reserved_balance
+```
+
+### Micropay Gates (in order)
+
+| # | Gate | Code |
+|---|------|------|
+| 1 | KYA ≥ basic + token not expired | 403 |
+| 2 | Idempotency replay | 200 |
+| 3 | Wallet ownership + active | 404/400 |
+| 4 | Closed-loop: intent reserved + not expired + amount match | 400/410 |
+| 5 | Counterparty allowlist | 403 |
+| 6 | Per-tx cap | 400 |
+| 7 | Daily velocity (wallet + KYA level) | 400/403 |
+| 8 | Wallet expiry + max_uses | 400 |
+| 9 | Available balance | 402 |
+| 10 | Settle off-chain + ledger entry | — |
+
+---
+
+## Flow 3 — Fiat Collections (Plaid)
+
+```
+Client → Plaid Link UI → exchange public_token → initiate ACH pull
+       → Plaid webhook → credit prefund_balance_usdc
 ```
 
 ---
 
-## Pub/Sub Topics
-
-| Topic | Publisher | Consumer |
-|-------|-----------|---------|
-| `batch_events` | Ingress API | Routing Engine |
-| `task_events` | Routing, Compliance | Compliance Gate, Execution |
-| `execution_status_events` | Execution Bridge, Partner webhooks | Reconciliation |
-| `audit_events` | Reconciliation, Compliance | Audit Agent |
-
----
-
-## AI Agent Layer (off hot path)
-
-All agents run on Cloud Scheduler — they observe, report, and recommend.
-They do NOT release payouts or modify routing config.
+## Database Schema
 
 ```
-Scheduled Agents:
-  ├── OpsOversightAgent        (every 15 min) → FinGPT Sentiment + Forecaster
-  ├── ProcessImprovementAgent  (weekly)        → FinGPT Sentiment + FX data
-  ├── AuditGovernanceAgent     (on-demand)     → FinGPT RAG
-  ├── InternalSupportAgent     (always-on)     → FinGPT RAG
-  └── TreasuryStrategyAgent    (on-demand)     → FinGPT Forecaster
+v1:            clients → client_corridor_permissions
+               batches → payout_tasks → payout_instructions → execution_events
+               routing_profiles, compliance_profiles, audit_logs
+
+migration 002: agent_accounts → agent_kya, agent_wallets → payment_intents
+               micro_transactions, agent_ledger_entries
+
+migration 003: principals → mandates → mandate_events
 ```
 
 ---
 
-## Corridor Adapter Pattern
+## Mandate Model
 
-Each corridor is a self-contained adapter:
-
-```python
-corridors/
-  ├── brazil/adapter.py     # PIX, CPF/CNPJ validation
-  ├── nigeria/adapter.py    # NIBSS, BVN, TRC-20 USDT preference
-  ├── india/adapter.py      # UPI/VPA
-  ...
 ```
+Principal → grants → Mandate → authorises → AgentAccount
 
-Adding a new corridor = create one adapter file, one RoutingProfile DB row,
-one ComplianceProfile DB row. No changes to core services.
+Key fields:
+  scope              payout|collect|topup|full|read_only
+  approval_mode      auto|manual|threshold
+  approval_threshold transactions ≥ N USDC → human approval queue
+  allowed_corridors  []= all;  ["BR","NG"] = restricted
+  allowed_chains     []= all;  ["base"] = Base only
+  status lifecycle   draft → active → suspended|revoked|expired|superseded
+  MandateEvent       append-only; every change logged
+```
 
 ---
 
-## MCP Server Pattern
+## Service Map
 
-Partner integrations are MCP servers:
+| Service | Port | Hot path |
+|---------|------|---------|
+| Ingress API | 8000 | Yes |
+| Agent Ledger API | 8100 | Yes |
+| Ops Console API | 8200 | No |
+| Routing Engine | Pub/Sub | Yes |
+| Compliance Gate | Pub/Sub | Yes |
+| Partner Execution | Pub/Sub | Yes |
+| Reconciliation | Scheduled | No |
+| intent_sweeper | Cron | No |
+| chain_watcher | Cron | No |
 
-```
-finogrid/mcp/
-  ├── bridge/server.py      port 9001  (Bridge API)
-  ├── kyt_aml/server.py     port 9002  (Chainalysis/Elliptic)
-  └── identity/server.py   port 9003  (KYB provider)
-```
+---
 
-Swapping a partner = deploy a new MCP server. Core services unchanged.
+## MCP Server Map
+
+| Server | Port | Key Tools |
+|--------|------|-----------|
+| bridge | 9001 | create_transfer, get_transfer, cancel_transfer |
+| kyt_aml | 9002 | screen_address, screen_sanctions |
+| identity | 9003 | submit_kyb, get_kyb_status |
+| wallet_factory | 9004 | register_wallet, check_tx_confirmed, get_wallet_balance |
+| kya_validator | 9005 | submit_kya, get_kya_status, verify_kya_token, renew_kya |
+| plaid | 9006 | create_link_token, initiate_ach_pull, handle_webhook |
+
+Swap any partner = deploy new MCP with same tool interface. Core services unchanged.
+
+---
+
+## Ops Console (port 8200)
+
+| Endpoint | Purpose |
+|----------|---------|
+| GET /v1/ops/search?q= | Unified cross-entity search |
+| GET /v1/ops/exceptions | Held tasks, KYA blocks, expired intents |
+| GET/POST /v1/ops/approvals | Mandate threshold approval queue |
+| GET /v1/ops/ledger | Ledger explorer (filterable) |
+| GET /v1/ops/agents/{id} | Agent detail: KYA, wallets, txs, daily spend |
+| POST /v1/ops/mandates/{id}/activate|suspend|resume|revoke | Mandate lifecycle |
+| GET /v1/ops/corridors | Volume + error rates per corridor |
+
+---
+
+## AI Agents (off hot path)
+
+| Agent | Schedule | Uses |
+|-------|----------|------|
+| OpsOversight | 15 min | FinGPT Sentiment + Forecaster |
+| ProcessImprovement | Weekly | FinGPT Forecaster + FX data |
+| AuditGovernance | On-demand | FinGPT RAG (ChromaDB) |
+| InternalSupport | Always-on | FinGPT RAG |
+| TreasuryStrategy | On-demand | FinGPT Forecaster |
+
+Agents observe, report, recommend. They never release payments.
 
 ---
 
 ## Security
 
-- No private keys stored or generated
-- All secrets in GCP Secret Manager
-- Per-service IAM service accounts (least privilege)
-- API keys hashed before storage
-- All traffic TLS
-- Audit log is append-only
+- No private keys stored
+- Client + Agent API keys SHA-256 hashed; agent keys shown once
+- Ops Console uses separate ops API key
+- x402 nonce + timestamp TTL prevents replay
+- KYA validator tokens have configurable expiry (default 365 days)
+- Ledger entries, mandate events, audit_logs are append-only
+- All traffic TLS; secrets in GCP Secret Manager
 
 ---
 
 ## Environments
 
-| Env | Branch | Data |
-|-----|--------|------|
-| Demo | `develop` | Synthetic, sandbox Bridge API |
-| Production | `main` | Live clients, hardened config |
+| Env | Notes |
+|-----|-------|
+| Local | chain_enabled=false, kya_validator_backend=internal |
+| Demo | Sandbox Bridge, Plaid sandbox |
+| Production | chain_enabled=true, hardened config |
