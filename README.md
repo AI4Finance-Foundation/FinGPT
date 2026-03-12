@@ -183,6 +183,8 @@ The datasets we used, and the **multi-task financial LLM** models are available 
 
 * [FinGPT-RAG](https://github.com/AI4Finance-Foundation/FinGPT/tree/master/fingpt/FinGPT_RAG): We present a retrieval-augmented large language model framework specifically designed for financial sentiment analysis, optimizing information depth and context through external knowledge retrieval, thereby ensuring nuanced predictions.
 
+  * Optional evaluation companion: [`fingpt/FinGPT_RAG/wfgy_evaluation_pack`](./fingpt/FinGPT_RAG/wfgy_evaluation_pack), a docs-only stress-test pack that maps financial RAG failures to the WFGY 16-problem `ProblemMap` for troubleshooting retrieval, reasoning, routing, and deployment drift.
+
 <div align="center">
 <img align="center" src=figs/FinGPT_RAG_framework.png>
 </div>
@@ -391,4 +393,3 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 MIT License
 
 **Disclaimer: We are sharing codes for academic purposes under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
-

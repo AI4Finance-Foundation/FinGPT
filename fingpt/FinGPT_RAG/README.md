@@ -20,6 +20,7 @@ Financial sentiment analysis is critical for valuation and investment decision-m
 
 - `multisource_retrieval`: Main code directory for the retrieval augmentation module which enhance the concise query with context.
 - `instruction-FinGPT`: Directory containing the code and data related to the instruction-tuned LLMs module.
+- `wfgy_evaluation_pack`: Optional docs-only evaluation pack for diagnosing common RAG failures in FinGPT-style financial QA pipelines using the WFGY 16-problem map.
 
 
 ## Performance
@@ -67,6 +68,8 @@ pip install -r requirements.txt
 ```
 
 3. Instructions on how to run the model, fine-tune, or evaluate can be found in the respective directories (`instruction-FinGPT`, `multisource_retrieval`). Note the generated .csv file from multisource_retrieval is the input for the instruction-tuned LLM during evaluation.
+
+For an optional failure-analysis companion focused on financial RAG debugging, see `wfgy_evaluation_pack/README.md`.
 
 ## Citation
 
