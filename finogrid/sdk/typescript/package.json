@@ -1,0 +1,25 @@
+{
+  "name": "@finogrid/agent-ledger-sdk",
+  "version": "0.1.0",
+  "description": "Finogrid Agent Ledger SDK — KYA, micropay, mandates, x402",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "keywords": ["finogrid", "stablecoin", "agent", "kya", "x402", "micropay"],
+  "license": "MIT"
+}
