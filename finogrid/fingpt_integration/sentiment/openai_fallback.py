@@ -71,16 +71,31 @@ class OpenAISentimentFallback:
 
 def get_sentiment_analyzer():
     """
-    Factory: returns OpenAI fallback for MVP, full FinGPT model for production.
-    Controlled by FINGPT_USE_OPENAI_FALLBACK env var.
+    Factory: returns the configured sentiment provider.
+
+    Provider selection (in order of precedence):
+      1. FINGPT_LLM_PROVIDER env var: "openai" | "minimax" | "fingpt"
+      2. FINGPT_USE_OPENAI_FALLBACK env var (legacy): "true" → OpenAI, "false" → FinGPT model
+
+    Examples:
+      FINGPT_LLM_PROVIDER=minimax  →  MiniMax MiniMax-M2.5
+      FINGPT_LLM_PROVIDER=openai   →  OpenAI GPT-3.5-turbo (default)
+      FINGPT_LLM_PROVIDER=fingpt   →  Local FinGPT Llama-2 model (requires GPU)
     """
-    from .. import USE_OPENAI_FALLBACK
-    if USE_OPENAI_FALLBACK:
-        log.info("sentiment_using_openai_fallback")
-        return OpenAISentimentFallback()
-    else:
+    from .. import LLM_PROVIDER, USE_OPENAI_FALLBACK
+
+    if LLM_PROVIDER == "minimax":
+        from .minimax_provider import MiniMaxSentimentProvider
+        log.info("sentiment_using_minimax")
+        return MiniMaxSentimentProvider()
+
+    if LLM_PROVIDER == "fingpt" or not USE_OPENAI_FALLBACK:
         from .crypto_sentiment import FinoGridSentimentAnalyzer
         log.info("sentiment_using_fingpt_model")
         analyzer = FinoGridSentimentAnalyzer()
         analyzer.load()
         return analyzer
+
+    # Default: OpenAI
+    log.info("sentiment_using_openai_fallback")
+    return OpenAISentimentFallback()
