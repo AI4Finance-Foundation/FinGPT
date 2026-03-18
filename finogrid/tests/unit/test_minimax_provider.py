@@ -15,14 +15,14 @@ class TestMiniMaxSentimentProvider:
     def test_init_with_api_key(self):
         from finogrid.fingpt_integration.sentiment.minimax_provider import MiniMaxSentimentProvider
         provider = MiniMaxSentimentProvider()
-        assert provider.model == "MiniMax-M2.5"
+        assert provider.model == "MiniMax-M2.7"
         assert provider.client is not None
 
     @patch.dict(os.environ, {"MINIMAX_API_KEY": "test-key"})
     def test_init_custom_model(self):
         from finogrid.fingpt_integration.sentiment.minimax_provider import MiniMaxSentimentProvider
-        provider = MiniMaxSentimentProvider(model="MiniMax-M2.5-highspeed")
-        assert provider.model == "MiniMax-M2.5-highspeed"
+        provider = MiniMaxSentimentProvider(model="MiniMax-M2.7-highspeed")
+        assert provider.model == "MiniMax-M2.7-highspeed"
 
     @patch.dict(os.environ, {}, clear=True)
     def test_init_missing_api_key(self):
@@ -179,7 +179,7 @@ class TestMiniMaxLLMClient:
     def test_init_defaults(self):
         from finogrid.fingpt_integration.minimax_llm_client import MiniMaxLLMClient
         client = MiniMaxLLMClient()
-        assert client.model == "MiniMax-M2.5"
+        assert client.model == "MiniMax-M2.7"
         assert client.temperature == 0.7
         assert client.max_tokens == 1024
 
@@ -187,11 +187,11 @@ class TestMiniMaxLLMClient:
     def test_init_custom_params(self):
         from finogrid.fingpt_integration.minimax_llm_client import MiniMaxLLMClient
         client = MiniMaxLLMClient(
-            model="MiniMax-M2.5-highspeed",
+            model="MiniMax-M2.7-highspeed",
             temperature=0.5,
             max_tokens=2048,
         )
-        assert client.model == "MiniMax-M2.5-highspeed"
+        assert client.model == "MiniMax-M2.7-highspeed"
         assert client.temperature == 0.5
         assert client.max_tokens == 2048
 
@@ -261,7 +261,7 @@ class TestMiniMaxLLMClient:
     @patch.dict(os.environ, {"MINIMAX_API_KEY": "test-key"})
     async def test_chat_passes_correct_params(self):
         from finogrid.fingpt_integration.minimax_llm_client import MiniMaxLLMClient
-        client = MiniMaxLLMClient(model="MiniMax-M2.5-highspeed", temperature=0.3, max_tokens=512)
+        client = MiniMaxLLMClient(model="MiniMax-M2.7-highspeed", temperature=0.3, max_tokens=512)
 
         mock_response = MagicMock()
         mock_response.choices = [MagicMock()]
@@ -271,7 +271,7 @@ class TestMiniMaxLLMClient:
         await client.chat("test prompt")
 
         call_kwargs = client.client.chat.completions.create.call_args[1]
-        assert call_kwargs["model"] == "MiniMax-M2.5-highspeed"
+        assert call_kwargs["model"] == "MiniMax-M2.7-highspeed"
         assert call_kwargs["temperature"] == 0.3
         assert call_kwargs["max_tokens"] == 512
         assert call_kwargs["messages"] == [{"role": "user", "content": "test prompt"}]

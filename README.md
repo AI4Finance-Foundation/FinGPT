@@ -209,7 +209,7 @@ For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM provid
 | Provider | Model | Context Length | Use Case |
 |----------|-------|---------------|----------|
 | OpenAI | GPT-3.5-turbo | 16K | Default fallback for sentiment & agents |
-| [MiniMax](https://platform.minimaxi.com/) | MiniMax-M2.5 | 204K | Cost-effective alternative with large context window |
+| [MiniMax](https://platform.minimaxi.com/) | MiniMax-M2.7 | 204K | Latest flagship model with enhanced reasoning and coding |
 | FinGPT (local) | Llama-2-13B LoRA | 4K | Full local inference (requires GPU) |
 
 ## Open-Source Base Model used in the LLMs layer of FinGPT

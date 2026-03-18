@@ -18,7 +18,7 @@ instead of loading the full 13B model locally. Same quality for early stage.
 
 LLM provider selection (for sentiment analysis and agent LLM client):
   FINGPT_LLM_PROVIDER=openai   → OpenAI GPT-3.5-turbo (default)
-  FINGPT_LLM_PROVIDER=minimax  → MiniMax MiniMax-M2.5 (204K context, cost-effective)
+  FINGPT_LLM_PROVIDER=minimax  → MiniMax MiniMax-M2.7 (enhanced reasoning and coding)
   FINGPT_LLM_PROVIDER=fingpt   → Local FinGPT model (requires GPU)
 """
 import os

@@ -35,7 +35,7 @@ class MiniMaxLLMClient:
 
     def __init__(
         self,
-        model: str = "MiniMax-M2.5",
+        model: str = "MiniMax-M2.7",
         temperature: float = 0.7,
         max_tokens: int = 1024,
     ):

@@ -78,7 +78,7 @@ def get_sentiment_analyzer():
       2. FINGPT_USE_OPENAI_FALLBACK env var (legacy): "true" → OpenAI, "false" → FinGPT model
 
     Examples:
-      FINGPT_LLM_PROVIDER=minimax  →  MiniMax MiniMax-M2.5
+      FINGPT_LLM_PROVIDER=minimax  →  MiniMax MiniMax-M2.7
       FINGPT_LLM_PROVIDER=openai   →  OpenAI GPT-3.5-turbo (default)
       FINGPT_LLM_PROVIDER=fingpt   →  Local FinGPT Llama-2 model (requires GPU)
     """
