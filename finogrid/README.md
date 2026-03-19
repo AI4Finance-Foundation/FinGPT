@@ -173,7 +173,7 @@ const tx = await finogrid.micropay.pay({
 | Database | AlloyDB (PostgreSQL) / SQLAlchemy 2.0 async |
 | Messaging | GCP Pub/Sub |
 | On-chain | Base L2 (native USDC, ~$0.007/tx, 2–10s confirmation) |
-| AI (inference) | FinGPT Llama-2 LoRA + OpenAI fallback |
+| AI (inference) | FinGPT Llama-2 LoRA + OpenAI / [MiniMax](https://platform.minimaxi.com/) fallback |
 | SDK | TypeScript 5.3 (`@finogrid/agent-ledger-sdk`) |
 | Infrastructure | GCP (Cloud Run, BigQuery, Secret Manager, IAM) |
 
@@ -272,7 +272,9 @@ python -m mcp.plaid.server &
 | `PLAID_SECRET` | Plaid MCP | Plaid secret |
 | `KYA_VALIDATOR_BACKEND` | KYA MCP | internal \| sardine \| persona |
 | `OPS_API_KEY` | ops console | Ops-level auth key |
+| `FINGPT_LLM_PROVIDER` | agents | LLM provider: `openai` \| `minimax` \| `fingpt` |
 | `OPENAI_API_KEY` | agents | FinGPT OpenAI fallback |
+| `MINIMAX_API_KEY` | agents | [MiniMax](https://platform.minimaxi.com/) API key (when provider=minimax) |
 | `PUBSUB_PROJECT_ID` | workers | GCP Pub/Sub project |
 
 See `.env.example` for the full list.

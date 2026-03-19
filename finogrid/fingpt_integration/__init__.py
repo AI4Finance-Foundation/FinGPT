@@ -13,9 +13,17 @@ What we do NOT use:
 - Trading strategies (FinGPT_Others)
 - v1 sentiment models (superseded by v3)
 
-For MVP: set USE_OPENAI_FALLBACK=true to use GPT-3.5 with FinGPT prompts
+For MVP: set FINGPT_USE_OPENAI_FALLBACK=true to use GPT-3.5 with FinGPT prompts
 instead of loading the full 13B model locally. Same quality for early stage.
+
+LLM provider selection (for sentiment analysis and agent LLM client):
+  FINGPT_LLM_PROVIDER=openai   → OpenAI GPT-3.5-turbo (default)
+  FINGPT_LLM_PROVIDER=minimax  → MiniMax MiniMax-M2.7 (enhanced reasoning and coding)
+  FINGPT_LLM_PROVIDER=fingpt   → Local FinGPT model (requires GPU)
 """
 import os
 
 USE_OPENAI_FALLBACK = os.getenv("FINGPT_USE_OPENAI_FALLBACK", "true").lower() == "true"
+
+# Provider selection: "openai" (default), "minimax", or "fingpt" (local model)
+LLM_PROVIDER = os.getenv("FINGPT_LLM_PROVIDER", "openai").lower()

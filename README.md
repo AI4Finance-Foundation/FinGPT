@@ -202,6 +202,16 @@ The datasets we used, and the **multi-task financial LLM** models are available 
 
 
 
+## Cloud LLM Providers for FinGPT Inference
+
+For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM providers as alternatives to running local models. Set `FINGPT_LLM_PROVIDER` in your environment:
+
+| Provider | Model | Context Length | Use Case |
+|----------|-------|---------------|----------|
+| OpenAI | GPT-3.5-turbo | 16K | Default fallback for sentiment & agents |
+| [MiniMax](https://platform.minimaxi.com/) | MiniMax-M2.7 | 204K | Latest flagship model with enhanced reasoning and coding |
+| FinGPT (local) | Llama-2-13B LoRA | 4K | Full local inference (requires GPU) |
+
 ## Open-Source Base Model used in the LLMs layer of FinGPT
 * Feel free to contribute more open-source base models tailored for various language-specific financial markets.
 
