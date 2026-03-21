@@ -376,6 +376,13 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
   year={2023}
 }
 
+@article{liang2024fingpt,
+  title={FinGPT: enhancing sentiment-based stock movement prediction with dissemination-aware and context-enriched LLMs},
+  author={Liang, Yixuan and Liu, Yuncong and Wang, Neng and Yang, Hongyang and Zhang, Boyu and Wang, Christina Dan},
+  journal={AAAI 2025 Workshop GoodData},
+  year={2025}
+}
+
 @article{wang2023fingptbenchmark,
   title={FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets},
   author={Wang, Neng and Yang, Hongyang and Wang, Christina Dan},
