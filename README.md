@@ -355,45 +355,46 @@ on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023
 ## Citing FinGPT
 ```
 @article{yang2023fingpt_open,
-  title   = {FinGPT: Open-Source Financial Large Language Models},
-  author  = {Yang, Hongyang and Liu, Xiao-Yang and Wang, Christina Dan},
-  journal = {arXiv preprint arXiv:2306.06031},
-  year    = {2023},
-  url     = {https://arxiv.org/abs/2306.06031},
-  note    = {First official FinGPT paper; FinLLM Workshop at IJCAI 2023}
+     title   = {FinGPT: Open-Source Financial Large Language Models},
+     author  = {Yang, Hongyang and Liu, Xiao-Yang and Wang, Christina Dan},
+     journal = {arXiv preprint arXiv:2306.06031},
+     year    = {2023},
+     url     = {https://arxiv.org/abs/2306.06031},
+     note    = {First official FinGPT paper; FinLLM Workshop at IJCAI 2023}
 }
 
 @article{zhang2023instructfingpt,
-      title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
-      author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
-      journal={FinLLM Symposium at IJCAI 2023},
-      year={2023}
+     title={Instruct-FinGPT: Financial Sentiment Analysis by Instruction Tuning of General-Purpose Large Language Models}, 
+     author={Boyu Zhang and Hongyang Yang and Xiao-Yang Liu},
+     journal={FinLLM Symposium at IJCAI 2023},
+     year={2023}
 }
+
 @article{zhang2023fingptrag,
-  title={Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models},
-  author={Zhang, Boyu and Yang, Hongyang and Zhou, tianyu and Babar, Ali and Liu, Xiao-Yang},
- journal = {ACM International Conference on AI in Finance (ICAIF)},
-  year={2023}
+     title={Enhancing Financial Sentiment Analysis via Retrieval Augmented Large Language Models},
+     author={Zhang, Boyu and Yang, Hongyang and Zhou, tianyu and Babar, Ali and Liu, Xiao-Yang},
+     journal = {ACM International Conference on AI in Finance (ICAIF)},
+     year={2023}
 }
 
 @article{liang2024fingpt,
-  title={FinGPT: enhancing sentiment-based stock movement prediction with dissemination-aware and context-enriched LLMs},
-  author={Liang, Yixuan and Liu, Yuncong and Wang, Neng and Yang, Hongyang and Zhang, Boyu and Wang, Christina Dan},
-  journal={AAAI 2025 Workshop GoodData},
-  year={2025}
+     title={FinGPT: enhancing sentiment-based stock movement prediction with dissemination-aware and context-enriched LLMs},
+     author={Liang, Yixuan and Liu, Yuncong and Wang, Neng and Yang, Hongyang and Zhang, Boyu and Wang, Christina Dan},
+     journal={AAAI 2025 Workshop GoodData},
+     year={2025}
 }
 
 @article{wang2023fingptbenchmark,
-  title={FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets},
-  author={Wang, Neng and Yang, Hongyang and Wang, Christina Dan},
-  journal={NeurIPS Workshop on Instruction Tuning and Instruction Following},
-  year={2023}
+     title={FinGPT: Instruction Tuning Benchmark for Open-Source Large Language Models in Financial Datasets},
+     author={Wang, Neng and Yang, Hongyang and Wang, Christina Dan},
+     journal={NeurIPS Workshop on Instruction Tuning and Instruction Following},
+     year={2023}
 }
 @article{2023finnlp,
-  title={Data-centric FinGPT: Democratizing Internet-scale Data for Financial Large Language Models},
-  author={Liu, Xiao-Yang and Wang, Guoxuan and Yang, Hongyang and Zha, Daochen},
-  journal={NeurIPS Workshop on Instruction Tuning and Instruction Following},
-  year={2023}
+     title={Data-centric FinGPT: Democratizing Internet-scale Data for Financial Large Language Models},
+     author={Liu, Xiao-Yang and Wang, Guoxuan and Yang, Hongyang and Zha, Daochen},
+     journal={NeurIPS Workshop on Instruction Tuning and Instruction Following},
+     year={2023}
 }
 
 ```
