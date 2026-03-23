@@ -14,6 +14,8 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 
+# Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
+os.environ.setdefault("HF_HUB_TIMEOUT", "120")
 
 access_token = os.environ["HF_TOKEN"]
 finnhub_client = finnhub.Client(api_key=os.environ["FINNHUB_API_KEY"])

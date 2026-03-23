@@ -8,11 +8,15 @@ NOT used in the hot transaction path — runs asynchronously.
 """
 from __future__ import annotations
 
+import os
 import structlog
 from typing import Optional
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from peft import PeftModel
 import torch
+
+# Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
+os.environ.setdefault("HF_HUB_TIMEOUT", "120")
 
 log = structlog.get_logger()
 
