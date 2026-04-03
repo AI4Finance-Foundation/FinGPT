@@ -1,6 +1,9 @@
 torch==2.0.1
 transformers==4.32.0
 peft==0.5.0
+bitsandbytes==0.41.1
+accelerate==0.23.0
+gradio==3.50.2
 pandas
 yfinance
 finnhub-python
