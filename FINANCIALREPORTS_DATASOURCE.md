@@ -2,15 +2,15 @@
 
 ## Overview
 
-[FinancialReports.eu](https://financialreports.eu) provides API access to **14M+ regulatory filings** from 35 official sources across 30+ countries. Its **Markdown conversion endpoint** returns LLM-ready text from annual reports, making it a rich source of financial text data for training and fine-tuning financial language models.
+[FinancialReports.eu](https://financialreports.eu) provides API access to **14M+ filings** from data sources across 30+ countries. Its **Markdown conversion endpoint** returns LLM-ready text from annual reports, making it a rich source of financial text data for training and fine-tuning financial language models.
 
 ## Why This Fits FinGPT
 
 FinGPT needs diverse, high-quality financial text for model training. FinancialReports.eu offers:
 
-- **14M+ regulatory filings** — annual reports, interim reports, ESG disclosures, M&A announcements
+- **14M+ filings** — annual reports, interim reports, ESG disclosures, M&A announcements
 - **Markdown endpoint** (`GET /filings/{id}/markdown/`) — returns clean, structured text from filing PDFs, ready for LLM consumption
-- **Global & multilingual** — filings from 35 regulators across 30+ countries, extending training data beyond US SEC filings
+- **Global & multilingual** — filings from 30+ countries, extending training data beyond US filings
 - **33,000+ companies** with ISIN, LEI, and GICS classification for structured metadata
 - **11 standardized filing categories** — enables category-specific fine-tuning (e.g., ESG reports, financial statements, M&A disclosures)
 - **Temporal coverage** — historical filings for time-series analysis and temporal reasoning tasks
@@ -81,7 +81,7 @@ content = filings_markdown_retrieve.sync(client=client, id=12345)
 | **Rate Limiting** | Burst limit + monthly quota |
 | **Companies** | 33,230+ |
 | **Total Filings** | 14,135,359+ |
-| **Sources** | 35 official regulators |
+| **Coverage** | 30+ countries |
 | **Countries** | 30+ |
 
 ## Use Cases for FinGPT
@@ -93,4 +93,4 @@ content = filings_markdown_retrieve.sync(client=client, id=12345)
 | ESG analysis | Dedicated ESG filing category |
 | Filing summarization | Full annual reports for summarization tasks |
 | Temporal reasoning | Historical filings with timestamps |
-| Cross-market analysis | Standardized categories across 35 regulators |
+| Cross-market analysis | Standardized categories across 30+ countries |
