@@ -2,10 +2,11 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel, get_peft_model, LoraConfig, TaskType  # 0.4.0
 import torch
 import argparse
+import os
 
 
 from fpb import test_fpb, test_fpb_mlt
-from fiqa import test_fiqa, test_fiqa_mlt 
+from fiqa import test_fiqa, test_fiqa_mlt
 from tfns import test_tfns
 from nwgi import test_nwgi
 from headline import test_headline
@@ -14,6 +15,9 @@ from convfinqa import test_convfinqa
 from fineval import test_fineval
 from finred import test_re
 
+
+# Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
+os.environ.setdefault("HF_HUB_TIMEOUT", "120")
 
 import sys
 sys.path.append('../')
