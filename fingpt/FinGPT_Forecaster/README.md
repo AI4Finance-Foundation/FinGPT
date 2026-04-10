@@ -17,12 +17,13 @@ Enter the following inputs:
 2) the day from which you want the prediction to happen (yyyy-mm-dd)
 3) the number of past weeks where market news are retrieved
 4) whether to add latest basic financials as additional information
+5) whether to add optional structured market sentiment signals (requires `ADANOS_API_KEY`)
 
 Then, click Submit！You'll get a response like this
 
 ![demo_response](figs/response.png)
 
-This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased.
+This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased. The optional Adanos market sentiment overlay helps reduce this by adding structured cross-source signals for recent windows.
 For more detailed and customized usage, scroll down and continue your reading.
 
 ## Deploy FinGPT-Forecaster
@@ -74,6 +75,36 @@ answer = re.sub(r'.*\[/INST\]\s*', '', output, flags=re.DOTALL) # don't forget t
 
 ## Data Preparation
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
+Structured market sentiment is available as an optional prompt enhancer using **Adanos**.
+
+## Optional Adanos Market Sentiment
+
+FinGPT-Forecaster can optionally enrich recent-window prompts with structured market sentiment from Reddit, X, Finance News, and Polymarket.
+
+Set the following environment variable before running the Gradio app or the online inference helper:
+
+```bash
+export ADANOS_API_KEY=your_api_key
+```
+
+What gets added to the prompt:
+
+- average sentiment score across available sources
+- source coverage
+- source alignment
+- per-source sentiment and activity counts
+
+Notes:
+
+- the integration is strictly optional; without `ADANOS_API_KEY` the Forecaster behaves exactly as before
+- it is intended for live/recent-window inference, not long-range historical backfills
+- recent-window availability depends on the public Adanos historical window for the selected account tier
+
+For offline data preparation, the same enrichment can be enabled in the dataset pipeline:
+
+```bash
+python data_pipeline.py --index_name dow --with_market_sentiment
+```
 
 Prompts used are organized as below:
 

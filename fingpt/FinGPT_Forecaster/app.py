@@ -13,6 +13,7 @@ from peft import PeftModel
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
+from market_sentiment import enrich_recent_market_sentiment, format_market_sentiment_prompt
 
 # Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
 os.environ.setdefault("HF_HUB_TIMEOUT", "120")
@@ -157,7 +158,11 @@ def get_prompt_by_row(symbol, row):
     else:
         basics = "[Basic Financials]:\n\nNo basic financial reported."
     
-    return head, news, basics
+    market_sentiment = ""
+    if "MarketSentiment" in row:
+        market_sentiment = format_market_sentiment_prompt(row["MarketSentiment"])
+
+    return head, news, market_sentiment, basics
 
 
 def sample_news(news, k=5):
@@ -197,8 +202,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
     prev_rows = []
 
     for row_idx, row in data.iterrows():
-        head, news, _ = get_prompt_by_row(symbol, row)
-        prev_rows.append((head, news, None))
+        head, news, market_sentiment, _ = get_prompt_by_row(symbol, row)
+        prev_rows.append((head, news, market_sentiment, None))
         
     prompt = ""
     for i in range(-len(prev_rows), 0):
@@ -211,6 +216,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
             prompt += "\n".join(sampled_news)
         else:
             prompt += "No relative news reported."
+        if prev_rows[i][2]:
+            prompt += "\n\n" + prev_rows[i][2]
         
     period = "{} to {}".format(curday, n_weeks_before(curday, -1))
     
@@ -228,7 +235,7 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
     return info, prompt
 
 
-def construct_prompt(ticker, curday, n_weeks, use_basics):
+def construct_prompt(ticker, curday, n_weeks, use_basics, use_market_sentiment):
 
     try:
         steps = [n_weeks_before(curday, n) for n in range(n_weeks + 1)][::-1]
@@ -238,6 +245,8 @@ def construct_prompt(ticker, curday, n_weeks, use_basics):
     data = get_stock_data(ticker, steps)
     data = get_news(ticker, data)
     data['Basics'] = [json.dumps({})] * len(data)
+    if use_market_sentiment:
+        data = enrich_recent_market_sentiment(data, ticker, today=curday)
     # print(data)
     
     info, prompt = get_all_prompts_online(ticker, data, curday, use_basics)
@@ -248,11 +257,11 @@ def construct_prompt(ticker, curday, n_weeks, use_basics):
     return info, prompt
 
 
-def predict(ticker, date, n_weeks, use_basics):
+def predict(ticker, date, n_weeks, use_basics, use_market_sentiment):
 
     print_gpu_utilization()
 
-    info, prompt = construct_prompt(ticker, date, n_weeks, use_basics)
+    info, prompt = construct_prompt(ticker, date, n_weeks, use_basics, use_market_sentiment)
       
     inputs = tokenizer(
         prompt, return_tensors='pt', padding=False
@@ -299,6 +308,11 @@ demo = gr.Interface(
             label="Use Latest Basic Financials",
             value=False,
             info="If checked, the latest quarterly reported basic financials of the company is taken into account."
+        ),
+        gr.Checkbox(
+            label="Use Structured Market Sentiment",
+            value=False,
+            info="If checked, recent cross-source market sentiment is added when ADANOS_API_KEY is configured."
         )
     ],
     outputs=[
@@ -313,6 +327,7 @@ demo = gr.Interface(
     description="""FinGPT-Forecaster takes random market news and optional basic financials related to the specified company from the past few weeks as input and responds with the company's **positive developments** and **potential concerns**. Then it gives out a **prediction** of stock price movement for the coming week and its **analysis** summary.
 This model is finetuned on Llama2-7b-chat-hf with LoRA on the past year's DOW30 market data. Inference in this demo uses fp16 and **welcomes any ticker symbol**.
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
+Optional structured market sentiment can be added with **Adanos** when `ADANOS_API_KEY` is configured.
 This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased.
 For more detailed and customized implementation, refer to our FinGPT project: <https://github.com/AI4Finance-Foundation/FinGPT>
 **Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**

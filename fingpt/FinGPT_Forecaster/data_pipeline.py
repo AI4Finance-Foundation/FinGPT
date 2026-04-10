@@ -17,6 +17,7 @@ def main(args):
     min_past_weeks = args['min_past_weeks']
     max_past_weeks = args['max_past_weeks']
     train_ratio = args['train_ratio']
+    with_market_sentiment = args['with_market_sentiment']
 
     with_basics = True
     if index_name == "dow":
@@ -39,15 +40,39 @@ def main(args):
     print("Acquiring data")
     for symbol in tqdm(index):
         print(f"Processing {symbol}")
-        prepare_data_for_symbol(symbol, data_dir, start_date, end_date, with_basics=with_basics)
+        prepare_data_for_symbol(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            with_basics=with_basics,
+            with_market_sentiment=with_market_sentiment,
+        )
 
     # Generate prompt and query GPT-4
     print("Generating prompts and querying GPT-4")
-    query_gpt4(index, data_dir, start_date, end_date, min_past_weeks, max_past_weeks, with_basics=with_basics)
+    query_gpt4(
+        index,
+        data_dir,
+        start_date,
+        end_date,
+        min_past_weeks,
+        max_past_weeks,
+        with_basics=with_basics,
+        with_market_sentiment=with_market_sentiment,
+    )
 
     # Transform into training format
     print("Transforming into training format")
-    dataset = create_dataset(index, data_dir, start_date, end_date, train_ratio, with_basics=with_basics)
+    dataset = create_dataset(
+        index,
+        data_dir,
+        start_date,
+        end_date,
+        train_ratio,
+        with_basics=with_basics,
+        with_market_sentiment=with_market_sentiment,
+    )
 
     # Save dataset
     dataset.save_to_disk(
@@ -64,6 +89,11 @@ if __name__ == "__main__":
     ap.add_argument("--min_past_weeks", default=1, help="min past weeks")
     ap.add_argument("--max_past_weeks", default=4, help="max past weeks")
     ap.add_argument("--train_ratio", default=0.6, help="train ratio")
+    ap.add_argument(
+        "--with_market_sentiment",
+        action="store_true",
+        help="optionally enrich prompts with Adanos market sentiment when ADANOS_API_KEY is set",
+    )
     args = vars(ap.parse_args())
 
     main(args)

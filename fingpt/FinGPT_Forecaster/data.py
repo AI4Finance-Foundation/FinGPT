@@ -15,6 +15,7 @@ from datasets import Dataset
 from openai import OpenAI
 
 from indices import *
+from market_sentiment import dataset_csv_path, enrich_recent_market_sentiment
 from prompt import get_all_prompts
 
 finnhub_client = finnhub.Client(api_key=os.environ.get("FINNHUB_KEY"))
@@ -115,17 +116,39 @@ def get_basics(symbol, data, start_date, always=False):
     return data
     
 
-def prepare_data_for_symbol(symbol, data_dir, start_date, end_date, with_basics=True):
+def prepare_data_for_symbol(
+    symbol,
+    data_dir,
+    start_date,
+    end_date,
+    with_basics=True,
+    with_market_sentiment=False,
+):
     
     data = get_returns(symbol, start_date, end_date)
     data = get_news(symbol, data)
+    if with_market_sentiment:
+        data = enrich_recent_market_sentiment(
+            data,
+            symbol,
+            today=end_date,
+        )
     
     if with_basics:
         data = get_basics(symbol, data, start_date)
-        data.to_csv(f"{data_dir}/{symbol}_{start_date}_{end_date}.csv")
     else:
         data['Basics'] = [json.dumps({})] * len(data)
-        data.to_csv(f"{data_dir}/{symbol}_{start_date}_{end_date}_nobasics.csv")
+
+    data.to_csv(
+        dataset_csv_path(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            with_basics=with_basics,
+            with_market_sentiment=with_market_sentiment,
+        )
+    )
     
     return data
 
@@ -149,12 +172,27 @@ def initialize_csv(filename):
         writer.writerow(["prompt", "answer"])
 
 
-def query_gpt4(symbol_list, data_dir, start_date, end_date, min_past_weeks=1, max_past_weeks=3, with_basics=True):
+def query_gpt4(
+    symbol_list,
+    data_dir,
+    start_date,
+    end_date,
+    min_past_weeks=1,
+    max_past_weeks=3,
+    with_basics=True,
+    with_market_sentiment=False,
+):
 
     for symbol in tqdm(symbol_list):
         
-        csv_file = f'{data_dir}/{symbol}_{start_date}_{end_date}_gpt-4.csv' if with_basics else \
-                   f'{data_dir}/{symbol}_{start_date}_{end_date}_nobasics_gpt-4.csv'
+        csv_file = dataset_csv_path(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            with_basics=with_basics,
+            with_market_sentiment=with_market_sentiment,
+        ).replace(".csv", "_gpt-4.csv")
         
         if not os.path.exists(csv_file):
             initialize_csv(csv_file)
@@ -163,7 +201,16 @@ def query_gpt4(symbol_list, data_dir, start_date, end_date, min_past_weeks=1, ma
             df = pd.read_csv(csv_file)
             pre_done = len(df)
 
-        prompts = get_all_prompts(symbol, data_dir, start_date, end_date, min_past_weeks, max_past_weeks, with_basics)
+        prompts = get_all_prompts(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            min_past_weeks,
+            max_past_weeks,
+            with_basics,
+            with_market_sentiment,
+        )
         system_prompt = SYSTEM_PROMPTS["crypto"] if symbol in CRYPTO else SYSTEM_PROMPTS["company"]
         for i, prompt in enumerate(prompts):
             
@@ -207,10 +254,16 @@ SYSTEM_PROMPTS = {
     "Your answer format should be as follows:\n\n[Positive Developments]:\n1. ...\n\n[Potential Concerns]:\n1. ...\n\n[Prediction & Analysis]:\n...\n",
 }
 
-def gpt4_to_llama(symbol, data_dir, start_date, end_date, with_basics=True):
+def gpt4_to_llama(symbol, data_dir, start_date, end_date, with_basics=True, with_market_sentiment=False):
 
-    csv_file = f'{data_dir}/{symbol}_{start_date}_{end_date}_gpt-4.csv' if with_basics else \
-                   f'{data_dir}/{symbol}_{start_date}_{end_date}_nobasics_gpt-4.csv'
+    csv_file = dataset_csv_path(
+        symbol,
+        data_dir,
+        start_date,
+        end_date,
+        with_basics=with_basics,
+        with_market_sentiment=with_market_sentiment,
+    ).replace(".csv", "_gpt-4.csv")
     
     df = pd.read_csv(csv_file)
     
@@ -261,14 +314,29 @@ def gpt4_to_llama(symbol, data_dir, start_date, end_date, with_basics=True):
     }
 
 
-def create_dataset(symbol_list, data_dir, start_date, end_date, train_ratio=0.8, with_basics=True):
+def create_dataset(
+    symbol_list,
+    data_dir,
+    start_date,
+    end_date,
+    train_ratio=0.8,
+    with_basics=True,
+    with_market_sentiment=False,
+):
 
     train_dataset_list = []
     test_dataset_list = []
 
     for symbol in symbol_list:
 
-        data_dict = gpt4_to_llama(symbol, data_dir, start_date, end_date,  with_basics)
+        data_dict = gpt4_to_llama(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            with_basics,
+            with_market_sentiment,
+        )
 #         print(data_dict['prompt'][-1])
 #         print(data_dict['answer'][-1])
         symbols = [symbol] * len(data_dict['label'])
@@ -289,6 +357,5 @@ def create_dataset(symbol_list, data_dir, start_date, end_date, train_ratio=0.8,
         'train': train_dataset,
         'test': test_dataset
     })
-    
+
     return dataset
-   
