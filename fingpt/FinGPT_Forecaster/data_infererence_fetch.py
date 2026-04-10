@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta
 from collections import defaultdict
 
 from data import get_news
+from market_sentiment import enrich_recent_market_sentiment
 from prompt import get_company_prompt, get_prompt_by_row, sample_news
 
 finnhub_client = finnhub.Client(api_key=os.environ.get("FINNHUB_KEY"))
@@ -71,12 +72,14 @@ def get_current_basics(symbol, curday):
     return basic
 
 
-def fetch_all_data(symbol, curday, n_weeks=3):
+def fetch_all_data(symbol, curday, n_weeks=3, with_market_sentiment=False):
 
     steps = [n_weeks_before(curday, i) for i in range(n_weeks+1)][::-1]
 
     data = get_stock_data(symbol, steps)
     data = get_news(symbol, data)
+    if with_market_sentiment:
+        data = enrich_recent_market_sentiment(data, symbol, today=curday)
 
     return data
     
@@ -88,8 +91,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
     prev_rows = []
 
     for row_idx, row in data.iterrows():
-        head, news, _ = get_prompt_by_row(symbol, row)
-        prev_rows.append((head, news, None))
+        head, news, market_sentiment, _ = get_prompt_by_row(symbol, row)
+        prev_rows.append((head, news, market_sentiment, None))
         
     prompt = ""
     for i in range(-len(prev_rows), 0):
@@ -102,6 +105,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
             prompt += "\n".join(sampled_news)
         else:
             prompt += "No relative news reported."
+        if prev_rows[i][2]:
+            prompt += "\n\n" + prev_rows[i][2]
         
     period = "{} to {}".format(curday, n_weeks_before(curday, -1))
     

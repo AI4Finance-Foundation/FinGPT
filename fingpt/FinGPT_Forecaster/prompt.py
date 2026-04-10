@@ -7,6 +7,7 @@ import pandas as pd
 from openai import OpenAI
 
 from indices import *
+from market_sentiment import dataset_csv_path, format_market_sentiment_prompt
 
 finnhub_client = finnhub.Client(api_key=os.environ.get("FINNHUB_KEY"))
 
@@ -53,8 +54,12 @@ def get_prompt_by_row(symbol, row):
             symbol, basics['period']) + "\n".join(f"{k}: {v}" for k, v in basics.items() if k != 'period')
     else:
         basics = "[Basic Financials]:\n\nNo basic financial reported."
+
+    market_sentiment = format_market_sentiment_prompt(
+        row["MarketSentiment"] if "MarketSentiment" in row else None
+    )
     
-    return head, news, basics
+    return head, news, market_sentiment, basics
 
 
 def get_crypto_prompt_by_row(symbol, row):
@@ -70,7 +75,7 @@ def get_crypto_prompt_by_row(symbol, row):
         n['headline'], n['summary']) for n in news if n['date'][:8] <= end_date.replace('-', '') and \
         not n['summary'].startswith("Looking for stock market analysis and research with proves results?")]
 
-    return head, news, None
+    return head, news, "", "[Basic Financials]:\n\nNo basic financial reported."
 
 
 def sample_news(news, k=5):
@@ -102,13 +107,28 @@ PROMPT_END = {
         "Then let's assume your prediction for next week ({start_date} to {end_date}) is {prediction}. Provide a summary analysis to support your prediction. The prediction result need to be inferred from your analysis at the end, and thus not appearing as a foundational factor of your analysis."
 }
 
-def get_all_prompts(symbol, data_dir, start_date, end_date, min_past_weeks=1, max_past_weeks=3, with_basics=True):
+def get_all_prompts(
+    symbol,
+    data_dir,
+    start_date,
+    end_date,
+    min_past_weeks=1,
+    max_past_weeks=3,
+    with_basics=True,
+    with_market_sentiment=False,
+):
 
     
-    if with_basics:
-        df = pd.read_csv(f'{data_dir}/{symbol}_{start_date}_{end_date}.csv')
-    else:
-        df = pd.read_csv(f'{data_dir}/{symbol}_{start_date}_{end_date}_nobasics.csv')
+    df = pd.read_csv(
+        dataset_csv_path(
+            symbol,
+            data_dir,
+            start_date,
+            end_date,
+            with_basics=with_basics,
+            with_market_sentiment=with_market_sentiment,
+        )
+    )
     
     if symbol in CRYPTO:
         info_prompt = get_crypto_prompt(symbol)
@@ -135,13 +155,15 @@ def get_all_prompts(symbol, data_dir, start_date, end_date, min_past_weeks=1, ma
                     prompt += "\n".join(sampled_news)
                 else:
                     prompt += "No relative news reported."
+                if prev_rows[i][2]:
+                    prompt += "\n\n" + prev_rows[i][2]
 
         if symbol in CRYPTO:
-            head, news, basics = get_crypto_prompt_by_row(symbol, row)
+            head, news, market_sentiment, basics = get_crypto_prompt_by_row(symbol, row)
         else:
-            head, news, basics = get_prompt_by_row(symbol, row)
+            head, news, market_sentiment, basics = get_prompt_by_row(symbol, row)
 
-        prev_rows.append((head, news, basics))
+        prev_rows.append((head, news, market_sentiment, basics))
         if len(prev_rows) > max_past_weeks:
             prev_rows.pop(0)  
 
@@ -150,7 +172,10 @@ def get_all_prompts(symbol, data_dir, start_date, end_date, min_past_weeks=1, ma
 
         prediction = map_bin_label(row['Bin Label'])
         
-        prompt = info_prompt + '\n' + prompt + '\n' + basics
+        prompt = info_prompt + '\n' + prompt
+        if market_sentiment:
+            prompt += '\n' + market_sentiment
+        prompt += '\n' + basics
 
         prompt += PROMPT_END['crypto' if symbol in CRYPTO else 'company'].format(
             start_date=row['Start Date'],
