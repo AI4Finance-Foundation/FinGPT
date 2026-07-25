@@ -8,12 +8,12 @@ import torch
 import gradio as gr
 import pandas as pd
 import yfinance as yf
-from pynvml import *
 from peft import PeftModel
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 from market_sentiment import enrich_recent_market_sentiment, format_market_sentiment_prompt
+from runtime_utils import empty_cuda_cache, print_gpu_utilization as report_gpu_utilization, resolve_torch_dtype
 
 # Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
 os.environ.setdefault("HF_HUB_TIMEOUT", "120")
@@ -26,7 +26,7 @@ base_model = AutoModelForCausalLM.from_pretrained(
     token=access_token,
     trust_remote_code=True, 
     device_map="auto",
-    torch_dtype=torch.float16,
+    torch_dtype=resolve_torch_dtype(torch),
     offload_folder="offload/"
 )
 model = PeftModel.from_pretrained(
@@ -51,11 +51,7 @@ SYSTEM_PROMPT = "You are a seasoned stock market analyst. Your task is to list t
 
 
 def print_gpu_utilization():
-    
-    nvmlInit()
-    handle = nvmlDeviceGetHandleByIndex(0)
-    info = nvmlDeviceGetMemoryInfo(handle)
-    print(f"GPU memory occupied: {info.used//1024**2} MB.")
+    return report_gpu_utilization(torch)
 
 
 def get_curday():
@@ -278,7 +274,7 @@ def predict(ticker, date, n_weeks, use_basics, use_market_sentiment):
     output = tokenizer.decode(res[0], skip_special_tokens=True)
     answer = re.sub(r'.*\[/INST\]\s*', '', output, flags=re.DOTALL)
 
-    torch.cuda.empty_cache()
+    empty_cuda_cache(torch)
     
     return info, answer
 
@@ -325,7 +321,7 @@ demo = gr.Interface(
     ],
     title="FinGPT-Forecaster",
     description="""FinGPT-Forecaster takes random market news and optional basic financials related to the specified company from the past few weeks as input and responds with the company's **positive developments** and **potential concerns**. Then it gives out a **prediction** of stock price movement for the coming week and its **analysis** summary.
-This model is finetuned on Llama2-7b-chat-hf with LoRA on the past year's DOW30 market data. Inference in this demo uses fp16 and **welcomes any ticker symbol**.
+This model is finetuned on Llama2-7b-chat-hf with LoRA on the past year's DOW30 market data. Inference uses fp16 on CUDA by default and fp32 on CPU, and **welcomes any ticker symbol**.
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
 Optional structured market sentiment can be added with **Adanos** when `ADANOS_API_KEY` is configured.
 This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased.

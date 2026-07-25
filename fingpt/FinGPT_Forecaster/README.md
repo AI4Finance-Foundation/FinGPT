@@ -45,7 +45,7 @@ base_model = AutoModelForCausalLM.from_pretrained(
     'meta-llama/Llama-2-7b-chat-hf',
     trust_remote_code=True,
     device_map="auto",
-    torch_dtype=torch.float16,   # optional if you have enough VRAM
+    torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
 )
 tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
 
@@ -72,6 +72,9 @@ res = model.generate(
 output = tokenizer.decode(res[0], skip_special_tokens=True)
 answer = re.sub(r'.*\[/INST\]\s*', '', output, flags=re.DOTALL) # don't forget to import re
 ```
+
+By default, the Gradio app uses `torch.float16` when CUDA is available and `torch.float32` on CPU-only machines.
+You can override this with `FINGPT_TORCH_DTYPE=float32`, `float16`, or `bfloat16`.
 
 ## Data Preparation
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
