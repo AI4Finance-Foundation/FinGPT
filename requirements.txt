@@ -8,3 +8,6 @@ wheel>=0.33.6
 
 # historical data
 tushare
+
+# ML dependencies (for GPU acceleration compatibility)
+# triton<2.1.0  # Required for bitsandbytes compatibility on NVIDIA GPUs only
