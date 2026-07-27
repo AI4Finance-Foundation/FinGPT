@@ -1,5 +1,5 @@
 # data handling
-numpy
+numpy<2  # NumPy 2.x compatibility issues with PyTorch and other ML dependencies
 pandas
 
 # packaging
@@ -8,6 +8,15 @@ wheel>=0.33.6
 
 # historical data
 tushare
+
+# Core ML dependencies
+transformers>=4.32.0
+peft>=0.5.0
+sentencepiece
+accelerate
+torch
+datasets
+bitsandbytes
 
 # ML dependencies (for GPU acceleration compatibility)
 # triton<2.1.0  # Required for bitsandbytes compatibility on NVIDIA GPUs only
