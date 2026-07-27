@@ -32,6 +32,7 @@ accelerate==0.23.0
 sentencepiece==0.1.99
 datasets==2.14.5
 einops==0.7.0
+# triton<2.1.0  # Required for bitsandbytes compatibility on NVIDIA GPUs only
 
 # ── Data / Finance ────────────────────────────────────────────────────────────
 numpy==1.26.4

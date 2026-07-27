@@ -69,6 +69,8 @@ pip install -e .
 pip install transformers==4.32.0 peft==0.5.0
 pip install sentencepiece accelerate torch
 pip install datasets bitsandbytes
+# Install triton only for NVIDIA GPUs (Linux/Windows)
+pip install triton<2.1.0  # Skip on macOS/M1 or non-NVIDIA systems
 ```
 
 #### For Training/Fine-tuning
@@ -76,6 +78,8 @@ pip install datasets bitsandbytes
 pip install transformers==4.32.0 peft==0.5.0
 pip install sentencepiece accelerate torch
 pip install datasets bitsandbytes
+# Install triton only for NVIDIA GPUs (Linux/Windows)
+pip install triton<2.1.0  # Skip on macOS/M1 or non-NVIDIA systems
 pip install deepspeed wandb  # Optional for advanced training
 ```
 
@@ -145,6 +149,8 @@ pip install -r requirements.txt
 pip install transformers==4.32.0 peft==0.5.0
 pip install sentencepiece accelerate torch
 pip install datasets bitsandbytes
+# Install triton only for NVIDIA GPUs (Linux/Windows)
+pip install triton<2.1.0  # Skip on macOS/M1 or non-NVIDIA systems
 ```
 
 ### Step 5: Handle GPU on Replit
@@ -384,6 +390,19 @@ source fresh_env/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt --force-reinstall
 ```
+
+#### Issue 7: Triton Import Error
+**Problem**: `ImportError: cannot import name 'driver' from 'triton.runtime'`
+
+**Solution**: This occurs when using incompatible triton versions with bitsandbytes on NVIDIA GPU systems.
+```bash
+# For NVIDIA GPU systems (Linux/Windows)
+pip install triton<2.1.0
+# Or downgrade triton if already installed
+pip install triton==2.0.1
+```
+
+**Note**: On macOS/M1 systems, triton is not required or available. Skip triton installation and use Apple's Metal Performance Shaders (MPS) for GPU acceleration instead.
 
 ### Getting Help
 
