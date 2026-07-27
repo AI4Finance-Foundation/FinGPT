@@ -35,9 +35,14 @@ If you don't have a powerful GPU, consider these cloud platforms:
 ## Local Setup
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.8-3.11 (Python 3.12 may have compatibility issues with some dependencies)
 - Git
 - Virtual environment (recommended)
+
+**Important Notes:**
+- Python 3.11.11 and 3.11.x are fully tested and recommended
+- Python 3.12 may have compatibility issues with some ML dependencies
+- Windows users: Some packages like `bitsandbytes` and `triton` have limited Windows support
 
 ### Step 1: Clone the Repository
 ```bash
@@ -57,6 +62,13 @@ conda activate fingpt
 ```
 
 ### Step 3: Install Dependencies
+
+#### Windows-Specific Notes
+For Windows users, follow these additional steps:
+1. Use Python 3.11.x (avoid 3.12 due to known compatibility issues)
+2. Skip `triton` installation (not fully supported on Windows)
+3. `bitsandbytes` has limited Windows support - consider using alternatives for quantization
+4. Install Visual C++ Redistributable if you encounter compilation errors
 
 #### Basic Installation
 ```bash
@@ -403,6 +415,17 @@ pip install triton==2.0.1
 ```
 
 **Note**: On macOS/M1 systems, triton is not required or available. Skip triton installation and use Apple's Metal Performance Shaders (MPS) for GPU acceleration instead.
+
+#### Issue 8: NumPy 2.x Compatibility
+**Problem**: `A module that was compiled using NumPy 1.x cannot be run in NumPy 2.x`
+
+**Solution**: This is a common issue with PyTorch and other ML dependencies that were compiled with NumPy 1.x.
+```bash
+# Downgrade NumPy to 1.x
+pip install "numpy<2"
+```
+
+**Prevention**: The updated requirements.txt now includes `numpy<2` to prevent this issue during installation.
 
 ### Getting Help
 
