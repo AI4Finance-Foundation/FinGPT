@@ -21,9 +21,9 @@ def get_one_content(x):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0",
         "Referer": "https://guba.eastmoney.com/",
     }
-    tunnel = YOUR_KUAIDAILI_TUNNEL
-    username = YOUR_KUAIDAILI_USERNAME
-    password = YOUR_KUAIDAILI_PASSWARD
+    tunnel = "YOUR_KUAIDAILI_TUNNEL"
+    username = "YOUR_KUAIDAILI_USERNAME"
+    password = "YOUR_KUAIDAILI_PASSWARD"
     proxies = {
         "http": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel},
         "https": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel}
@@ -35,14 +35,19 @@ def get_one_content(x):
     ok = False
     while not ok:
         try:
-            response = requests.get(url = url, headers = headers, proxies= proxies)
+            response = requests.get(url = url, headers = headers, proxies= proxies, timeout=10)
             if response.status_code == 200:
                 res = etree.HTML(response.text)
                 res = res.xpath("//script[2]//text()")[0]
-                res = json.loads(res[17:])
-                res = pd.Series(res).to_frame().T
+                json_data = json.loads(res[17:])
+
+                if isinstance(json_data, dict):
+                    res_series = pd.Series(json_data)
+                else:
+                    res_series = pd.Series()
+
                 ok = True
-                return res
+                return res_series
         except:
             pass
 
