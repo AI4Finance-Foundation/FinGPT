@@ -1,3 +1,16 @@
+---
+title: FinGPT Forecaster
+emoji: 📈
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 3.50.2
+app_file: app.py
+pinned: true
+license: mit
+python_version: "3.10"
+---
+
 ![title](figs/title.png)
 
 ## What is FinGPT-Forecaster?
@@ -25,6 +38,14 @@ Then, click Submit！You'll get a response like this
 
 This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased. The optional Adanos market sentiment overlay helps reduce this by adding structured cross-source signals for recent windows.
 For more detailed and customized usage, scroll down and continue your reading.
+
+## HuggingFace Space Environment Variables
+
+For HuggingFace Space deployment, set these secrets in your Space settings:
+
+- `HF_TOKEN`: Your HuggingFace access token (required for accessing Llama-2 model)
+- `FINNHUB_API_KEY`: Your Finnhub API key (required for market data)
+- `ADANOS_API_KEY`: Your Adanos API key (optional, for market sentiment enrichment)
 
 ## Deploy FinGPT-Forecaster
 
