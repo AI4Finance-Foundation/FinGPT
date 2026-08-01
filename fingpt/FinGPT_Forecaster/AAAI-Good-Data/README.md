@@ -44,10 +44,11 @@ base_model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True,
     device_map="auto",
     torch_dtype=torch.float16,   # optional if you have enough VRAM
+    offload_folder="offload/",   # required for proper model loading with device_map
 )
 tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
 
-model = PeftModel.from_pretrained(base_model, 'FinGPT/fingpt-forecaster_dow30_llama2-7b_lora')
+model = PeftModel.from_pretrained(base_model, 'FinGPT/fingpt-forecaster_dow30_llama2-7b_lora', offload_folder="offload/")   # required for proper model loading with device_map
 model = model.eval()
 ```
 

@@ -11,8 +11,8 @@ base_model = "daryl149/llama-2-13b-chat-hf"
 peft_model = "oliverwang15/FinGPT_v11_Llama2_13B_Sentiment_Market_Feedback_LoRA_FT_8bit"
 tokenizer = LlamaTokenizerFast.from_pretrained(base_model, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
-model = LlamaForCausalLM.from_pretrained(base_model, trust_remote_code=True, device_map = "cuda:0", load_in_8bit = True,)
-model = PeftModel.from_pretrained(model, peft_model)
+model = LlamaForCausalLM.from_pretrained(base_model, trust_remote_code=True, device_map = "cuda:0", load_in_8bit = True, offload_folder="offload/")   # required for proper model loading with device_map
+model = PeftModel.from_pretrained(model, peft_model, offload_folder="offload/")   # required for proper model loading with device_map
 model = model.eval()
 
 # Make prompts
