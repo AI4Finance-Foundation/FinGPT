@@ -99,6 +99,20 @@ answer = re.sub(r'.*\[/INST\]\s*', '', output, flags=re.DOTALL) # don't forget t
 Company profile & Market news & Basic financials & Stock prices are retrieved using **yfinance & finnhub**.
 Structured market sentiment is available as an optional prompt enhancer using **Adanos**.
 
+### Required API Keys for Data Preparation
+
+If you want to prepare your own training data using `prepare_data.ipynb`, you will need:
+
+1. **Finnhub API Key**: Required for fetching company news and basic financials
+   - Sign up at https://finnhub.io/
+   - Set via environment variable: `export FINNHUB_API_KEY=your_key_here`
+
+2. **OpenAI API Key**: Required for GPT-4 analysis to generate training labels
+   - Sign up at https://platform.openai.com/
+   - Set via environment variable: `export OPENAI_API_KEY=your_key_here`
+
+**Note**: The `prepare_data.ipynb` notebook now includes API key validation and error handling to prevent the "num_rows is zero" issue. Make sure to set these environment variables before running the notebook.
+
 ## Optional Adanos Market Sentiment
 
 FinGPT-Forecaster can optionally enrich recent-window prompts with structured market sentiment from Reddit, X, Finance News, and Polymarket.
