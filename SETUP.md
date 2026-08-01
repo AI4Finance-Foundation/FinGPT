@@ -193,13 +193,15 @@ base_model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True,
     device_map="auto",
     torch_dtype=torch.float16,
+    offload_folder="offload/",   # required for proper model loading with device_map
 )
 tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
 
 # Load FinGPT model
 model = PeftModel.from_pretrained(
     base_model, 
-    'FinGPT/fingpt-sentiment_llama2-13b_lora'
+    'FinGPT/fingpt-sentiment_llama2-13b_lora',
+    offload_folder="offload/"   # required for proper model loading with device_map
 )
 model = model.eval()
 
@@ -342,7 +344,8 @@ jupyter notebook demo.ipynb
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     load_in_8bit=True,
-    device_map="auto"
+    device_map="auto",
+    offload_folder="offload/"   # required for proper model loading with device_map
 )
 ```
 
@@ -387,7 +390,8 @@ import torch
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype=torch.float32,
-    device_map="cpu"
+    device_map="cpu",
+    offload_folder="offload/"   # required for proper model loading with device_map
 )
 ```
 
