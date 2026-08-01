@@ -18,8 +18,15 @@ from market_sentiment import enrich_recent_market_sentiment, format_market_senti
 # Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
 os.environ.setdefault("HF_HUB_TIMEOUT", "120")
 
-access_token = os.environ["HF_TOKEN"]
-finnhub_client = finnhub.Client(api_key=os.environ["FINNHUB_API_KEY"])
+access_token = os.environ.get("HF_TOKEN", "")
+finnhub_api_key = os.environ.get("FINNHUB_API_KEY", "")
+
+if not access_token:
+    raise ValueError("HF_TOKEN environment variable is not set. Please set it in your Space secrets.")
+if not finnhub_api_key:
+    raise ValueError("FINNHUB_API_KEY environment variable is not set. Please set it in your Space secrets.")
+
+finnhub_client = finnhub.Client(api_key=finnhub_api_key)
 
 base_model = AutoModelForCausalLM.from_pretrained(
     'meta-llama/Llama-2-7b-chat-hf',
@@ -51,11 +58,13 @@ SYSTEM_PROMPT = "You are a seasoned stock market analyst. Your task is to list t
 
 
 def print_gpu_utilization():
-    
-    nvmlInit()
-    handle = nvmlDeviceGetHandleByIndex(0)
-    info = nvmlDeviceGetMemoryInfo(handle)
-    print(f"GPU memory occupied: {info.used//1024**2} MB.")
+    try:
+        nvmlInit()
+        handle = nvmlDeviceGetHandleByIndex(0)
+        info = nvmlDeviceGetMemoryInfo(handle)
+        print(f"GPU memory occupied: {info.used//1024**2} MB.")
+    except Exception as e:
+        print(f"GPU utilization check failed: {e}")
 
 
 def get_curday():
@@ -334,4 +343,10 @@ For more detailed and customized implementation, refer to our FinGPT project: <h
 """
 )
 
-demo.launch()
+if __name__ == "__main__":
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        share=False,
+        show_error=True
+    )
