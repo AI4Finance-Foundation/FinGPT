@@ -119,6 +119,7 @@ Key fields:
 | wallet_factory | 9004 | register_wallet, check_tx_confirmed, get_wallet_balance |
 | kya_validator | 9005 | submit_kya, get_kya_status, verify_kya_token, renew_kya |
 | plaid | 9006 | create_link_token, initiate_ach_pull, handle_webhook |
+| agentweb | 9007 | search_businesses, get_business, local_search |
 
 Swap any partner = deploy new MCP with same tool interface. Core services unchanged.
 
@@ -144,11 +145,35 @@ Swap any partner = deploy new MCP with same tool interface. Core services unchan
 |-------|----------|------|
 | OpsOversight | 15 min | FinGPT Sentiment + Forecaster |
 | ProcessImprovement | Weekly | FinGPT Forecaster + FX data |
-| AuditGovernance | On-demand | FinGPT RAG (ChromaDB) |
+| AuditGovernance | On-demand | FinGPT RAG (ChromaDB) + AgentWeb |
 | InternalSupport | Always-on | FinGPT RAG |
-| TreasuryStrategy | On-demand | FinGPT Forecaster |
+| TreasuryStrategy | On-demand | FinGPT Forecaster + AgentWeb |
 
 Agents observe, report, recommend. They never release payments.
+
+---
+
+## AgentWeb Integration
+
+FinGPT integrates with AgentWeb for real-time business data access:
+- **85M+ businesses** across 195 countries
+- **Business verification** for KYB compliance
+- **Local search** for geographic intelligence
+- **Contact information** retrieval
+
+**Configuration:**
+- API endpoint: `https://api.agentweb.live/mcp`
+- Environment variables: `AGENTWEB_API_KEY`, `AGENTWEB_MCP_URL`
+- Free tier: 1,000 requests/day
+
+**Integration Points:**
+- `AuditGovernanceAgent`: Business entity verification for compliance
+- `TreasuryStrategyAgent`: Corridor business intelligence and market analysis
+
+**Client Implementation:**
+- `/Users/test/FinGPT/finogrid/fingpt_integration/agentweb/client.py`
+- Async HTTP client with MCP tool interface
+- Error handling and fallback mechanisms
 
 ---
 

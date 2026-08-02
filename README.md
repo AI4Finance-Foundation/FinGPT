@@ -249,6 +249,48 @@ For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM provid
 | [MiniMax](https://platform.minimaxi.com/) | MiniMax-M3 | 512K | Latest flagship model with 128K max output and image input support |
 | FinGPT (local) | Llama-2-13B LoRA | 4K | Full local inference (requires GPU) |
 
+## AgentWeb Business Data Integration
+
+FinGPT now integrates with [AgentWeb](https://agentweb.live) for real-time business data access:
+
+- **85M+ businesses** across 195 countries
+- **Business verification** for KYB compliance
+- **Local search** for geographic intelligence  
+- **Contact information** retrieval
+- **Free tier**: 1,000 requests/day
+
+### Quick Start
+
+1. Get your free API key from [agentweb.live](https://agentweb.live)
+2. Add to your environment:
+   ```bash
+   export AGENTWEB_API_KEY=your_api_key_here
+   export AGENTWEB_MCP_URL=https://api.agentweb.live/mcp
+   ```
+3. Use with FinGPT agents:
+   ```python
+   from finogrid.fingpt_integration.agentweb import AgentWebClient
+   
+   client = AgentWebClient()
+   
+   # Search for businesses
+   results = await client.search_businesses("financial services", "US")
+   
+   # Verify business entity
+   verification = await client.verify_business_entity("JPMorgan Chase", "US")
+   ```
+
+### Integration Points
+
+- **AuditGovernanceAgent**: Business entity verification for compliance checks
+- **TreasuryStrategyAgent**: Corridor business intelligence and market analysis
+
+### Documentation
+
+- [Example Notebook](./fingpt/agentweb_integration_example.ipynb)
+- [AgentWeb API Docs](https://api.agentweb.live/docs)
+- [Architecture Documentation](./finogrid/docs/architecture.md)
+
 ## Open-Source Base Model used in the LLMs layer of FinGPT
 * Feel free to contribute more open-source base models tailored for various language-specific financial markets.
 

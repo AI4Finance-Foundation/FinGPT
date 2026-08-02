@@ -39,10 +39,11 @@ class AuditGovernanceAgent:
     Uses FinGPT RAG for context retrieval from compliance docs.
     """
 
-    def __init__(self, db_session_factory, knowledge_base=None, llm_client=None):
+    def __init__(self, db_session_factory, knowledge_base=None, llm_client=None, agentweb_client=None):
         self.SessionLocal = db_session_factory
         self.kb = knowledge_base        # FinoGridKnowledgeBase instance
         self.llm = llm_client           # OpenAI or local FinGPT
+        self.agentweb = agentweb_client  # AgentWeb client for business verification
 
     async def audit_batch(self, batch_id: str, question: Optional[str] = None) -> dict:
         """
@@ -148,3 +149,64 @@ class AuditGovernanceAgent:
         for e in events:
             lines.append(f"[{e['timestamp']}] {e['action']} | {e.get('detail', '')}")
         return "\n".join(lines)
+
+    async def verify_business_entity(self, business_name: str, country: str = "US") -> dict:
+        """
+        Verify business entity using AgentWeb data.
+        Useful for KYB verification and compliance checks.
+        """
+        if not self.agentweb or not self.agentweb.is_configured():
+            return {
+                "business_name": business_name,
+                "verified": False,
+                "message": "AgentWeb client not configured",
+                "note": "Set AGENTWEB_API_KEY in environment to enable business verification"
+            }
+
+        try:
+            verification_result = await self.agentweb.verify_business_entity(
+                business_name=business_name,
+                country=country
+            )
+            
+            log.info(
+                "business_verification_attempt",
+                business_name=business_name,
+                verified=verification_result.get("verified", False)
+            )
+            
+            return verification_result
+        except Exception as exc:
+            log.error("business_verification_error", business_name=business_name, error=str(exc))
+            return {
+                "business_name": business_name,
+                "verified": False,
+                "error": str(exc)
+            }
+
+    async def enhance_compliance_context(self, entity_name: str, country: str = "US") -> str:
+        """
+        Enhance compliance context with business data from AgentWeb.
+        Returns formatted context string for LLM prompts.
+        """
+        if not self.agentweb or not self.agentweb.is_configured():
+            return f"Business verification not available for {entity_name}."
+
+        try:
+            verification = await self.verify_business_entity(entity_name, country)
+            
+            if verification.get("verified"):
+                business_data = verification.get("business_data", {})
+                context_parts = [
+                    f"Business: {business_data.get('name', 'N/A')}",
+                    f"Category: {business_data.get('category', 'N/A')}",
+                    f"Address: {business_data.get('address', 'N/A')}",
+                    f"Phone: {business_data.get('phone', 'N/A')}",
+                    f"Rating: {business_data.get('rating', 'N/A')}",
+                ]
+                return " | ".join(context_parts)
+            else:
+                return f"Business verification failed for {entity_name}: {verification.get('message', 'Unknown error')}"
+        except Exception as exc:
+            log.error("context_enhancement_error", entity_name=entity_name, error=str(exc))
+            return f"Error enhancing context for {entity_name}: {str(exc)}"
