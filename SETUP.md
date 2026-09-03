@@ -412,13 +412,13 @@ pip install -r requirements.txt --force-reinstall
 
 **Solution**: This occurs when using incompatible triton versions with bitsandbytes on NVIDIA GPU systems.
 ```bash
-# For NVIDIA GPU systems (Linux/Windows)
-pip install triton<2.1.0
-# Or downgrade triton if already installed
-pip install triton==2.0.1
+# For NVIDIA GPU systems (Linux x86_64)
+pip install "bitsandbytes>=0.43.1" "triton<3.0.0"
+# Reinstall both packages if an incompatible version is already installed
+pip install --upgrade --force-reinstall "bitsandbytes>=0.43.1" "triton<3.0.0"
 ```
 
-**Note**: On macOS/M1 systems, triton is not required or available. Skip triton installation and use Apple's Metal Performance Shaders (MPS) for GPU acceleration instead.
+**Note**: Triton is only declared for Linux x86_64 GPU environments. On macOS/M1 systems, skip Triton and use Apple's Metal Performance Shaders (MPS) for GPU acceleration instead.
 
 #### Issue 8: NumPy 2.x Compatibility
 **Problem**: `A module that was compiled using NumPy 1.x cannot be run in NumPy 2.x`

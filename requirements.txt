@@ -16,7 +16,6 @@ sentencepiece
 accelerate
 torch
 datasets
-bitsandbytes
-
 # ML dependencies (for GPU acceleration compatibility)
-# triton<2.1.0  # Required for bitsandbytes compatibility on NVIDIA GPUs only
+bitsandbytes>=0.43.1
+# Triton is installed separately for supported NVIDIA GPU environments.
