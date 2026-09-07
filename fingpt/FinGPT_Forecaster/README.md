@@ -51,6 +51,20 @@ For HuggingFace Space deployment, set these secrets in your Space settings:
 
 We have released our FinGPT-Forecaster trained on DOW30 market data from 2022-12-30 to 2023-9-1 on HuggingFace: [fingpt-forecaster_dow30_llama2-7b_lora](https://huggingface.co/FinGPT/fingpt-forecaster_dow30_llama2-7b_lora)
 
+### Run with Docker
+
+Docker Desktop users can build and run the Forecaster with:
+
+```bash
+docker build --platform linux/amd64 -t fingpt-forecaster .
+docker run --rm --platform linux/amd64 \
+    --env-file .env \
+    -p 7860:7860 \
+    fingpt-forecaster
+```
+
+Open <http://localhost:7860> after the container starts. The `.env` file must define `HF_TOKEN` and `FINNHUB_API_KEY`; it is excluded from the Docker build context.
+
 We have most of the key requirements in `requirements.txt`. Before you start, do `pip install -r requirements.txt`. Then you can refer to `demo.ipynb` for our deployment and evaluation script.
 
 First let's load the model:

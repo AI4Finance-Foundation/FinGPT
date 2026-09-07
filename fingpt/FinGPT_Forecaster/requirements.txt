@@ -1,12 +1,12 @@
 torch==2.0.1
 transformers==4.32.0
 peft==0.5.0
-bitsandbytes>=0.43.1
+bitsandbytes==0.43.1
 accelerate==0.23.0
 triton<3.0.0; platform_system == "Linux" and platform_machine == "x86_64"
 gradio==3.50.2
 pandas
-yfinance
+yfinance==0.2.49
 finnhub-python
 nvidia-ml-py3
 requests
