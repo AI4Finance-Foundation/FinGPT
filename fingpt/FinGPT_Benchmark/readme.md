@@ -170,4 +170,32 @@ CUDA_VISIBLE_DEVICES=1 python benchmarks.py \
 For Zero-shot Evaluation on Sentiment Analysis, we use multiple prompts and evaluate each of them.
 The task indicators are `fiqa_mlt` and `fpb_mlt`.
 
+## A-share Factor Research Reports
+
+`benchmarks/ashare_factor.py` checks the structure of newline-delimited JSON
+research reports. It is intentionally independent of model inference and
+market-data providers, so it can be used as a first-pass quality gate before
+human or backtest evaluation.
+
+Each report must contain `symbol`, `as_of`, `factors`, `risks`,
+`recommendation`, and `confidence`. Every factor must contain `name`,
+`direction`, and `evidence`; `recommendation` must be `buy`, `hold`, or
+`sell`; and `confidence` must be between 0 and 1.
+
+Example record:
+
+```json
+{"symbol":"600000.SH","as_of":"2026-01-01","factors":[{"name":"earnings","direction":"positive","evidence":"revenue growth"}],"risks":["valuation"],"recommendation":"buy","confidence":0.8}
+```
+
+Run the evaluator with:
+
+```bash
+python benchmarks/ashare_factor.py reports.jsonl
+```
+
+The output includes per-record validation errors, the number of valid reports,
+and the mean structural score. This score measures report completeness, not
+investment performance or recommendation accuracy.
+
 
