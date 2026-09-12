@@ -6,6 +6,28 @@
 
 ## Ⅰ. Try our model ( [FinGPT v3](https://huggingface.co/FinGPT/fingpt-sentiment_llama2-13b_lora) )
 
+### Linguistic Sentiment vs. Quantitative Market Impact
+
+FinGPT's sentiment model classifies the language in financial text. It does
+not calculate whether a reported value beat or missed market expectations. For
+example, `EPS was $2.11 versus a $1.90 consensus` may be classified as
+`neutral` because it states facts, while the 11.05% earnings surprise can be
+classified as positive quantitative impact.
+
+The two signals should be kept separate and combined explicitly when needed:
+
+```python
+from quantitative_sentiment import earnings_impact
+
+impact = earnings_impact(actual=2.11, consensus=1.90)
+print(impact)
+# {'label': 'positive', 'surprise': 0.11052631578947367}
+```
+
+The default 5% threshold is a transparent heuristic, not a trading signal. A
+production strategy should calibrate thresholds by sector, reporting period,
+and historical market reaction.
+
 ### Code:
 
 ``` python

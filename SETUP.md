@@ -182,6 +182,17 @@ python -c "from transformers import AutoTokenizer; print('FinGPT ready!')"
 ### Example 1: Running Inference with Pre-trained Models
 
 #### Using FinGPT-Sentiment Model (Local)
+
+The released `fingpt-sentiment_llama2-13b_lora` model is a LoRA adapter,
+not a complete base model. You need access to the Llama 2 base model and must
+use the matching 13B base model when loading the adapter. Authenticate with
+Hugging Face first if the base model requests access:
+
+```bash
+pip install huggingface_hub
+huggingface-cli login
+```
+
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
@@ -189,41 +200,50 @@ import torch
 
 # Load base model
 base_model = AutoModelForCausalLM.from_pretrained(
-    'meta-llama/Llama-2-7b-chat-hf',
+    'NousResearch/Llama-2-13b-hf',
     trust_remote_code=True,
     device_map="auto",
     torch_dtype=torch.float16,
-    offload_folder="offload/",   # required for proper model loading with device_map
+    offload_folder="offload/",
 )
-tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-chat-hf')
+tokenizer = AutoTokenizer.from_pretrained('NousResearch/Llama-2-13b-hf')
 
 # Load FinGPT model
 model = PeftModel.from_pretrained(
-    base_model, 
+    base_model,
     'FinGPT/fingpt-sentiment_llama2-13b_lora',
-    offload_folder="offload/"   # required for proper model loading with device_map
+    offload_folder="offload/",
 )
 model = model.eval()
 
-# Prepare input
-text = "Glaxo's ViiV Healthcare Signs China Manufacturing Deal With Desano"
-prompt = f"What is the sentiment of this news? Please choose an answer from {{negative/neutral/positive}}.\n\n{text}"
-
-# Generate response
-inputs = tokenizer(prompt, return_tensors='pt')
-inputs = {key: value.to(model.device) for key, value in inputs.items()}
-
-with torch.no_grad():
-    outputs = model.generate(
-        **inputs, 
-        max_new_tokens=100,
-        do_sample=True,
-        temperature=0.7
+def predict_sentiment(text):
+    prompt = (
+        "Instruction: What is the sentiment of this news? "
+        "Please choose an answer from {negative/neutral/positive}.\n"
+        f"Input: {text}\nAnswer: "
     )
+    inputs = tokenizer(prompt, return_tensors="pt")
+    inputs = {key: value.to(model.device) for key, value in inputs.items()}
 
-response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-print(response)
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=20,
+            do_sample=False,
+            eos_token_id=tokenizer.eos_token_id,
+        )
+
+    generated_tokens = outputs[0, inputs["input_ids"].shape[1]:]
+    return tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
+
+text = "Glaxo's ViiV Healthcare Signs China Manufacturing Deal With Desano"
+print(predict_sentiment(text))
 ```
+
+This model predicts the sentiment of financial text; it does not predict a
+stock price. For next-week directional forecasts, use the separate
+[FinGPT-Forecaster](./fingpt/FinGPT_Forecaster/README.md) component and its
+demo. Neither output should be treated as investment advice.
 
 #### Using Cloud API (No GPU Required)
 ```python

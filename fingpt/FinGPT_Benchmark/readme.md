@@ -58,6 +58,44 @@ We use different datasets at different phases of our instruction tuning paradigm
 - Multi-task Instruction Tuning: `sentiment-train & finred & ner & headline`
 - Zero-shot Aimed Instruction Tuning: `finred-cls & ner-cls & headline-cls -> sentiment-cls (test)`
 
+### Instruction Types
+
+FinGPT-v1 sentiment tuning is one task configuration, not the only instruction
+type supported by the benchmark. Each processed example uses the same fields:
+`instruction`, `input`, and `output`. The default prompt wrapper is:
+
+```
+Instruction: {instruction}
+Input: {input}
+Answer: {output}
+```
+
+The instruction and output vary by task:
+
+| Dataset | Task | Example output |
+| --- | --- | --- |
+| `sentiment-train` | Financial sentiment analysis | `positive`, `neutral`, or `negative` |
+| `finred` / `finred-re` | Financial relation extraction | Relation and entity pairs |
+| `headline` | Financial headline classification | `Yes` or `No` |
+| `ner` | Financial named entity recognition | Entities with their types |
+| `fiqa` / `convfinqa` | Financial question answering | A numerical or explanatory answer |
+| `fineval` | Financial multiple-choice evaluation | `A`, `B`, `C`, or `D` |
+
+The training script also supports zero-shot classification variants such as
+`finred-cls-instruct`, `ner-cls-instruct`, and `headline-cls-instruct`. These
+train on related tasks and evaluate whether the model can follow a new task
+instruction, such as `sentiment-cls-instruct`, without sentiment examples in
+the training set.
+
+For datasets containing both headlines and article content, `train_lora.py`
+supports three input modes: `--input_mode headline`, `--input_mode content`,
+and `--input_mode both`. The `both` mode formats the input as:
+
+```
+Headline: {headline}
+Content: {content}
+```
+
 In our benchmark experiments, we used the headline dataset for sentiment fine-tuning because it was the most practical option for time and token-budget reasons. The news content dataset was kept in the data preparation pipeline, but it was not used in the final benchmark runs.
 
 If you want to experiment further, you can extend the preprocessing step to combine headlines and news content, or use the content split as a separate training source.

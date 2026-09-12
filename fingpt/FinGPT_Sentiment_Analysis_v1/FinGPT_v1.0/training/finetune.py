@@ -9,6 +9,7 @@ from peft import get_peft_model, LoraConfig, TaskType
 from dataclasses import dataclass, field
 import datasets
 import os
+from data_validation import validate_training_dataset
 
 model_name = "/root/.cache/huggingface/hub/models--THUDM--chatglm-6b/snapshots/658202d88ac4bb782b99e99ac3adff58b4d0b813"
 # model_name = "THUDM/chatglm-6b"
@@ -86,6 +87,10 @@ def main():
         (FinetuneArguments, TrainingArguments)
     ).parse_args_into_dataclasses()
 
+    # Validate data before loading the model or reserving GPU memory.
+    dataset = datasets.load_from_disk(finetune_args.dataset_path)
+    validate_training_dataset(dataset)
+
     # init model
     model = AutoModel.from_pretrained(
         model_name, load_in_8bit=True, trust_remote_code=True, device_map="auto"
@@ -110,8 +115,6 @@ def main():
     )
     model = get_peft_model(model, peft_config)
 
-    # load dataset
-    dataset = datasets.load_from_disk(finetune_args.dataset_path)
     # dataset = datasets.Dataset.from_dict(dataset[::10])
     train_val = dataset.train_test_split( test_size = 0.1, shuffle=True, seed=42 )
     train_data = train_val["train"].shuffle()

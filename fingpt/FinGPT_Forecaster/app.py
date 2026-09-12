@@ -14,6 +14,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 from market_sentiment import enrich_recent_market_sentiment, format_market_sentiment_prompt
+from market_symbols import resolve_symbol
 
 # Increase HuggingFace Hub timeout to handle slow network connections or large file downloads
 os.environ.setdefault("HF_HUB_TIMEOUT", "120")
@@ -244,21 +245,23 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
     return info, prompt
 
 
-def construct_prompt(ticker, curday, n_weeks, use_basics, use_market_sentiment):
+def construct_prompt(ticker, curday, n_weeks, use_basics, use_market_sentiment, market="US"):
+
+    market_symbol = resolve_symbol(ticker, market)
 
     try:
         steps = [n_weeks_before(curday, n) for n in range(n_weeks + 1)][::-1]
     except Exception:
         raise gr.Error(f"Invalid date {curday}!")
         
-    data = get_stock_data(ticker, steps)
-    data = get_news(ticker, data)
+    data = get_stock_data(market_symbol.price, steps)
+    data = get_news(market_symbol.provider, data)
     data['Basics'] = [json.dumps({})] * len(data)
     if use_market_sentiment:
-        data = enrich_recent_market_sentiment(data, ticker, today=curday)
+        data = enrich_recent_market_sentiment(data, market_symbol.provider, today=curday)
     # print(data)
     
-    info, prompt = get_all_prompts_online(ticker, data, curday, use_basics)
+    info, prompt = get_all_prompts_online(market_symbol.provider, data, curday, use_basics)
     
     prompt = B_INST + B_SYS + SYSTEM_PROMPT + E_SYS + prompt + E_INST
     # print(prompt)
@@ -266,11 +269,11 @@ def construct_prompt(ticker, curday, n_weeks, use_basics, use_market_sentiment):
     return info, prompt
 
 
-def predict(ticker, date, n_weeks, use_basics, use_market_sentiment):
+def predict(ticker, date, n_weeks, use_basics, use_market_sentiment, market):
 
     print_gpu_utilization()
 
-    info, prompt = construct_prompt(ticker, date, n_weeks, use_basics, use_market_sentiment)
+    info, prompt = construct_prompt(ticker, date, n_weeks, use_basics, use_market_sentiment, market)
       
     inputs = tokenizer(
         prompt, return_tensors='pt', padding=False
@@ -298,7 +301,13 @@ demo = gr.Interface(
         gr.Textbox(
             label="Ticker",
             value="AAPL",
-            info="Companys from Dow-30 are recommended"
+            info="Examples: AAPL, RELIANCE, or TCS"
+        ),
+        gr.Dropdown(
+            choices=["US", "INDIA_NSE", "INDIA_BSE"],
+            value="US",
+            label="Market",
+            info="Indian tickers are resolved for yfinance and Finnhub"
         ),
         gr.Textbox(
             label="Date",
