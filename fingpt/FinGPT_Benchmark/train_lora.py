@@ -164,7 +164,8 @@ def main(args):
         eval_dataset=dataset["test"], 
         data_collator=DataCollatorForSeq2Seq(
             tokenizer, padding=True,
-            return_tensors="pt"
+            return_tensors="pt",
+            label_pad_token_id=-100  # Handle missing labels
         ),
         callbacks=[TensorBoardCallback(writer)],
     )
