@@ -31,12 +31,53 @@ def main(args):
         model_name = '../' + parse_model_name(args.base_model)
         
 
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name, trust_remote_code=True, 
-        # load_in_8bit=True
-        device_map="auto",
-        # fp16=True
-    )
+    # Create offload folder if it doesn't exist
+    offload_folder = "./offload"
+    os.makedirs(offload_folder, exist_ok=True)
+    
+    # Try loading with different memory configurations
+    try:
+        # First try with 8-bit quantization for memory efficiency
+        print("Attempting to load model with 8-bit quantization...")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name, trust_remote_code=True, 
+            load_in_8bit=True,
+            device_map="auto",
+            offload_folder=offload_folder,
+        )
+    except Exception as e:
+        print(f"8-bit loading failed: {e}")
+        try:
+            # Fallback to 4-bit quantization
+            print("Attempting to load model with 4-bit quantization...")
+            from transformers import BitsAndBytesConfig
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+            )
+            model = AutoModelForCausalLM.from_pretrained(
+                model_name, trust_remote_code=True, 
+                quantization_config=bnb_config,
+                device_map="auto",
+                offload_folder=offload_folder,
+            )
+        except Exception as e2:
+            print(f"4-bit loading failed: {e2}")
+            # Final fallback to full precision with memory optimization
+            print("Loading model in full precision with memory optimization...")
+            model = AutoModelForCausalLM.from_pretrained(
+                model_name, trust_remote_code=True, 
+                device_map="auto",
+                offload_folder=offload_folder,
+                low_cpu_mem_usage=True,
+            )
+    
+    # Clear CUDA cache and set up memory management
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        print(f"GPU Memory after model load: {torch.cuda.memory_allocated() / 1024**3:.2f} GB")
     model.model_parallel = True
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
@@ -70,30 +111,41 @@ def main(args):
     
     with torch.no_grad():
         for data in args.dataset.split(','):
-            if data == 'fpb':
-                test_fpb(args, model, tokenizer)
-            elif data == 'fpb_mlt':
-                test_fpb_mlt(args, model, tokenizer)
-            elif data == 'fiqa':
-                test_fiqa(args, model, tokenizer)
-            elif data == 'fiqa_mlt':
-                test_fiqa_mlt(args, model, tokenizer)
-            elif data == 'tfns':
-                test_tfns(args, model, tokenizer)
-            elif data == 'nwgi':
-                test_nwgi(args, model, tokenizer)
-            elif data == 'headline':
-                test_headline(args, model, tokenizer)
-            elif data == 'ner':
-                test_ner(args, model, tokenizer)
-            elif data == 'convfinqa':
-                test_convfinqa(args, model, tokenizer)
-            elif data == 'fineval':
-                test_fineval(args, model, tokenizer)
-            elif data == 're':
-                test_re(args, model, tokenizer)
-            else:
-                raise ValueError('undefined dataset.')
+            print(f"Starting evaluation for dataset: {data}")
+            try:
+                if data == 'fpb':
+                    test_fpb(args, model, tokenizer)
+                elif data == 'fpb_mlt':
+                    test_fpb_mlt(args, model, tokenizer)
+                elif data == 'fiqa':
+                    test_fiqa(args, model, tokenizer)
+                elif data == 'fiqa_mlt':
+                    test_fiqa_mlt(args, model, tokenizer)
+                elif data == 'tfns':
+                    test_tfns(args, model, tokenizer)
+                elif data == 'nwgi':
+                    test_nwgi(args, model, tokenizer)
+                elif data == 'headline':
+                    test_headline(args, model, tokenizer)
+                elif data == 'ner':
+                    test_ner(args, model, tokenizer)
+                elif data == 'convfinqa':
+                    test_convfinqa(args, model, tokenizer)
+                elif data == 'fineval':
+                    test_fineval(args, model, tokenizer)
+                elif data == 're':
+                    test_re(args, model, tokenizer)
+                else:
+                    raise ValueError('undefined dataset.')
+                
+                # Clear memory after each dataset evaluation
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+                    print(f"GPU Memory after {data}: {torch.cuda.memory_allocated() / 1024**3:.2f} GB")
+            except Exception as e:
+                print(f"Error during evaluation of {data}: {e}")
+                # Continue with next dataset instead of failing completely
+                continue
     
     print('Evaluation Ends.')
         
