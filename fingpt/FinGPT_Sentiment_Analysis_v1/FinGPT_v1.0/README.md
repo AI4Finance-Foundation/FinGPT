@@ -1,5 +1,21 @@
 # FinGPT-V1.0
 
+## Fine-tuning data validation
+
+The v1 fine-tuning script expects a processed Hugging Face dataset created by
+`making_dataset/tokenize_dataset_rows.py`, not a raw JSONL directory. The
+saved dataset must contain `input_ids` and `seq_len` columns and at least two
+examples so the script can create its 90/10 train/validation split.
+
+Before loading the model, `training/finetune.py` checks the dataset path,
+required columns, empty token sequences, and invalid sequence lengths. Errors
+identify the failed condition and point back to the preprocessing step.
+
+For poor evaluation results, first compare the number of usable examples and
+the label distribution in the source JSONL, then verify that the preprocessing
+tokenizer and prompt format match the inference code. Only after those checks
+should you tune learning rate, batch size, or number of epochs.
+
 ### Ⅰ. Data Preparations
 #### 1. Download Titles [code](./data_preparations/download_titles.py)
 * In this file, we downloaded the financial news titles and URLs from [eastmoney(东方财富)](https://www.eastmoney.com/)  
