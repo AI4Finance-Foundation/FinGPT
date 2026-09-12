@@ -26,11 +26,12 @@ Try our demo at <https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster>
 
 Enter the following inputs:
 
-1) ticker symbol (e.g. AAPL, MSFT, NVDA)
-2) the day from which you want the prediction to happen (yyyy-mm-dd)
-3) the number of past weeks where market news are retrieved
-4) whether to add latest basic financials as additional information
-5) whether to add optional structured market sentiment signals (requires `ADANOS_API_KEY`)
+1) ticker symbol (e.g. AAPL, MSFT, NVDA, RELIANCE, or TCS)
+2) market (`US`, `INDIA_NSE`, or `INDIA_BSE`)
+3) the day from which you want the prediction to happen (yyyy-mm-dd)
+4) the number of past weeks where market news are retrieved
+5) whether to add latest basic financials as additional information
+6) whether to add optional structured market sentiment signals (requires `ADANOS_API_KEY`)
 
 Then, click Submit！You'll get a response like this
 
@@ -38,6 +39,13 @@ Then, click Submit！You'll get a response like this
 
 This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased. The optional Adanos market sentiment overlay helps reduce this by adding structured cross-source signals for recent windows.
 For more detailed and customized usage, scroll down and continue your reading.
+
+### Indian Market Symbols
+
+The Forecaster resolves Indian symbols for each data provider. Enter `RELIANCE`
+with market `INDIA_NSE` or `INDIA_BSE`; the price lookup uses `RELIANCE.NS`
+or `RELIANCE.BO`, while news and company lookups use `NSE:RELIANCE` or
+`BSE:RELIANCE`. The same conversion applies to symbols such as `TCS`.
 
 ## HuggingFace Space Environment Variables
 
