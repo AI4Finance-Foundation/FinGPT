@@ -40,6 +40,10 @@ Then, click Submit！You'll get a response like this
 This is just a demo showing what this model is capable of. Results inferred from randomly chosen news can be strongly biased. The optional Adanos market sentiment overlay helps reduce this by adding structured cross-source signals for recent windows.
 For more detailed and customized usage, scroll down and continue your reading.
 
+For the current status and a leakage-safe experiment design for reinforcement
+learning on stock prices, see the [RLSP guide](./RLSP_GUIDE.md). The released
+Forecaster is a supervised LoRA model; no validated RLSP trainer is included.
+
 ### Indian Market Symbols
 
 The Forecaster resolves Indian symbols for each data provider. Enter `RELIANCE`
