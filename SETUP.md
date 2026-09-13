@@ -70,6 +70,19 @@ For Windows users, follow these additional steps:
 3. `bitsandbytes` has limited Windows support - consider using alternatives for quantization
 4. Install Visual C++ Redistributable if you encounter compilation errors
 
+#### macOS-Specific Notes
+For macOS users (including Apple Silicon M1/M2/M3):
+1. Use Python 3.8-3.11 (Python 3.12 may have compatibility issues)
+2. Install Xcode Command Line Tools: `xcode-select --install`
+3. For Apple Silicon (M1/M2/M3): Install PyTorch with MPS support:
+   ```bash
+   pip install torch torchvision torchaudio
+   ```
+4. Skip `triton` installation (not supported on macOS)
+5. `bitsandbytes` has limited macOS support - consider using MPS (Metal Performance Shaders) for GPU acceleration
+6. For Intel Macs: standard Linux-compatible installations usually work
+7. For Apple Silicon: some packages may need to be installed from source or use Rosetta 2 for compatibility
+
 #### Basic Installation
 ```bash
 pip install -r requirements.txt
@@ -83,6 +96,16 @@ pip install sentencepiece accelerate torch
 pip install datasets bitsandbytes
 # Install triton only for NVIDIA GPUs (Linux/Windows)
 pip install triton<2.1.0  # Skip on macOS/M1 or non-NVIDIA systems
+```
+
+**macOS GPU Acceleration**: For Apple Silicon Macs, use MPS (Metal Performance Shaders):
+```python
+import torch
+# Check if MPS is available
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+else:
+    device = torch.device("cpu")
 ```
 
 #### For Training/Fine-tuning
@@ -244,6 +267,28 @@ This model predicts the sentiment of financial text; it does not predict a
 stock price. For next-week directional forecasts, use the separate
 [FinGPT-Forecaster](./fingpt/FinGPT_Forecaster/README.md) component and its
 demo. Neither output should be treated as investment advice.
+
+#### macOS with Apple Silicon (M1/M2/M3)
+For Mac users with Apple Silicon, modify the device configuration:
+```python
+import torch
+
+# Use MPS for Apple Silicon, CUDA for NVIDIA GPUs, CPU as fallback
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+elif torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
+
+# Load model with appropriate device
+base_model = AutoModelForCausalLM.from_pretrained(
+    'NousResearch/Llama-2-13b-hf',
+    trust_remote_code=True,
+    torch_dtype=torch.float16,
+    device_map={"": device},  # Use MPS/CUDA/CPU
+)
+```
 
 #### Using Cloud API (No GPU Required)
 ```python
@@ -450,6 +495,80 @@ pip install "numpy<2"
 ```
 
 **Prevention**: The updated requirements.txt now includes `numpy<2` to prevent this issue during installation.
+
+#### Issue 9: macOS MPS Not Available
+**Problem**: MPS (Metal Performance Shaders) not detected on Apple Silicon Macs
+
+**Solution**: Ensure you have the correct PyTorch version with MPS support:
+```bash
+# For Apple Silicon, install PyTorch with MPS support
+pip install torch torchvision torchaudio
+# Verify MPS availability
+python -c "import torch; print('MPS available:', torch.backends.mps.is_available())"
+```
+
+**Note**: MPS is only available on Apple Silicon (M1/M2/M3) Macs running macOS 12.3+. Intel Macs should use CPU mode.
+
+#### Issue 10: macOS Installation Issues
+**Problem**: Package installation failures on macOS due to compilation errors
+
+**Solution**: 
+```bash
+# Install Xcode Command Line Tools
+xcode-select --install
+
+# For packages that require compilation, try using pre-built wheels
+pip install --only-binary :all: <package_name>
+
+# Use Homebrew for system dependencies
+brew install <dependency_name>
+```
+
+#### Issue 11: Slow Training Performance
+**Problem**: Fine-tuning training is extremely slow (e.g., single epoch taking days instead of hours)
+
+**Solution**: Several factors can cause slow training performance:
+
+**1. GPU Configuration Issues:**
+```bash
+# Check if GPU is being utilized
+nvidia-smi  # For NVIDIA GPUs
+# Monitor GPU usage during training
+watch -n 1 nvidia-smi
+```
+
+**2. Memory/Quantization Settings:**
+- Using `load_in_8bit=True` can significantly slow down training
+- Consider using `load_in_4bit=True` (QLoRA) for better performance
+- If GPU memory allows, try without quantization for maximum speed
+
+**3. Batch Size and Gradient Accumulation:**
+```bash
+# Optimize batch size for your GPU
+# Too small = slow, too large = OOM
+--per_device_train_batch_size 16  # Adjust based on GPU
+--gradient_accumulation_steps 1   # Increase if reducing batch size
+```
+
+**4. DeepSpeed Configuration:**
+```bash
+# Without DeepSpeed (faster for smaller models):
+python train_lora.py --base_model llama2-13b-nr --dataset sentiment-train
+
+# With DeepSpeed (better for large models but may have overhead):
+deepspeed -i train_lora.py --base_model llama2-13b-nr --dataset sentiment-train
+```
+
+**5. Expected Performance Benchmarks:**
+- FinGPT v3.3 (13B) on RTX 3090: ~17 hours for full training
+- FinGPT v3.2 (7B) on A100: ~5.5 hours for full training
+- If training is significantly slower than these benchmarks, check the above issues
+
+**6. Other Optimizations:**
+- Use mixed precision training (`--fp16` or `--bf16`)
+- Enable gradient checkpointing (`--gradient_checkpointing`)
+- Reduce sequence length if appropriate for your task
+- Use optimized data loaders and preprocessing
 
 ### Getting Help
 

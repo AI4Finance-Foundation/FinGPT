@@ -18,9 +18,43 @@ should you tune learning rate, batch size, or number of epochs.
 
 ### Ⅰ. Data Preparations
 #### 1. Download Titles [code](./data_preparations/download_titles.py)
-* In this file, we downloaded the financial news titles and URLs from [eastmoney(东方财富)](https://www.eastmoney.com/)  
+* In this file, we downloaded the financial news titles and URLs from [eastmoney(东方财富)](https://www.eastmoney.com/)
+* **Important**: This script uses `Eastmoney_Streaming` from the [FinNLP library](https://github.com/AI4Finance-Foundation/FinNLP)
+* You need to clone the FinNLP repository and ensure it's available at `../../FinNLP` relative to this script
+* The script expects FinNLP to be in the parent directory structure or you need to adjust the import path
+
 #### 2. Download Content [code](./data_preparations/download_contents.py)
-* In this file, we downloaded the financial news Contents from [eastmoney(东方财富)](https://www.eastmoney.com/)  
+* In this file, we downloaded the financial news Contents from [eastmoney(东方财富)](https://www.eastmoney.com/)
+
+**Troubleshooting Eastmoney Download Issues:**
+
+If you encounter issues downloading eastmoney content (no data downloaded, no errors reported):
+
+1. **Proxy Configuration**: The download scripts use proxy services (kuaidaili) to avoid rate limiting
+   - Ensure your proxy credentials (YOUR_KUAIDAILI_TUNNEL, YOUR_KUAIDAILI_USERNAME, YOUR_KUAIDAILI_PASSWARD) are correctly set
+   - Check if your proxy service subscription is active
+   - Verify proxy connection settings
+
+2. **Rate Limiting**: Eastmoney may have rate limits or anti-scraping measures
+   - Reduce the number of concurrent downloads (adjust `processes` in multiprocessing Pool)
+   - Add delays between requests
+   - Use different proxy servers or rotate IPs
+
+3. **Network Issues**: 
+   - Check your internet connection
+   - Verify DNS settings
+   - Try accessing eastmoney.com directly in a browser
+
+4. **Script Configuration**:
+   - Ensure the `max_retry` parameter is set appropriately (default is 5)
+   - Check that the stock list (hs_300.csv) contains valid security codes
+   - Verify file paths are correct and writable
+
+5. **Alternative Data Sources**: If eastmoney downloads consistently fail:
+   - Consider using other financial data sources
+   - Use pre-processed datasets if available
+   - Check if FinNLP library has alternative data source implementations
+
 #### 3. Add labels [code](./data_preparations/add_labels.py)
 * In this file, we add the label for news titles and contents.
 * The labels are determined by the change pct between the stock price of today and 5-days later
@@ -47,6 +81,28 @@ should you tune learning rate, batch size, or number of epochs.
     cd training
     sh finetune.sh
     ```
+
+#### Expected Training Times
+Training time varies significantly based on:
+- **Dataset size**: Number of training examples
+- **Hardware**: GPU type and memory
+- **Model size**: Base model parameter count
+- **Configuration**: Batch size, learning rate, epochs
+
+**Typical training times for reference:**
+- Small dataset (2 stocks, ~70M examples) on Tesla V100 32GB: A few minutes per epoch
+- Full dataset on RTX 3090: Several hours to overnight
+- Full dataset on A100: 4-6 hours depending on configuration
+
+**Note**: Very short training times (a few minutes) may indicate:
+1. Very small dataset size
+2. Insufficient training epochs
+3. Hardware not being fully utilized
+
+If training completes unusually quickly, verify:
+- Dataset size is appropriate for your use case
+- Number of epochs is sufficient (default is 1 in finetune.sh)
+- GPU utilization is high during training
 
 ### Ⅳ. Inferencing 
 * Please refer to [infer.ipynb](./inferencing/infer.ipynb)
