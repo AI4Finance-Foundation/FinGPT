@@ -8,7 +8,45 @@ import pandas as pd
 from lxml import etree
 from tqdm import tqdm
 
-from meta.data_processors.akshare import Akshare
+try:
+    from meta.data_processors.akshare import Akshare
+except ImportError:
+    try:
+        import akshare as ak
+        class Akshare:
+            def __init__(self, provider, start_date, end_date, time_interval):
+                self.provider = provider
+                self.start_date = start_date
+                self.end_date = end_date
+                self.time_interval = time_interval
+                self.dataframe = None
+                
+            def download_data(self, code_list, save_path):
+                # Fallback to using akshare directly
+                data_list = []
+                for code in code_list:
+                    try:
+                        # Try to get stock data using akshare
+                        df = ak.stock_zh_a_hist(symbol=code, period="daily", 
+                                               start_date=self.start_date.replace("-", ""), 
+                                               end_date=self.end_date.replace("-", ""))
+                        df['code'] = code
+                        data_list.append(df)
+                    except Exception as e:
+                        print(f"Error downloading data for {code}: {e}")
+                
+                if data_list:
+                    self.dataframe = pd.concat(data_list, ignore_index=True)
+                    if save_path:
+                        self.dataframe.to_csv(save_path, index=False)
+                else:
+                    self.dataframe = pd.DataFrame()
+    except ImportError:
+        raise ImportError(
+            "Please install FinRL-Meta package or akshare package. "
+            "For FinRL-Meta: git clone git@github.com:AI4Finance-Foundation/FinRL-Meta.git && cd FinRL-Meta && python setup.py sdist && cd dist && pip install finrl-meta-0.3.6.tar.gz. "
+            "For akshare: pip install akshare"
+        )
 
 '''
 You may install FinRL-Meta package with the following code:
@@ -19,6 +57,9 @@ You may install FinRL-Meta package with the following code:
     cd dist
     pip install finrl-meta-0.3.6.tar.gz
     
+Or install akshare directly:
+
+    pip install akshare
 '''
 
 from loguru import logger

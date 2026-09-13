@@ -42,7 +42,12 @@ def data_collator(features: list) -> dict:
         )
         ids = ids + [tokenizer.pad_token_id] * (longest - ids_l)
         _ids = torch.LongTensor(ids)
-        labels_list.append(torch.LongTensor(labels))
+        # Handle case where labels might be None or contain None values
+        if labels is not None and all(l is not None for l in labels):
+            labels_list.append(torch.LongTensor(labels))
+        else:
+            # Fallback: create valid labels tensor
+            labels_list.append(torch.LongTensor([-100] * longest))
         input_ids.append(_ids)
     input_ids = torch.stack(input_ids)
     labels = torch.stack(labels_list)
@@ -76,6 +81,19 @@ class ModifiedTrainer(Trainer):
             k: v.to("cpu") for k, v in self.model.named_parameters() if v.requires_grad
         }
         torch.save(saved_params, os.path.join(output_dir, "adapter_model.bin"))
+        
+        # Save the model configuration
+        if hasattr(self.model, 'config'):
+            self.model.config.save_pretrained(output_dir)
+        
+        # Save the PEFT configuration if available
+        if hasattr(self.model, 'peft_config'):
+            from peft import PeftConfig
+            if isinstance(self.model.peft_config, dict):
+                for key, config in self.model.peft_config.items():
+                    config.save_pretrained(output_dir)
+            else:
+                self.model.peft_config.save_pretrained(output_dir)
 
 
 def main():
@@ -92,9 +110,31 @@ def main():
     validate_training_dataset(dataset)
 
     # init model
-    model = AutoModel.from_pretrained(
-        model_name, load_in_8bit=True, trust_remote_code=True, device_map="auto"
-    )
+    try:
+        model = AutoModel.from_pretrained(
+            model_name, load_in_8bit=True, trust_remote_code=True, device_map="auto"
+        )
+    except Exception as e:
+        print(f"Error loading model with 8-bit quantization: {e}")
+        print("Falling back to 4-bit quantization or full precision...")
+        try:
+            from transformers import BitsAndBytesConfig
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+            )
+            model = AutoModel.from_pretrained(
+                model_name, quantization_config=bnb_config, trust_remote_code=True, device_map="auto"
+            )
+        except Exception as e2:
+            print(f"Error loading model with 4-bit quantization: {e2}")
+            print("Loading model in full precision...")
+            model = AutoModel.from_pretrained(
+                model_name, trust_remote_code=True, device_map="auto"
+            )
+    
     model.gradient_checkpointing_enable()
     model.enable_input_require_grads()
     model.is_parallelizable = True
