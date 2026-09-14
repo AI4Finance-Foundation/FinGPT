@@ -4,15 +4,20 @@ sys.path.append("../../FinNLP")
 import os
 import multiprocessing as mp
 import pandas as pd
-from finnlp.data_sources.news.eastmoney_streaming import Eastmoney_Streaming  # https://github.com/AI4Finance-Foundation/FinNLP
+# Eastmoney_Streaming is from the FinNLP library: https://github.com/AI4Finance-Foundation/FinNLP
+# You need to clone FinNLP repository and ensure it's in the correct path relative to this script
+from finnlp.data_sources.news.eastmoney_streaming import Eastmoney_Streaming
 
 df = pd.read_csv("hs_300.csv")
 stock_list = df.SECURITY_CODE.unique()
 stock_list = [str(s).zfill(6) for s in stock_list]
 
 # ATTENTION! Should replace this with your results path!
+# al_re: List of stock codes that have already been processed/downloaded
+# This prevents re-downloading data for stocks we already have
+# The path should point to your directory containing downloaded CSV files
 al_re = os.listdir(r"D:\python_project\FinRL-Meta\experiment\scrape\results")
-al_re = [al.split(".")[0] for al in al_re]
+al_re = [al.split(".")[0] for al in al_re]  # Remove file extension to get stock codes
 
 def get_news_data( stock ):
     print(f"Collecting {stock}")
@@ -30,6 +35,7 @@ def get_news_data( stock ):
     }
     
     # ATTENTION! Should replace this with your results path!
+    # result_path: Directory where downloaded stock news data will be saved
     result_path = r"D:\python_project\FinRL-Meta\experiment\scrape\results"
     result_path = os.path.join(result_path, f"{stock}.csv")
     downloader = Eastmoney_Streaming(config)

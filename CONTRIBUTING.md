@@ -59,6 +59,30 @@ Calling all AI heroes and wizards! You are the secret sauce behind the FinGPT pr
 
 If you find yourself stuck or have questions, remember that our support team is your sidekick. Don't hesitate to reach out. We are here to guide you through the process and provide any necessary assistance.
 
+## Contact and Collaboration 🤝
+
+### For Collaboration Inquiries
+If you're interested in collaborating on FinGPT, such as:
+- Implementing FinGPT with different base models (e.g., InternLM, Mistral)
+- Adapting FinGPT for specific markets or use cases
+- Research partnerships
+- Technical collaborations
+
+**Recommended Channels:**
+1. **GitHub Discussions**: Start a discussion about your collaboration idea
+2. **Discord Community**: Join our Discord for real-time conversations: https://discord.gg/trsr8SXpW5
+3. **GitHub Issues**: For specific technical questions or bug reports
+4. **Email**: Check the project repository for maintainer contact information
+
+### For Personal Contact Requests
+While we appreciate interest in personal contact for deeper discussions, we recommend:
+- Starting with public channels (Discord, GitHub Discussions) first
+- This allows the broader community to benefit from the conversation
+- Enables more developers to contribute to the discussion
+- Creates a public record of the collaboration for future reference
+
+If you have a specific reason for private contact, please explain the context in a GitHub Discussion or Issue, and maintainers can decide on the appropriate communication channel.
+
 ## Getting Started 🚀🚀
 
 Are you ready to make a mark on the FinGPT project? Grab your cape and join us in our mission to make finance and AI even more incredible. Your contributions are the magic that fuels our journey.

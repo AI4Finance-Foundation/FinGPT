@@ -53,6 +53,8 @@ Key contributors include:
 
 For detailed setup instructions for running FinGPT locally or on Replit, including hardware requirements and troubleshooting, check out our comprehensive [SETUP Guide](./SETUP.md).
 
+**❓ Have questions?** Check our [FAQ](./FAQ.md) for answers to common questions about FinGPT usage, capabilities, and limitations.
+
 ### Installation
 
 ```bash
@@ -97,6 +99,12 @@ from peft import PeftModel
 Try the latest released FinGPT-Forecaster demo at our [HuggingFace Space](https://huggingface.co/spaces/FinGPT/FinGPT-Forecaster)
 
 The dataset for FinGPT-Forecaster: https://huggingface.co/datasets/FinGPT/fingpt-forecaster-dow30-202305-202405
+
+**Market Support**: FinGPT-Forecaster is currently trained on US market data (DOW 30). For other markets (including China stock market), you would need to:
+1. Collect appropriate market data
+2. Fine-tune the model on the target market data
+3. Consider using FinGPT v1.x models which were designed for Chinese markets
+4. Adapt the data pipeline and model architecture for specific market characteristics
 
 ![demo_interface](fingpt/FinGPT_Forecaster/figs/interface.png)
 
@@ -284,7 +292,6 @@ For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM provid
 
 ## ChatGPT at AI4Finance
 
-+ [YouTube video] [I Built a Trading Bot with ChatGPT](https://www.youtube.com/watch?v=fhBw3j_O9LE), combining ChatGPT and FinRL.
 + [Hey, ChatGPT! Explain FinRL code to me!](https://medium.com/@ai4finance/hey-chatgpt-explain-finrl-code-to-me-6a91d612296f)
 
 ## Introductory
@@ -315,15 +322,6 @@ For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM provid
 + [GPT-3 Creative Fiction](https://gwern.net/gpt-3#prompts-as-programming) Creative writing by OpenAI’s GPT-3 model, demonstrating poetry, dialogue, puns, literary parodies, and storytelling. Plus advice on effective GPT-3 prompt programming & avoiding common errors.
 
 ## ChatGPT for FinTech
-
-**ChatGPT Trading Bot**
-+ [YouTube video] [ChatGPT Trading strategy 20097% returns](https://www.youtube.com/watch?v=unsa_gXPAJ4)
-+ [YouTube video] [ChatGPT Coding - Make A Profitable Trading Strategy In Five Minutes!](https://www.youtube.com/watch?v=4SG2884RcDY)
-+ [YouTube video] [Easy Automated Live Trading using ChatGPT (+9660.3% hands free)](https://www.youtube.com/watch?v=dIEZVPVOZPQ)
-+ [YouTube video] [ChatGPT Trading Strategy 893% Returns](https://www.youtube.com/watch?v=YxjvjK5AD2M)
-+ [YouTube video] [ChatGPT 10 Million Trading Strategy](https://www.youtube.com/watch?v=9VPfd08uU4Q)
-+ [YouTube video] [ChatGPT: Your Crypto Assistant](https://www.youtube.com/watch?v=LpzeshX6s2w)
-+ [YouTube video] [Generate Insane Trading Returns with ChatGPT and TradingView](https://www.youtube.com/watch?v=ekz6ugJE1h0&t=3s)
 
 <!--- 
 **(Fast and accurate) Sentiment Analysis**
@@ -356,7 +354,6 @@ For the Finogrid platform (finogrid/), FinGPT supports multiple cloud LLM provid
 
 Prompting as a new programming paradigm!
 + [Towards Data Science] [GPT-3: Creative Potential of NLP](https://towardsdatascience.com/gpt-3-creative-potential-of-nlp-d5ccae16c1ab)
-+ [YouTube video] [OpenAI GPT-3 - Prompt Engineering For Financial NLP](https://www.youtube.com/watch?v=Nl2Cdbao5Ws)
 
 + [OpenAI API for GPT-3](https://platform.openai.com/docs/models/gpt-3)
 + [ChatGPT-wrapper: python and shell](https://github.com/mmabrouk/chatgpt-wrapper)
@@ -384,9 +381,7 @@ Interesting evaluations:
 
 + [A Multitask, Multilingual, Multimodal Evaluation of ChatGPT
 on Reasoning, Hallucination, and Interactivity](https://arxiv.org/pdf/2302.04023.pdf)
-
-[YouTube video] [Physics Solution: ChatGPT vs. Google](https://www.youtube.com/watch?v=x4dIx9VYQoM)
----> 
+--> 
 
 ## Citing FinGPT
 ```
