@@ -18,6 +18,18 @@
 <img align="center" src=figs/logo_transparent_background.png width="40%"/>
 </div>
 
+<!-- Keep these links, translations synced daily. -->
+<p align="center">
+<a href="https://zdoc.app/de/AI4Finance-Foundation/FinGPT">Deutsch</a> |
+<a href="https://zdoc.app/es/AI4Finance-Foundation/FinGPT">Español</a> |
+<a href="https://zdoc.app/fr/AI4Finance-Foundation/FinGPT">français</a> |
+<a href="https://zdoc.app/ja/AI4Finance-Foundation/FinGPT">日本語</a> |
+<a href="https://zdoc.app/ko/AI4Finance-Foundation/FinGPT">한국어</a> |
+<a href="https://zdoc.app/pt/AI4Finance-Foundation/FinGPT">Português</a> |
+<a href="https://zdoc.app/ru/AI4Finance-Foundation/FinGPT">Русский</a> |
+<a href="https://zdoc.app/zh/AI4Finance-Foundation/FinGPT">中文</a>
+</p>
+
 Let us not expect Wall Street to open-source LLMs or open APIs, due to FinTech institutes' internal regulations and policies.
 
 [Blueprint of FinGPT](https://ai4finance.org/research/fingpt-open-source-finllm.html)
