@@ -1,0 +1,205 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  spam-detection:
+    name: Spam Detection
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    permissions:
+      issues: write
+      contents: read
+    
+    steps:
+      - name: Detect spam patterns
+        id: spam_check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.issue.title.toLowerCase();
+            const body = context.payload.issue.body?.toLowerCase() || '';
+            const fullText = `${title} ${body}`;
+            
+            let confidence = 0;
+            const reasons = [];
+            
+            // Commercial link patterns
+            const commercialPatterns = [
+              /greatwestpay\.com/,
+              /justpaste\.it/,
+              /agentpit\.io/,
+              /payment.*processing/,
+              /small.*business.*payment/
+            ];
+            
+            commercialPatterns.forEach(pattern => {
+              if (pattern.test(fullText)) {
+                confidence += 30;
+                reasons.push(`Contains commercial link pattern: ${pattern}`);
+              }
+            });
+            
+            // Advertising keywords
+            const adKeywords = [
+              /free.*api/,
+              /completely.*free/,
+              /commercial.*service/,
+              /payment.*solution/,
+              /credit.*card.*processing/
+            ];
+            
+            adKeywords.forEach(keyword => {
+              if (keyword.test(fullText)) {
+                confidence += 20;
+                reasons.push(`Contains advertising keyword: ${keyword}`);
+              }
+            });
+            
+            // Default template detection
+            const templatePatterns = [
+              /is your feature request related to a problem/,
+              /describe the solution you'd like/,
+              /describe alternatives you've considered/,
+              /additional context/
+            ];
+            
+            let templateMatches = 0;
+            templatePatterns.forEach(pattern => {
+              if (pattern.test(body)) {
+                templateMatches++;
+              }
+            });
+            
+            if (templateMatches >= 3) {
+              confidence += 40;
+              reasons.push('Contains default issue template text (likely blank)');
+            }
+            
+            // Off-topic financial content
+            const offTopicPatterns = [
+              /market linked debentures/,
+              /payment.*processing.*guide/,
+              /small.*business.*payment/,
+              /financial.*guide.*comprehensive/
+            ];
+            
+            offTopicPatterns.forEach(pattern => {
+              if (pattern.test(fullText)) {
+                confidence += 25;
+                reasons.push(`Contains off-topic financial content: ${pattern}`);
+              }
+            });
+            
+            // QR code detection
+            if (fullText.includes('qr code') || fullText.includes('二维码')) {
+              confidence += 25;
+              reasons.push('Contains QR code reference');
+            }
+            
+            // Short content detection
+            if (body.trim().length < 50 && body.trim().length > 0) {
+              confidence += 15;
+              reasons.push('Very short issue body');
+            }
+            
+            const isSpam = confidence >= 30;
+            
+            console.log(`Spam detection results: isSpam=${isSpam}, confidence=${confidence}%`);
+            console.log(`Reasons: ${reasons.join('; ')}`);
+            
+            return {
+              isSpam: isSpam,
+              confidence: confidence,
+              reasons: reasons.join('; ')
+            };
+            
+      - name: Add spam label if detected
+        if: steps.spam_check.outputs.result.isSpam == true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['spam']
+            });
+      
+      - name: Comment on potential spam
+        if: steps.spam_check.outputs.result.isSpam == true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const result = ${{ steps.spam_check.outputs.result }};
+            const confidence = result.confidence;
+            const reasons = result.reasons;
+            
+            const comment = `⚠️ **Automated Spam Detection**
+            
+            This issue has been flagged as potential spam with ${confidence}% confidence.
+            
+            **Reasons:**
+            ${reasons}
+            
+            A maintainer will review this issue shortly. If this is a legitimate issue, please provide more details about your request.
+            
+            For guidance on creating effective issues, please see our [CONTRIBUTING.md](https://github.com/AI4Finance-Foundation/FinGPT/blob/main/CONTRIBUTING.md) and [ISSUE_MAINTENANCE.md](https://github.com/AI4Finance-Foundation/FinGPT/blob/main/.github/ISSUE_MAINTENANCE.md).`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  issue-labeling:
+    name: Issue Labeling
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    permissions:
+      issues: write
+      contents: read
+    
+    steps:
+      - name: Label based on content
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.issue.title.toLowerCase();
+            const body = context.payload.issue.body?.toLowerCase() || '';
+            const fullText = `${title} ${body}`;
+            
+            const labels = [];
+            
+            // Bug detection
+            if (fullText.includes('error') || fullText.includes('bug') || fullText.includes('crash') || fullText.includes('fail')) {
+              labels.push('bug');
+            }
+            
+            // Feature request detection
+            if (fullText.includes('feature') || fullText.includes('add') || fullText.includes('implement') || fullText.includes('request')) {
+              labels.push('enhancement');
+            }
+            
+            // Documentation detection
+            if (fullText.includes('documentation') || fullText.includes('readme') || fullText.includes('guide') || fullText.includes('how to')) {
+              labels.push('documentation');
+            }
+            
+            // Question detection
+            if (fullText.includes('question') || fullText.includes('how') || fullText.includes('help') || fullText.includes('?')) {
+              labels.push('question');
+            }
+            
+            // Apply labels if any were detected
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: labels
+              });
+            }
