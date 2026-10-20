@@ -84,7 +84,7 @@ def _response(payload, status=200):
     return response
 
 
-def _fake_get(url, params=None, headers=None, timeout=None):
+def _fake_get(url, params=None, headers=None, timeout=None, allow_redirects=False):
     if url.endswith("/calendar/USD"):
         return _response(CALENDAR_USD)
     if "/announcements/USD/" in url:
@@ -257,3 +257,37 @@ def test_market_data_needs_key(source):
 
 def test_news_sentiment_falls_through(source):
     assert source.get_news_sentiment("EUR/USD", datetime(2026, 9, 1), datetime(2026, 10, 1)) == {}
+
+
+def test_redirect_is_rejected_without_parsing_body(keyed_source):
+    response = _response({"data": []}, status=302)
+    with mock.patch.object(data_sources.requests, "get", return_value=response) as get:
+        with pytest.raises(DataSourceException):
+            keyed_source._make_request("/calendar/USD")
+    assert get.call_args.kwargs["allow_redirects"] is False
+    response.json.assert_not_called()
+
+
+@pytest.mark.parametrize("payload", [None, "text", {"detail": "fixture-private-value"}, {"error": "fixture-private-value"}])
+def test_invalid_payload_is_rejected_without_echo(keyed_source, payload):
+    with mock.patch.object(data_sources.requests, "get", return_value=_response(payload)):
+        with pytest.raises(DataSourceException) as raised:
+            keyed_source._make_request("/calendar/USD")
+    assert "fixture-private-value" not in str(raised.value)
+
+
+def test_transport_private_text_is_not_logged_or_chained(keyed_source, caplog):
+    import traceback
+    error = data_sources.requests.exceptions.ConnectionError("fixture-private-value")
+    with mock.patch.object(data_sources.requests, "get", side_effect=error):
+        with pytest.raises(DataSourceException) as raised:
+            keyed_source._make_request("/calendar/USD")
+    assert "fixture-private-value" not in caplog.text
+    assert "fixture-private-value" not in "".join(traceback.format_exception(raised.value))
+
+
+def test_invalid_key_is_rejected_without_echo(monkeypatch):
+    monkeypatch.setenv("FXMACRODATA_API_KEY", "fixture-key\r\nX-Other: value")
+    with pytest.raises(ValueError) as raised:
+        FXMacroDataSource(DATA_SOURCES["fxmacrodata"])
+    assert "fixture-key" not in str(raised.value)

@@ -377,6 +377,9 @@ class FXMacroDataSource(BaseDataSource):
         if not self.base_url.startswith("https://"):
             raise DataSourceException("FXMacroData base_url must use https")
         self.include_actuals = include_actuals
+        self.api_key = (self.api_key or "").strip()
+        if any(ch.isspace() or not ch.isprintable() for ch in self.api_key):
+            raise ValueError("FXMacroData API key contains whitespace or control characters")
 
     def _make_request(
         self,
@@ -393,13 +396,18 @@ class FXMacroDataSource(BaseDataSource):
             headers["X-API-Key"] = self.api_key
 
         try:
-            response = requests.get(url, params=params, headers=headers, timeout=30)
+            response = requests.get(url, params=params, headers=headers, timeout=30, allow_redirects=False)
+            if 300 <= response.status_code < 400:
+                raise DataSourceException(f"FXMacroData redirect rejected: HTTP {response.status_code}")
             response.raise_for_status()
             self.last_request_time = datetime.now()
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Request error for {self.name}: {e}")
-            raise DataSourceException(f"Request failed: {e}")
+            payload = response.json()
+        except (requests.exceptions.RequestException, ValueError):
+            logger.error("FXMacroData request failed")
+            raise DataSourceException("FXMacroData request failed") from None
+        if not isinstance(payload, dict) or "detail" in payload or "error" in payload:
+            raise DataSourceException("FXMacroData returned an error or invalid response")
+        return payload
 
     def get_market_data(
         self,
