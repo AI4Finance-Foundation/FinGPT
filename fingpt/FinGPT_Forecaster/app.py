@@ -13,6 +13,7 @@ from peft import PeftModel
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
+from basics import select_published_basic
 from market_sentiment import enrich_recent_market_sentiment, format_market_sentiment_prompt
 from market_symbols import resolve_symbol
 
@@ -198,11 +199,8 @@ def get_current_basics(symbol, curday):
         
     basic_list.sort(key=lambda x: x['period'])
     
-    for basic in basic_list[::-1]:
-        if basic['period'] <= curday:
-            break
-            
-    return basic
+    # Only quarters that were public before curday (#280).
+    return select_published_basic(basic_list, curday)
     
 
 def get_all_prompts_online(symbol, data, curday, with_basics=True):
@@ -231,8 +229,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
         
     period = "{} to {}".format(curday, n_weeks_before(curday, -1))
     
-    if with_basics:
-        basics = get_current_basics(symbol, curday)
+    basics = get_current_basics(symbol, curday) if with_basics else {}
+    if basics:
         basics = "Some recent basic financials of {}, reported at {}, are presented below:\n\n[Basic Financials]:\n\n".format(
             symbol, basics['period']) + "\n".join(f"{k}: {v}" for k, v in basics.items() if k != 'period')
     else:
