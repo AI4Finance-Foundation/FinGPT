@@ -14,6 +14,7 @@ import datasets
 from datasets import Dataset
 from openai import OpenAI
 
+from basics import select_published_basic
 from indices import *
 from market_sentiment import dataset_csv_path, enrich_recent_market_sentiment
 from prompt import get_all_prompts
@@ -101,14 +102,16 @@ def get_basics(symbol, data, start_date, always=False):
             
     for i, row in data.iterrows():
         
-        start_date = row['End Date'].strftime('%Y-%m-%d')
-        last_start_date = start_date if i < 2 else data.loc[i-2, 'Start Date'].strftime('%Y-%m-%d')
+        # Row i's basics go into the prompt that predicts row i's week, so the
+        # decision point is the START of that week, and a quarter counts only
+        # once it was public, not once it ended (#280).
+        decision_date = row['Start Date'].strftime('%Y-%m-%d')
+        if always:
+            window_start = None
+        else:
+            window_start = decision_date if i < 2 else data.loc[i-2, 'Start Date'].strftime('%Y-%m-%d')
         
-        used_basic = {}
-        for basic in basic_list[::-1]:
-            if (always and basic['period'] < start_date) or (last_start_date <= basic['period'] < start_date):
-                used_basic = basic
-                break
+        used_basic = select_published_basic(basic_list, decision_date, window_start)
         final_basics.append(json.dumps(used_basic))
         
     data['Basics'] = final_basics

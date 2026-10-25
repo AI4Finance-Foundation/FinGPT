@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import date, datetime, timedelta
 from collections import defaultdict
 
+from basics import select_published_basic
 from data import get_news
 from market_sentiment import enrich_recent_market_sentiment
 from prompt import get_company_prompt, get_prompt_by_row, sample_news
@@ -65,11 +66,8 @@ def get_current_basics(symbol, curday):
         
     basic_list.sort(key=lambda x: x['period'])
     
-    for basic in basic_list[::-1]:
-        if basic['period'] <= curday:
-            break
-            
-    return basic
+    # Only quarters that were public before curday (#280).
+    return select_published_basic(basic_list, curday)
 
 
 def fetch_all_data(symbol, curday, n_weeks=3, with_market_sentiment=False):
@@ -110,8 +108,8 @@ def get_all_prompts_online(symbol, data, curday, with_basics=True):
         
     period = "{} to {}".format(curday, n_weeks_before(curday, -1))
     
-    if with_basics:
-        basics = get_current_basics(symbol, curday)
+    basics = get_current_basics(symbol, curday) if with_basics else {}
+    if basics:
         basics = "Some recent basic financials of {}, reported at {}, are presented below:\n\n[Basic Financials]:\n\n".format(
             symbol, basics['period']) + "\n".join(f"{k}: {v}" for k, v in basics.items() if k != 'period')
     else:
