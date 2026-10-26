@@ -8,9 +8,9 @@ import json
 import logging
 import requests
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict, is_dataclass
 from abc import ABC, abstractmethod
 import pickle
 
@@ -59,11 +59,19 @@ class EconomicEvent:
     impact: str = "MEDIUM"  # HIGH, MEDIUM, LOW
     tier: str = "MEDIUM"
 
+    @property
+    def timestamp(self) -> datetime:
+        """Alias for date (the event system reads event.timestamp)"""
+        return self.date
+
 
 class BaseDataSource(ABC):
     """Abstract base class for data sources"""
-    
+
     def __init__(self, config: Dict[str, Any]):
+        # DATA_SOURCES entries in config.py are DataSource dataclasses
+        if is_dataclass(config):
+            config = asdict(config)
         self.config = config
         self.name = config.get("name", "unknown")
         self.api_key = os.environ.get(config.get("api_key_env", ""))
@@ -352,6 +360,268 @@ class TradingEconomicsSource(BaseDataSource):
             return {"sentiment": 0, "article_count": 0}
 
 
+class FXMacroDataSource(BaseDataSource):
+    """
+    FXMacroData data source implementation
+
+    Release calendars and announcement values come from official publishers
+    (central banks and statistics agencies). The USD calendar and USD
+    announcements work without an API key; other currencies and FX rates
+    need FXMACRODATA_API_KEY.
+    """
+
+    KEYLESS_CURRENCIES = {"USD"}
+
+    def __init__(self, config: Dict[str, Any], include_actuals: bool = True):
+        super().__init__(config)
+        if not self.base_url.startswith("https://"):
+            raise DataSourceException("FXMacroData base_url must use https")
+        self.include_actuals = include_actuals
+        self.api_key = (self.api_key or "").strip()
+        if any(ch.isspace() or not ch.isprintable() for ch in self.api_key):
+            raise ValueError("FXMacroData API key contains whitespace or control characters")
+
+    def _make_request(
+        self,
+        endpoint: str,
+        params: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Make HTTP request, sending the API key in the X-API-Key header"""
+        self._check_rate_limit()
+
+        url = f"{self.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
+        headers = {"Accept": "application/json"}
+
+        if self.api_key:
+            headers["X-API-Key"] = self.api_key
+
+        try:
+            response = requests.get(url, params=params, headers=headers, timeout=30, allow_redirects=False)
+            if 300 <= response.status_code < 400:
+                raise DataSourceException(f"FXMacroData redirect rejected: HTTP {response.status_code}")
+            response.raise_for_status()
+            self.last_request_time = datetime.now()
+            payload = response.json()
+        except (requests.exceptions.RequestException, ValueError):
+            logger.error("FXMacroData request failed")
+            raise DataSourceException("FXMacroData request failed") from None
+        if not isinstance(payload, dict) or "detail" in payload or "error" in payload:
+            raise DataSourceException("FXMacroData returned an error or invalid response")
+        return payload
+
+    def get_market_data(
+        self,
+        symbol: str,
+        start_date: datetime,
+        end_date: datetime,
+    ) -> List[MarketData]:
+        """Get daily forex rates from FXMacroData"""
+        if not self.api_key:
+            logger.warning("FXMACRODATA_API_KEY not set, FXMacroData forex rates need an API key")
+            return []
+
+        try:
+            base, quote = self._convert_to_fxmd_pair(symbol)
+
+            params = {
+                "start_date": start_date.strftime("%Y-%m-%d"),
+                "end_date": end_date.strftime("%Y-%m-%d"),
+                "limit": 100,
+                "offset": 0,
+            }
+
+            rows = []
+            while True:
+                data = self._make_request(f"/forex/{base}/{quote}", dict(params))
+                page = data.get("data", [])
+                rows.extend(page)
+
+                pagination = data.get("pagination") or {}
+                next_offset = pagination.get("next_offset")
+                if not pagination.get("has_more") or not page:
+                    break
+                if next_offset is None:
+                    next_offset = params["offset"] + len(page)
+                if next_offset <= params["offset"]:
+                    break
+                params["offset"] = next_offset
+
+            # Rows come back most-recent-first
+            rows.sort(key=lambda item: item["date"])
+
+            market_data = []
+            previous_mid = None
+            for item in rows:
+                mid = item.get("close")
+                if mid is None:
+                    mid = item.get("val")
+                if mid is None:
+                    continue
+
+                change = None
+                change_percent = None
+                if previous_mid:
+                    change = mid - previous_mid
+                    change_percent = (change / previous_mid) * 100
+
+                market_data.append(
+                    MarketData(
+                        symbol=symbol,
+                        timestamp=datetime.strptime(item["date"][:10], "%Y-%m-%d"),
+                        mid=mid,
+                        change=change,
+                        change_percent=change_percent,
+                    )
+                )
+                previous_mid = mid
+
+            return market_data
+        except Exception as e:
+            logger.error(f"Error fetching market data from FXMacroData: {e}")
+            return []
+
+    def _convert_to_fxmd_pair(self, symbol: str) -> tuple:
+        """Convert forex pair ("EUR/USD" or "EURUSD") to base and quote codes"""
+        cleaned = symbol.strip().upper()
+        if cleaned.endswith("=X"):
+            cleaned = cleaned[:-2]
+        if "/" in cleaned:
+            base, quote = cleaned.split("/", 1)
+        elif len(cleaned) == 6:
+            base, quote = cleaned[:3], cleaned[3:]
+        else:
+            raise DataSourceException(f"Unrecognised forex symbol: {symbol}")
+
+        base, quote = base.strip(), quote.strip()
+        if not (len(base) == 3 and len(quote) == 3 and base.isalpha() and quote.isalpha()):
+            raise DataSourceException(f"Unrecognised forex symbol: {symbol}")
+        return base, quote
+
+    def get_economic_calendar(
+        self,
+        start_date: datetime,
+        end_date: datetime,
+        currencies: Optional[List[str]] = None,
+    ) -> List[EconomicEvent]:
+        """Get economic release calendar from FXMacroData"""
+        try:
+            params = {
+                "start_date": start_date.strftime("%Y-%m-%d"),
+                "end_date": end_date.strftime("%Y-%m-%d"),
+            }
+
+            events = []
+            for currency in currencies or MAJOR_CURRENCIES:
+                currency = currency.upper()
+                if not self.api_key and currency not in self.KEYLESS_CURRENCIES:
+                    logger.info(
+                        f"Skipping {currency} calendar: FXMacroData needs FXMACRODATA_API_KEY "
+                        "for currencies other than USD"
+                    )
+                    continue
+
+                try:
+                    data = self._make_request(f"/calendar/{currency}", params)
+                except DataSourceException as e:
+                    logger.warning(f"Failed to get {currency} calendar from FXMacroData: {e}")
+                    continue
+
+                release_values = {}
+                for item in data.get("data", []):
+                    release = item.get("release", "")
+                    announced_at = item.get("announcement_datetime")
+                    if announced_at is None:
+                        continue
+
+                    actual, previous = None, None
+                    if self.include_actuals and release:
+                        actual, previous = self._get_release_values(
+                            currency, release, announced_at, release_values
+                        )
+
+                    importance = item.get("event_importance") or "medium"
+                    events.append(
+                        EconomicEvent(
+                            event_id=item.get("calendar_event_id") or f"{currency.lower()}_{release}_{announced_at}",
+                            name=item.get("name") or release,
+                            currency=currency,
+                            # Naive UTC datetime
+                            date=datetime.fromtimestamp(announced_at, tz=timezone.utc).replace(tzinfo=None),
+                            actual=actual,
+                            previous=previous,
+                            impact=self._map_impact(importance),
+                            tier=self._map_tier(importance),
+                        )
+                    )
+
+            return events
+        except Exception as e:
+            logger.error(f"Error fetching economic calendar from FXMacroData: {e}")
+            return []
+
+    def _get_release_values(
+        self,
+        currency: str,
+        release: str,
+        announced_at: int,
+        cache: Dict[str, List[Dict[str, Any]]],
+    ) -> tuple:
+        """
+        Get (actual, previous) for a calendar release from the latest announcements.
+
+        A release that has happened is matched on its announcement time. An
+        upcoming release gets the latest published value as previous. Forecast
+        is left empty because no consensus value is fetched.
+        """
+        if release not in cache:
+            try:
+                data = self._make_request(f"/announcements/{currency}/{release}", {"limit": 2})
+                cache[release] = data.get("data", [])
+            except DataSourceException as e:
+                logger.debug(f"No FXMacroData announcements for {currency} {release}: {e}")
+                cache[release] = []
+
+        rows = cache[release]
+        actual, previous = None, None
+        for row in rows:
+            if row.get("announcement_datetime") == announced_at:
+                actual = row.get("val")
+                previous = row.get("previous_value")
+                break
+
+        if previous is None:
+            earlier = [
+                row for row in rows
+                if row.get("announcement_datetime") is not None
+                and row["announcement_datetime"] < announced_at
+                and row.get("val") is not None
+            ]
+            if earlier:
+                previous = max(earlier, key=lambda row: row["announcement_datetime"])["val"]
+
+        return actual, previous
+
+    def _map_impact(self, importance: str) -> str:
+        """Map importance level to impact"""
+        mapping = {"high": "HIGH", "medium": "MEDIUM", "low": "LOW"}
+        return mapping.get(str(importance).lower(), "MEDIUM")
+
+    def _map_tier(self, importance: str) -> str:
+        """Map importance level to tier"""
+        mapping = {"high": "HIGH", "medium": "MEDIUM", "low": "LOW"}
+        return mapping.get(str(importance).lower(), "MEDIUM")
+
+    def get_news_sentiment(
+        self,
+        symbol: str,
+        start_date: datetime,
+        end_date: datetime,
+    ) -> Dict[str, Any]:
+        """FXMacroData doesn't provide news sentiment"""
+        # Empty result lets the manager fall through to the next source
+        return {}
+
+
 class ForexDataSourceManager:
     """
     Manager for multiple forex data sources with fallback and caching
@@ -394,6 +664,8 @@ class ForexDataSourceManager:
                     self.data_sources[source_name] = YahooFinanceSource(config)
                 elif source_name == "tradingeconomics":
                     self.data_sources[source_name] = TradingEconomicsSource(config)
+                elif source_name == "fxmacrodata":
+                    self.data_sources[source_name] = FXMacroDataSource(config)
                 # Add other sources as needed
                 else:
                     logger.warning(f"Source {source_name} not yet implemented")
