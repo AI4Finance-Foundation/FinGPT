@@ -102,6 +102,7 @@ pip install pandas numpy requests yfinance
      - `REUTERS_API_KEY`
      - `TRADING_ECONOMICS_API_KEY`
      - `FXSTREET_API_KEY`
+     - `FXMACRODATA_API_KEY`
 
 2. The framework will use Yahoo Finance (free) by default if no API keys are provided.
 
@@ -227,6 +228,29 @@ The framework supports multiple data sources with automatic fallback:
 3. **Bloomberg** (API key required)
 4. **Reuters** (API key required)
 5. **FXStreet** (API key required)
+6. **FXMacroData** (USD calendar free, API key for other currencies and FX rates)
+
+#### FXMacroData
+
+[FXMacroData](https://fxmacrodata.com/?utm_source=github&utm_medium=referral&utm_campaign=FinGPT&utm_content=readme) provides release calendars and announcement values from official publishers (central banks and statistics agencies), plus daily FX rates.
+
+- `get_economic_calendar` returns scheduled releases with `HIGH`/`MEDIUM`/`LOW` impact. Released events carry the published `actual` and `previous` values; upcoming events carry the latest published value as `previous`. `forecast` is left empty.
+- `get_market_data` returns daily FX rates for pairs such as `"EUR/USD"` or `"EURUSD"`.
+- News sentiment is not provided, so the manager falls through to the next source.
+
+The USD calendar and USD announcements work without an API key (15-minute delay, last 90 days). Other currencies and FX rates need `FXMACRODATA_API_KEY`, which is sent in the `X-API-Key` header.
+
+```python
+from datetime import datetime, timedelta
+from fingpt.FinGPT_ForexIntelligence.data_sources import ForexDataSourceManager
+
+data_manager = ForexDataSourceManager(sources=["fxmacrodata", "yfinance"])
+events = data_manager.get_economic_calendar(
+    datetime.now(),
+    datetime.now() + timedelta(days=7),
+    currencies=["USD"],
+)
+```
 
 ### Economic Indicators
 

@@ -214,6 +214,14 @@ DATA_SOURCES = {
         data_types=["economic_indicators", "historical_data", "forecasts"],
         reliability_score=0.88
     ),
+    "fxmacrodata": DataSource(
+        name="FXMacroData",
+        base_url="https://api.fxmacrodata.com/v1",
+        api_key_env="FXMACRODATA_API_KEY",
+        rate_limit=60,
+        data_types=["market_data", "economic_indicators", "calendar", "historical_data"],
+        reliability_score=0.88
+    ),
     "fxstreet": DataSource(
         name="FXStreet",
         base_url="https://www.fxstreet.com",
