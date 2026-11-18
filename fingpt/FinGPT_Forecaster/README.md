@@ -202,3 +202,33 @@ Based on all the information before {curday}, let's first analyze the positive d
 
 
 **Disclaimer: Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+
+## Historical backtest
+
+Run the price-only backtest from the repository root. Provide an archived daily
+CSV with `date,close` columns, ISO dates, and closes as known at the time. Use a
+range after the checkpoint's training period for an out-of-sample evaluation,
+and keep a copy of the input CSV with the results. The Llama 2 base model
+requires Hugging Face access and an authenticated session.
+
+```sh
+python fingpt/FinGPT_Forecaster/backtest.py \
+  --prices aapl.csv --symbol AAPL --start 2025-01-03 --end 2025-03-28 \
+  --base-revision "$BASE_MODEL_COMMIT" --adapter-revision "$ADAPTER_COMMIT" \
+  > aapl-backtest.json
+```
+
+The CSV needs to cover the three-week default lookback before the first
+forecast and at least one week after the last forecast. Include every trading
+session in that interval. Each forecast is made as of the end of its cutoff
+day, using closes on or before the weekly boundaries. Weekend and holiday
+boundaries use the previous trading close. The target is the close on or
+before the boundary seven calendar days later.
+
+The report includes each response, parse coverage, binary directional accuracy
+(positive versus non-positive returns), and MSE in squared percentage points.
+Predicted ranges use their midpoint, and open-ended magnitudes use their stated
+bound. MSE therefore measures the error of that numeric conversion. Both
+metrics use parseable forecasts only. This evaluates the demo checkpoint with
+price history alone. Results from the interactive demo also depend on its
+news and fundamentals inputs.
